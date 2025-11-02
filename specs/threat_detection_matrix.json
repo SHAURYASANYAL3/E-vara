@@ -58,6 +58,14 @@
       "type": "docs",
       "description": "update threat modeling guide and compliance runbook",
       "status": "verified"
+    },
+    {
+      "id": "REF-00008",
+      "timestamp": "2025-11-02T21:17:16+05:30",
+      "scope": "storage",
+      "type": "chore",
+      "description": "tune rate-limiting thresholds on public audit endpoints",
+      "status": "verified"
     }
   ]
 }
