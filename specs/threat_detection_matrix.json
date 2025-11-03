@@ -90,6 +90,14 @@
       "type": "perf",
       "description": "batch database insertions for scraped profile snapshots",
       "status": "verified"
+    },
+    {
+      "id": "REF-00012",
+      "timestamp": "2025-11-03T15:22:55+05:30",
+      "scope": "crawler",
+      "type": "refactor",
+      "description": "decouple notification dispatcher from scoring engine",
+      "status": "verified"
     }
   ]
 }
