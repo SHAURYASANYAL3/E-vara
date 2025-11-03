@@ -122,6 +122,14 @@
       "type": "feat",
       "description": "add sentiment polarity index to community mentions collector",
       "status": "verified"
+    },
+    {
+      "id": "REF-00016",
+      "timestamp": "2025-11-03T21:16:42+05:30",
+      "scope": "classifier",
+      "type": "fix",
+      "description": "resolve connection pool exhaustion during batch domain audit",
+      "status": "verified"
     }
   ]
 }
