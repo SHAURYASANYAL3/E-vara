@@ -98,6 +98,14 @@
       "type": "refactor",
       "description": "decouple notification dispatcher from scoring engine",
       "status": "verified"
+    },
+    {
+      "id": "REF-00013",
+      "timestamp": "2025-11-03T16:52:18+05:30",
+      "scope": "reputation",
+      "type": "test",
+      "description": "add unit tests for fuzzy string matching in username audit",
+      "status": "verified"
     }
   ]
 }
