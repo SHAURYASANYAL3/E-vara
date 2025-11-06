@@ -274,6 +274,14 @@
       "type": "fix",
       "description": "resolve connection pool exhaustion during batch domain audit",
       "status": "verified"
+    },
+    {
+      "id": "REF-00035",
+      "timestamp": "2025-11-06T12:27:08+05:30",
+      "scope": "threat-intel",
+      "type": "perf",
+      "description": "parallelize social graph entity resolution queries",
+      "status": "verified"
     }
   ]
 }
