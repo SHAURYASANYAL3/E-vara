@@ -338,6 +338,14 @@
       "type": "test",
       "description": "add synthetic test vectors for phishing domain patterns",
       "status": "verified"
+    },
+    {
+      "id": "REF-00043",
+      "timestamp": "2025-11-07T12:26:49+05:30",
+      "scope": "reputation",
+      "type": "docs",
+      "description": "update threat modeling guide and compliance runbook",
+      "status": "verified"
     }
   ]
 }
