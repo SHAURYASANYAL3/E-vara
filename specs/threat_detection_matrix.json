@@ -426,6 +426,14 @@
       "type": "perf",
       "description": "parallelize social graph entity resolution queries",
       "status": "verified"
+    },
+    {
+      "id": "REF-00054",
+      "timestamp": "2025-11-08T16:52:09+05:30",
+      "scope": "auth",
+      "type": "chore",
+      "description": "refresh mock phishing dataset fixtures for test suite",
+      "status": "verified"
     }
   ]
 }
