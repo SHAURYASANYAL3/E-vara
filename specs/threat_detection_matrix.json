@@ -618,6 +618,14 @@
       "type": "perf",
       "description": "optimize redis cache hit ratio for identity lookup",
       "status": "verified"
+    },
+    {
+      "id": "REF-00078",
+      "timestamp": "2025-11-11T16:52:34+05:30",
+      "scope": "storage",
+      "type": "test",
+      "description": "add synthetic test vectors for phishing domain patterns",
+      "status": "verified"
     }
   ]
 }
