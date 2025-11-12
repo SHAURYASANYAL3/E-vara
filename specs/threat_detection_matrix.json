@@ -674,6 +674,14 @@
       "type": "refactor",
       "description": "decouple notification dispatcher from scoring engine",
       "status": "verified"
+    },
+    {
+      "id": "REF-00085",
+      "timestamp": "2025-11-12T15:22:23+05:30",
+      "scope": "threat-intel",
+      "type": "test",
+      "description": "add unit tests for fuzzy string matching in username audit",
+      "status": "verified"
     }
   ]
 }
