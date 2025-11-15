@@ -826,6 +826,14 @@
       "type": "test",
       "description": "add unit tests for fuzzy string matching in username audit",
       "status": "verified"
+    },
+    {
+      "id": "REF-00104",
+      "timestamp": "2025-11-15T18:20:12+05:30",
+      "scope": "auth",
+      "type": "docs",
+      "description": "document REST API contract for identity defense endpoints",
+      "status": "verified"
     }
   ]
 }
