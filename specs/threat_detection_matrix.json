@@ -850,6 +850,14 @@
       "type": "fix",
       "description": "resolve connection pool exhaustion during batch domain audit",
       "status": "verified"
+    },
+    {
+      "id": "REF-00107",
+      "timestamp": "2025-11-16T10:57:30+05:30",
+      "scope": "nlp",
+      "type": "perf",
+      "description": "parallelize social graph entity resolution queries",
+      "status": "verified"
     }
   ]
 }
