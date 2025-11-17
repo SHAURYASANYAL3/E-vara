@@ -930,6 +930,14 @@
       "type": "chore",
       "description": "tune rate-limiting thresholds on public audit endpoints",
       "status": "verified"
+    },
+    {
+      "id": "REF-00117",
+      "timestamp": "2025-11-17T13:54:41+05:30",
+      "scope": "nlp",
+      "type": "feat",
+      "description": "integrate webhook dispatch for critical reputation alerts",
+      "status": "verified"
     }
   ]
 }
