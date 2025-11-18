@@ -1026,6 +1026,14 @@
       "type": "feat",
       "description": "add heuristic weights for impersonation risk scoring",
       "status": "verified"
+    },
+    {
+      "id": "REF-00129",
+      "timestamp": "2025-11-18T19:47:52+05:30",
+      "scope": "api",
+      "type": "fix",
+      "description": "sanitize multiline unicode bio sequences in entity profile",
+      "status": "verified"
     }
   ]
 }
