@@ -1098,6 +1098,14 @@
       "type": "perf",
       "description": "batch database insertions for scraped profile snapshots",
       "status": "verified"
+    },
+    {
+      "id": "REF-00138",
+      "timestamp": "2025-11-19T21:16:08+05:30",
+      "scope": "storage",
+      "type": "refactor",
+      "description": "decouple notification dispatcher from scoring engine",
+      "status": "verified"
     }
   ]
 }
