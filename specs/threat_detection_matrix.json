@@ -1162,6 +1162,14 @@
       "type": "feat",
       "description": "implement social media threat detector for spoofed profiles",
       "status": "verified"
+    },
+    {
+      "id": "REF-00146",
+      "timestamp": "2025-11-20T21:16:11+05:30",
+      "scope": "classifier",
+      "type": "feat",
+      "description": "add heuristic weights for impersonation risk scoring",
+      "status": "verified"
     }
   ]
 }
