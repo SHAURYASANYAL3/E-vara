@@ -1218,6 +1218,14 @@
       "type": "chore",
       "description": "tune rate-limiting thresholds on public audit endpoints",
       "status": "verified"
+    },
+    {
+      "id": "REF-00153",
+      "timestamp": "2025-11-21T19:47:36+05:30",
+      "scope": "reputation",
+      "type": "feat",
+      "description": "integrate webhook dispatch for critical reputation alerts",
+      "status": "verified"
     }
   ]
 }
