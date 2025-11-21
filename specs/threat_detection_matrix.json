@@ -1226,6 +1226,14 @@
       "type": "feat",
       "description": "integrate webhook dispatch for critical reputation alerts",
       "status": "verified"
+    },
+    {
+      "id": "REF-00154",
+      "timestamp": "2025-11-21T21:16:40+05:30",
+      "scope": "auth",
+      "type": "fix",
+      "description": "handle null avatar checksum in risk evaluation pass",
+      "status": "verified"
     }
   ]
 }
