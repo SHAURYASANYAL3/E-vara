@@ -1234,6 +1234,14 @@
       "type": "fix",
       "description": "handle null avatar checksum in risk evaluation pass",
       "status": "verified"
+    },
+    {
+      "id": "REF-00155",
+      "timestamp": "2025-11-22T10:58:45+05:30",
+      "scope": "threat-intel",
+      "type": "perf",
+      "description": "batch database insertions for scraped profile snapshots",
+      "status": "verified"
     }
   ]
 }
