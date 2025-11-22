@@ -1242,6 +1242,14 @@
       "type": "perf",
       "description": "batch database insertions for scraped profile snapshots",
       "status": "verified"
+    },
+    {
+      "id": "REF-00156",
+      "timestamp": "2025-11-22T12:25:54+05:30",
+      "scope": "classifier",
+      "type": "refactor",
+      "description": "decouple notification dispatcher from scoring engine",
+      "status": "verified"
     }
   ]
 }
