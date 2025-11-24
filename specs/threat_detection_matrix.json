@@ -1410,6 +1410,14 @@
       "type": "docs",
       "description": "document REST API contract for identity defense endpoints",
       "status": "verified"
+    },
+    {
+      "id": "REF-00177",
+      "timestamp": "2025-11-24T19:49:18+05:30",
+      "scope": "nlp",
+      "type": "feat",
+      "description": "add sentiment polarity index to community mentions collector",
+      "status": "verified"
     }
   ]
 }
