@@ -1586,6 +1586,14 @@
       "type": "chore",
       "description": "refresh mock phishing dataset fixtures for test suite",
       "status": "verified"
+    },
+    {
+      "id": "REF-00199",
+      "timestamp": "2025-11-27T16:51:56+05:30",
+      "scope": "api",
+      "type": "feat",
+      "description": "implement social media threat detector for spoofed profiles",
+      "status": "verified"
     }
   ]
 }
