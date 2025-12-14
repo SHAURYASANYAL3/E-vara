@@ -544,3 +544,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Decouple notification dispatcher from scoring engine.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-00337] 2025-12-14 19:47:47 - test(nlp)
+- **Summary**: Add unit tests for fuzzy string matching in username audit.
+- **Verification**: State integrity confirmed, checksum passed.
+
