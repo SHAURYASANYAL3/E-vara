@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00194",
-      "timestamp": "2025-11-26T21:17:09+05:30",
-      "scope": "auth",
-      "type": "docs",
-      "description": "document REST API contract for identity defense endpoints",
-      "status": "verified"
-    },
-    {
       "id": "REF-00195",
       "timestamp": "2025-11-27T10:58:58+05:30",
       "scope": "threat-intel",
@@ -1601,6 +1593,14 @@
       "scope": "reputation",
       "type": "feat",
       "description": "add sentiment polarity index to community mentions collector",
+      "status": "verified"
+    },
+    {
+      "id": "REF-00394",
+      "timestamp": "2025-12-22T19:48:47+05:30",
+      "scope": "auth",
+      "type": "fix",
+      "description": "resolve connection pool exhaustion during batch domain audit",
       "status": "verified"
     }
   ]
