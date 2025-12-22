@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00190",
-      "timestamp": "2025-11-26T15:24:06+05:30",
-      "scope": "telemetry",
-      "type": "fix",
-      "description": "handle null avatar checksum in risk evaluation pass",
-      "status": "verified"
-    },
-    {
       "id": "REF-00191",
       "timestamp": "2025-11-26T16:52:00+05:30",
       "scope": "scanner",
@@ -1601,6 +1593,14 @@
       "scope": "api",
       "type": "perf",
       "description": "batch database insertions for scraped profile snapshots",
+      "status": "verified"
+    },
+    {
+      "id": "REF-00390",
+      "timestamp": "2025-12-22T13:55:02+05:30",
+      "scope": "telemetry",
+      "type": "refactor",
+      "description": "decouple notification dispatcher from scoring engine",
       "status": "verified"
     }
   ]
