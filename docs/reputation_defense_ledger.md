@@ -544,3 +544,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Update threat modeling guide and compliance runbook.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-00404] 2025-12-24 10:58:31 - chore(auth)
+- **Summary**: Tune rate-limiting thresholds on public audit endpoints.
+- **Verification**: State integrity confirmed, checksum passed.
+
