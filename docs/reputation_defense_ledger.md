@@ -624,3 +624,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Integrate webhook dispatch for critical reputation alerts.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-00424] 2025-12-26 16:51:59 - fix(auth)
+- **Summary**: Handle null avatar checksum in risk evaluation pass.
+- **Verification**: State integrity confirmed, checksum passed.
+
