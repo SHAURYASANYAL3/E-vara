@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00335",
-      "timestamp": "2025-12-14T16:51:03+05:30",
-      "scope": "threat-intel",
-      "type": "perf",
-      "description": "batch database insertions for scraped profile snapshots",
-      "status": "verified"
-    },
-    {
       "id": "REF-00336",
       "timestamp": "2025-12-14T18:19:24+05:30",
       "scope": "classifier",
@@ -1601,6 +1593,14 @@
       "scope": "auth",
       "type": "refactor",
       "description": "decouple notification dispatcher from scoring engine",
+      "status": "verified"
+    },
+    {
+      "id": "REF-00535",
+      "timestamp": "2026-01-09T15:24:17+05:30",
+      "scope": "threat-intel",
+      "type": "test",
+      "description": "add unit tests for fuzzy string matching in username audit",
       "status": "verified"
     }
   ]
