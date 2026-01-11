@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00353",
-      "timestamp": "2025-12-16T19:47:42+05:30",
-      "scope": "reputation",
-      "type": "perf",
-      "description": "batch database insertions for scraped profile snapshots",
-      "status": "verified"
-    },
-    {
       "id": "REF-00354",
       "timestamp": "2025-12-16T21:16:18+05:30",
       "scope": "auth",
@@ -1601,6 +1593,14 @@
       "scope": "crawler",
       "type": "refactor",
       "description": "decouple notification dispatcher from scoring engine",
+      "status": "verified"
+    },
+    {
+      "id": "REF-00553",
+      "timestamp": "2026-01-11T18:19:42+05:30",
+      "scope": "reputation",
+      "type": "test",
+      "description": "add unit tests for fuzzy string matching in username audit",
       "status": "verified"
     }
   ]
