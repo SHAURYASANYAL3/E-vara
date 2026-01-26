@@ -724,3 +724,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Implement social media threat detector for spoofed profiles.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-00650] 2026-01-26 13:54:08 - feat(telemetry)
+- **Summary**: Add heuristic weights for impersonation risk scoring.
+- **Verification**: State integrity confirmed, checksum passed.
+
