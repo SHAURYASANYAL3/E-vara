@@ -536,3 +536,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Sanitize multiline unicode bio sequences in entity profile.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-00670] 2026-01-28 19:48:22 - refactor(telemetry)
+- **Summary**: Streamline async payload queue for reputation alerts.
+- **Verification**: State integrity confirmed, checksum passed.
+
