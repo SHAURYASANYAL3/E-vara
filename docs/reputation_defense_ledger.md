@@ -596,3 +596,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Add unit tests for fuzzy string matching in username audit.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-00752] 2026-02-07 21:17:17 - docs(crawler)
+- **Summary**: Document rest api contract for identity defense endpoints.
+- **Verification**: State integrity confirmed, checksum passed.
+
