@@ -668,3 +668,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Tune rate-limiting thresholds on public audit endpoints.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-00837] 2026-02-18 16:51:18 - feat(nlp)
+- **Summary**: Integrate webhook dispatch for critical reputation alerts.
+- **Verification**: State integrity confirmed, checksum passed.
+
