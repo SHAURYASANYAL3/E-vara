@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00701",
-      "timestamp": "2026-02-01T18:20:43+05:30",
-      "scope": "scanner",
-      "type": "perf",
-      "description": "parallelize social graph entity resolution queries",
-      "status": "verified"
-    },
-    {
       "id": "REF-00702",
       "timestamp": "2026-02-01T19:48:08+05:30",
       "scope": "crawler",
@@ -1601,6 +1593,14 @@
       "scope": "telemetry",
       "type": "chore",
       "description": "refresh mock phishing dataset fixtures for test suite",
+      "status": "verified"
+    },
+    {
+      "id": "REF-00901",
+      "timestamp": "2026-02-26T15:23:06+05:30",
+      "scope": "scanner",
+      "type": "feat",
+      "description": "implement social media threat detector for spoofed profiles",
       "status": "verified"
     }
   ]
