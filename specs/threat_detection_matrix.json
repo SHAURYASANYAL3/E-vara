@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00767",
-      "timestamp": "2026-02-09T19:48:15+05:30",
-      "scope": "nlp",
-      "type": "perf",
-      "description": "batch database insertions for scraped profile snapshots",
-      "status": "verified"
-    },
-    {
       "id": "REF-00768",
       "timestamp": "2026-02-09T21:15:52+05:30",
       "scope": "storage",
@@ -1601,6 +1593,14 @@
       "scope": "classifier",
       "type": "refactor",
       "description": "decouple notification dispatcher from scoring engine",
+      "status": "verified"
+    },
+    {
+      "id": "REF-00967",
+      "timestamp": "2026-03-06T15:23:07+05:30",
+      "scope": "nlp",
+      "type": "test",
+      "description": "add unit tests for fuzzy string matching in username audit",
       "status": "verified"
     }
   ]
