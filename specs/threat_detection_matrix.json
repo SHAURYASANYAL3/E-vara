@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00764",
-      "timestamp": "2026-02-09T15:22:49+05:30",
-      "scope": "auth",
-      "type": "chore",
-      "description": "tune rate-limiting thresholds on public audit endpoints",
-      "status": "verified"
-    },
-    {
       "id": "REF-00765",
       "timestamp": "2026-02-09T16:52:15+05:30",
       "scope": "threat-intel",
@@ -1601,6 +1593,14 @@
       "scope": "reputation",
       "type": "feat",
       "description": "integrate webhook dispatch for critical reputation alerts",
+      "status": "verified"
+    },
+    {
+      "id": "REF-00964",
+      "timestamp": "2026-03-06T10:59:05+05:30",
+      "scope": "auth",
+      "type": "fix",
+      "description": "handle null avatar checksum in risk evaluation pass",
       "status": "verified"
     }
   ]
