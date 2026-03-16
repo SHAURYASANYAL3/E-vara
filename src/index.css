@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 210 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 20% 15%;
+
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 15% 93%;
+    --secondary-foreground: 210 20% 15%;
+
+    --muted: 210 15% 93%;
+    --muted-foreground: 215 10% 45%;
+
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 199 89% 48%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 210 20% 15%;
+    --sidebar-primary: 199 89% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 15% 93%;
+    --sidebar-accent-foreground: 210 20% 15%;
+    --sidebar-border: 210 15% 88%;
+    --sidebar-ring: 199 89% 48%;
+
+    /* Custom tokens */
+    --sky: 199 89% 48%;
+    --obsidian: 0 0% 98%;
+    --slate-panel: 0 0% 100%;
+    --mist: 210 20% 15%;
+
+    /* Severity tokens */
+    --severity-low: 142 71% 40%;
+    --severity-medium: 38 92% 45%;
+    --severity-high: 0 84% 55%;
+  }
+
+  .dark {
+    --background: 210 30% 5%;
+    --foreground: 220 14% 90%;
+
+    --card: 210 25% 8%;
+    --card-foreground: 220 14% 90%;
+
+    --popover: 210 25% 8%;
+    --popover-foreground: 220 14% 90%;
+
+    --primary: 199 89% 60%;
+    --primary-foreground: 210 30% 5%;
+
+    --secondary: 210 15% 14%;
+    --secondary-foreground: 220 14% 90%;
+
+    --muted: 210 15% 14%;
+    --muted-foreground: 215 10% 50%;
+
+    --accent: 199 89% 60%;
+    --accent-foreground: 210 30% 5%;
+
+    --destructive: 0 0% 0%;
+    --destructive-foreground: 220 14% 90%;
+
+    --border: 210 15% 16%;
+    --input: 210 15% 16%;
+    --ring: 199 89% 60%;
+
+    --sidebar-background: 210 25% 8%;
+    --sidebar-foreground: 220 14% 90%;
+    --sidebar-primary: 199 89% 60%;
+    --sidebar-primary-foreground: 210 30% 5%;
+    --sidebar-accent: 210 15% 14%;
+    --sidebar-accent-foreground: 220 14% 90%;
+    --sidebar-border: 210 15% 16%;
+    --sidebar-ring: 199 89% 60%;
+
+    /* Custom tokens */
+    --sky: 199 89% 60%;
+    --obsidian: 210 30% 5%;
+    --slate-panel: 210 25% 8%;
+    --mist: 220 14% 90%;
+
+    /* Severity tokens */
+    --severity-low: 142 71% 45%;
+    --severity-medium: 38 92% 50%;
+    --severity-high: 0 84% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-mono;
+  }
+}
+
+/* Alert arrival animation */
+@keyframes alert-wave {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+@keyframes alert-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.alert-wave::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  background: hsl(var(--sky));
+  animation: alert-wave 0.8s ease-out forwards;
+}
+
+.alert-pulse-dot {
+  animation: alert-pulse 1s ease-in-out 3;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--obsidian));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 2px;
+}
