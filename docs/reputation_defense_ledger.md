@@ -688,3 +688,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Resolve connection pool exhaustion during batch domain audit.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01043] 2026-03-19 12:26:15 - perf(reputation)
+- **Summary**: Parallelize social graph entity resolution queries.
+- **Verification**: State integrity confirmed, checksum passed.
+
