@@ -71,7 +71,7 @@ E-Vara is a proactive digital identity monitoring system that helps individuals 
 ## 🚀 Getting Started
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/e-vara.git
+git clone https://github.com/SHAURYASANYAL3/e-vara.git
 
 # Navigate into the project
 cd e-vara
