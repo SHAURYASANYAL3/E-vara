@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00886",
-      "timestamp": "2026-02-24T17:27:24+05:30",
-      "scope": "classifier",
-      "type": "refactor",
-      "description": "streamline async payload queue for reputation alerts",
-      "status": "verified"
-    },
-    {
       "id": "REF-00887",
       "timestamp": "2026-02-24T18:46:57+05:30",
       "scope": "nlp",
@@ -1601,6 +1593,14 @@
       "scope": "threat-intel",
       "type": "perf",
       "description": "optimize redis cache hit ratio for identity lookup",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01086",
+      "timestamp": "2026-03-27T16:07:02+05:30",
+      "scope": "classifier",
+      "type": "test",
+      "description": "add synthetic test vectors for phishing domain patterns",
       "status": "verified"
     }
   ]
