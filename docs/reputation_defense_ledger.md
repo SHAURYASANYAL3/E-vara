@@ -616,3 +616,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Batch database insertions for scraped profile snapshots.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01092] 2026-03-28 18:19:03 - refactor(crawler)
+- **Summary**: Decouple notification dispatcher from scoring engine.
+- **Verification**: State integrity confirmed, checksum passed.
+
