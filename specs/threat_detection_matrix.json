@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00894",
-      "timestamp": "2026-02-25T16:52:02+05:30",
-      "scope": "auth",
-      "type": "refactor",
-      "description": "decouple notification dispatcher from scoring engine",
-      "status": "verified"
-    },
-    {
       "id": "REF-00895",
       "timestamp": "2026-02-25T18:19:05+05:30",
       "scope": "threat-intel",
@@ -1601,6 +1593,14 @@
       "scope": "reputation",
       "type": "test",
       "description": "add unit tests for fuzzy string matching in username audit",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01094",
+      "timestamp": "2026-03-28T21:15:41+05:30",
+      "scope": "auth",
+      "type": "docs",
+      "description": "document REST API contract for identity defense endpoints",
       "status": "verified"
     }
   ]
