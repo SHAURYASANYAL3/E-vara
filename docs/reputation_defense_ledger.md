@@ -668,3 +668,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Add synthetic test vectors for phishing domain patterns.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01105] 2026-03-30 13:54:16 - docs(threat-intel)
+- **Summary**: Update threat modeling guide and compliance runbook.
+- **Verification**: State integrity confirmed, checksum passed.
+
