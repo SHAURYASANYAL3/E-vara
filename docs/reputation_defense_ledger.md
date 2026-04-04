@@ -536,3 +536,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Streamline async payload queue for reputation alerts.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01139] 2026-04-04 13:55:27 - perf(api)
+- **Summary**: Optimize redis cache hit ratio for identity lookup.
+- **Verification**: State integrity confirmed, checksum passed.
+
