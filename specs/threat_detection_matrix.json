@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-00975",
-      "timestamp": "2026-03-08T13:56:00+05:30",
-      "scope": "threat-intel",
-      "type": "fix",
-      "description": "sanitize multiline unicode bio sequences in entity profile",
-      "status": "verified"
-    },
-    {
       "id": "REF-00976",
       "timestamp": "2026-03-08T15:23:31+05:30",
       "scope": "classifier",
@@ -1601,6 +1593,14 @@
       "scope": "auth",
       "type": "refactor",
       "description": "streamline async payload queue for reputation alerts",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01175",
+      "timestamp": "2026-04-09T16:52:32+05:30",
+      "scope": "threat-intel",
+      "type": "perf",
+      "description": "optimize redis cache hit ratio for identity lookup",
       "status": "verified"
     }
   ]
