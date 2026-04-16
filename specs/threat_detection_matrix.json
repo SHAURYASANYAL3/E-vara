@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01013",
-      "timestamp": "2026-03-13T21:17:13+05:30",
-      "scope": "reputation",
-      "type": "perf",
-      "description": "optimize redis cache hit ratio for identity lookup",
-      "status": "verified"
-    },
-    {
       "id": "REF-01014",
       "timestamp": "2026-03-14T10:48:49+05:30",
       "scope": "auth",
@@ -1601,6 +1593,14 @@
       "scope": "crawler",
       "type": "test",
       "description": "add synthetic test vectors for phishing domain patterns",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01213",
+      "timestamp": "2026-04-16T16:08:13+05:30",
+      "scope": "reputation",
+      "type": "docs",
+      "description": "update threat modeling guide and compliance runbook",
       "status": "verified"
     }
   ]
