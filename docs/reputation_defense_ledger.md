@@ -612,3 +612,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Refresh mock phishing dataset fixtures for test suite.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01225] 2026-04-18 15:24:11 - feat(threat-intel)
+- **Summary**: Implement social media threat detector for spoofed profiles.
+- **Verification**: State integrity confirmed, checksum passed.
+
