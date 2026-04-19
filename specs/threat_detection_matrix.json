@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01035",
-      "timestamp": "2026-03-17T15:23:47+05:30",
-      "scope": "threat-intel",
-      "type": "feat",
-      "description": "integrate webhook dispatch for critical reputation alerts",
-      "status": "verified"
-    },
-    {
       "id": "REF-01036",
       "timestamp": "2026-03-17T16:51:27+05:30",
       "scope": "classifier",
@@ -1601,6 +1593,14 @@
       "scope": "auth",
       "type": "fix",
       "description": "handle null avatar checksum in risk evaluation pass",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01235",
+      "timestamp": "2026-04-19T18:20:16+05:30",
+      "scope": "threat-intel",
+      "type": "perf",
+      "description": "batch database insertions for scraped profile snapshots",
       "status": "verified"
     }
   ]
