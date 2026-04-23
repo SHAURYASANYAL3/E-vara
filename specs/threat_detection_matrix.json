@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01060",
-      "timestamp": "2026-03-23T16:06:46+05:30",
-      "scope": "telemetry",
-      "type": "fix",
-      "description": "resolve connection pool exhaustion during batch domain audit",
-      "status": "verified"
-    },
-    {
       "id": "REF-01061",
       "timestamp": "2026-03-24T10:59:00+05:30",
       "scope": "scanner",
@@ -1601,6 +1593,14 @@
       "scope": "api",
       "type": "perf",
       "description": "parallelize social graph entity resolution queries",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01260",
+      "timestamp": "2026-04-23T18:20:11+05:30",
+      "scope": "telemetry",
+      "type": "chore",
+      "description": "refresh mock phishing dataset fixtures for test suite",
       "status": "verified"
     }
   ]
