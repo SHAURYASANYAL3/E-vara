@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01116",
-      "timestamp": "2026-03-31T18:20:05+05:30",
-      "scope": "classifier",
-      "type": "chore",
-      "description": "refresh mock phishing dataset fixtures for test suite",
-      "status": "verified"
-    },
-    {
       "id": "REF-01117",
       "timestamp": "2026-03-31T19:48:35+05:30",
       "scope": "nlp",
@@ -1601,6 +1593,14 @@
       "scope": "threat-intel",
       "type": "feat",
       "description": "implement social media threat detector for spoofed profiles",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01316",
+      "timestamp": "2026-05-03T13:54:19+05:30",
+      "scope": "classifier",
+      "type": "feat",
+      "description": "add heuristic weights for impersonation risk scoring",
       "status": "verified"
     }
   ]
