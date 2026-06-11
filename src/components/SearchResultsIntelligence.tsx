@@ -16,7 +16,9 @@ export const SearchResultsIntelligence = ({
   const [searchEngine, setSearchEngine] = useState<"google" | "bing">("google");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [analysisResult, setAnalysisResult] = useState<ReturnType<typeof analyzeSearchResults> | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<ReturnType<
+    typeof analyzeSearchResults
+  > | null>(null);
 
   const performSearch = async () => {
     if (!fullName || !username) {
@@ -30,17 +32,40 @@ export const SearchResultsIntelligence = ({
 
     try {
       // Call the secure Supabase Edge Function for OSINT analysis
-      const { data, error: funcError } = await supabase.functions.invoke('osint-search', {
-        body: { fullName, username, engine: searchEngine }
-      });
+      const { data, error: funcError } = await supabase.functions.invoke(
+        "osint-search",
+        {
+          body: { fullName, username, engine: searchEngine },
+        },
+      );
 
-      const safeHandle = username.split('@')[0];
+      const safeHandle = username.split("@")[0];
       const mockResults = [
-        { title: `${fullName} Public Profile`, link: `https://www.linkedin.com/search/results/all/?keywords=${encodeURIComponent(fullName)}`, snippet: `View the professional footprint of ${fullName} on LinkedIn...` },
-        { title: `@${safeHandle} | Twitter Search`, link: `https://twitter.com/search?q=${encodeURIComponent(safeHandle)}`, snippet: `Latest mentions and tweets from @${safeHandle}...` },
-        { title: `${safeHandle} | Instagram Search`, link: `https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(safeHandle)}`, snippet: `Visual media and social tags for ${safeHandle}...` },
-        { title: `${fullName} | Facebook Public Data`, link: `https://www.facebook.com/search/top?q=${encodeURIComponent(fullName)}`, snippet: `Public graph data matching ${fullName}...` },
-        { title: `${safeHandle} | GitHub Repositories`, link: `https://github.com/search?q=${encodeURIComponent(safeHandle)}&type=users`, snippet: `Code contributions and tech footprint for ${safeHandle}...` }
+        {
+          title: `${fullName} Public Profile`,
+          link: `https://www.linkedin.com/search/results/all/?keywords=${encodeURIComponent(fullName)}`,
+          snippet: `View the professional footprint of ${fullName} on LinkedIn...`,
+        },
+        {
+          title: `@${safeHandle} | Twitter Search`,
+          link: `https://twitter.com/search?q=${encodeURIComponent(safeHandle)}`,
+          snippet: `Latest mentions and tweets from @${safeHandle}...`,
+        },
+        {
+          title: `${safeHandle} | Instagram Search`,
+          link: `https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(safeHandle)}`,
+          snippet: `Visual media and social tags for ${safeHandle}...`,
+        },
+        {
+          title: `${fullName} | Facebook Public Data`,
+          link: `https://www.facebook.com/search/top?q=${encodeURIComponent(fullName)}`,
+          snippet: `Public graph data matching ${fullName}...`,
+        },
+        {
+          title: `${safeHandle} | GitHub Repositories`,
+          link: `https://github.com/search?q=${encodeURIComponent(safeHandle)}&type=users`,
+          snippet: `Code contributions and tech footprint for ${safeHandle}...`,
+        },
       ];
 
       let results = [];
@@ -53,19 +78,30 @@ export const SearchResultsIntelligence = ({
 
       // If the endpoint is not fully implemented or returns no data, handle it gracefully
       if (results.length === 0) {
-         results = mockResults;
+        results = mockResults;
       }
 
       const result = analyzeSearchResults(results, fullName, username, 10);
       setAnalysisResult(result);
-      
     } catch (err: unknown) {
-      const safeHandle = username.split('@')[0];
+      const safeHandle = username.split("@")[0];
       // In case of any other unexpected error, still provide mock data so the demo works
       const results = [
-        { title: `${fullName} Public Profile`, link: `https://www.linkedin.com/search/results/all/?keywords=${encodeURIComponent(fullName)}`, snippet: `View the professional footprint of ${fullName} on LinkedIn...` },
-        { title: `@${safeHandle} | Twitter Search`, link: `https://twitter.com/search?q=${encodeURIComponent(safeHandle)}`, snippet: `Latest mentions and tweets from @${safeHandle}...` },
-        { title: `${safeHandle} | Instagram Search`, link: `https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(safeHandle)}`, snippet: `Visual media and social tags for ${safeHandle}...` },
+        {
+          title: `${fullName} Public Profile`,
+          link: `https://www.linkedin.com/search/results/all/?keywords=${encodeURIComponent(fullName)}`,
+          snippet: `View the professional footprint of ${fullName} on LinkedIn...`,
+        },
+        {
+          title: `@${safeHandle} | Twitter Search`,
+          link: `https://twitter.com/search?q=${encodeURIComponent(safeHandle)}`,
+          snippet: `Latest mentions and tweets from @${safeHandle}...`,
+        },
+        {
+          title: `${safeHandle} | Instagram Search`,
+          link: `https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(safeHandle)}`,
+          snippet: `Visual media and social tags for ${safeHandle}...`,
+        },
       ];
       const result = analyzeSearchResults(results, fullName, username, 10);
       setAnalysisResult(result);
@@ -125,7 +161,7 @@ export const SearchResultsIntelligence = ({
             </p>
           </div>
         </div>
-      )}  
+      )}
 
       {/* Results */}
       {analysisResult && (
@@ -176,19 +212,51 @@ export const SearchResultsIntelligence = ({
 
           {analysisResult.summary.totalResults > 0 && (
             <div className="rounded-md border border-border/70 bg-secondary/40 p-3">
-              <p className="mb-2 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">Risk Distribution</p>
+              <p className="mb-2 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
+                Risk Distribution
+              </p>
               <div className="space-y-2 text-[10px] font-mono">
                 <div>
-                  <div className="mb-1 flex items-center justify-between"><span>High</span><span>{analysisResult.summary.highRiskCount}</span></div>
-                  <div className="h-1.5 rounded bg-secondary"><div className="h-1.5 rounded bg-[hsl(var(--severity-high))]" style={{ width: `${(analysisResult.summary.highRiskCount / Math.max(analysisResult.summary.totalResults,1))*100}%` }} /></div>
+                  <div className="mb-1 flex items-center justify-between">
+                    <span>High</span>
+                    <span>{analysisResult.summary.highRiskCount}</span>
+                  </div>
+                  <div className="h-1.5 rounded bg-secondary">
+                    <div
+                      className="h-1.5 rounded bg-[hsl(var(--severity-high))]"
+                      style={{
+                        width: `${(analysisResult.summary.highRiskCount / Math.max(analysisResult.summary.totalResults, 1)) * 100}%`,
+                      }}
+                    />
+                  </div>
                 </div>
                 <div>
-                  <div className="mb-1 flex items-center justify-between"><span>Medium</span><span>{analysisResult.summary.mediumRiskCount}</span></div>
-                  <div className="h-1.5 rounded bg-secondary"><div className="h-1.5 rounded bg-[hsl(var(--severity-medium))]" style={{ width: `${(analysisResult.summary.mediumRiskCount / Math.max(analysisResult.summary.totalResults,1))*100}%` }} /></div>
+                  <div className="mb-1 flex items-center justify-between">
+                    <span>Medium</span>
+                    <span>{analysisResult.summary.mediumRiskCount}</span>
+                  </div>
+                  <div className="h-1.5 rounded bg-secondary">
+                    <div
+                      className="h-1.5 rounded bg-[hsl(var(--severity-medium))]"
+                      style={{
+                        width: `${(analysisResult.summary.mediumRiskCount / Math.max(analysisResult.summary.totalResults, 1)) * 100}%`,
+                      }}
+                    />
+                  </div>
                 </div>
                 <div>
-                  <div className="mb-1 flex items-center justify-between"><span>Low</span><span>{analysisResult.summary.lowRiskCount}</span></div>
-                  <div className="h-1.5 rounded bg-secondary"><div className="h-1.5 rounded bg-[hsl(var(--severity-low))]" style={{ width: `${(analysisResult.summary.lowRiskCount / Math.max(analysisResult.summary.totalResults,1))*100}%` }} /></div>
+                  <div className="mb-1 flex items-center justify-between">
+                    <span>Low</span>
+                    <span>{analysisResult.summary.lowRiskCount}</span>
+                  </div>
+                  <div className="h-1.5 rounded bg-secondary">
+                    <div
+                      className="h-1.5 rounded bg-[hsl(var(--severity-low))]"
+                      style={{
+                        width: `${(analysisResult.summary.lowRiskCount / Math.max(analysisResult.summary.totalResults, 1)) * 100}%`,
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -202,7 +270,8 @@ export const SearchResultsIntelligence = ({
             {analysisResult.signals.length === 0 ? (
               <div className="rounded-md border border-[hsl(var(--severity-low)/0.3)] bg-[hsl(var(--severity-low)/0.1)] p-6 text-center">
                 <p className="text-sm text-[hsl(var(--severity-low))]">
-                  Low Observed Risk. No anomalous signals detected in surface web sweep.
+                  Low Observed Risk. No anomalous signals detected in surface
+                  web sweep.
                 </p>
               </div>
             ) : (
@@ -216,7 +285,8 @@ export const SearchResultsIntelligence = ({
 
           {/* Footer */}
           <div className="text-center text-xs text-muted-foreground font-mono">
-            Analyzed at {new Date(analysisResult.timestamp).toLocaleTimeString()}
+            Analyzed at{" "}
+            {new Date(analysisResult.timestamp).toLocaleTimeString()}
           </div>
         </div>
       )}
@@ -232,4 +302,3 @@ export const SearchResultsIntelligence = ({
     </div>
   );
 };
-
