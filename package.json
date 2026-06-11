@@ -58,7 +58,7 @@
     "hls.js": "^1.6.16",
     "input-otp": "^1.4.2",
     "jspdf": "^4.2.0",
-    "jspdf-autotable": "^5.0.7",
+    "jspdf-autotable": "^5.0.8",
     "lucide-react": "^0.462.0",
     "next-themes": "^0.3.0",
     "posthog-js": "^1.384.1",
