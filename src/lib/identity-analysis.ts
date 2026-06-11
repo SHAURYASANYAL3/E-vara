@@ -89,7 +89,9 @@ export function calculateSimilarity(str1: string, str2: string): number {
   if (s1 === s2) return 1;
 
   const matrix: number[][] = Array.from({ length: s2.length + 1 }, (_, row) =>
-    Array.from({ length: s1.length + 1 }, (_, col) => (row === 0 ? col : col === 0 ? row : 0)),
+    Array.from({ length: s1.length + 1 }, (_, col) =>
+      row === 0 ? col : col === 0 ? row : 0,
+    ),
   );
 
   for (let row = 1; row <= s2.length; row += 1) {
@@ -148,7 +150,11 @@ function extractUsername(url: string): string | null {
   }
 }
 
-export function classifyResult(result: SearchResultInput, fullName: string, username: string): IdentitySignal {
+export function classifyResult(
+  result: SearchResultInput,
+  fullName: string,
+  username: string,
+): IdentitySignal {
   const platform = detectPlatform(result.link);
   const content = `${result.title} ${result.snippet}`;
   const extractedUsername = extractUsername(result.link);
@@ -166,8 +172,12 @@ export function classifyResult(result: SearchResultInput, fullName: string, user
     normalizedContent.slice(0, Math.max(normalizedUsername.length + 20, 40)),
   );
 
-  const hasFullName = containsExactMatch(normalizedContent, [normalizedFullName]);
-  const hasUsernameMention = containsExactMatch(normalizedContent, [normalizedUsername]);
+  const hasFullName = containsExactMatch(normalizedContent, [
+    normalizedFullName,
+  ]);
+  const hasUsernameMention = containsExactMatch(normalizedContent, [
+    normalizedUsername,
+  ]);
 
   let type: ResultClassification = "Not Relevant";
   let confidence = 10;
@@ -176,7 +186,9 @@ export function classifyResult(result: SearchResultInput, fullName: string, user
 
   if (
     platform &&
-    (usernameFromUrlScore >= 0.85 || (hasFullName && hasUsernameMention) || hasUsernameMention)
+    (usernameFromUrlScore >= 0.85 ||
+      (hasFullName && hasUsernameMention) ||
+      hasUsernameMention)
   ) {
     type = "Verified Platform Match";
     confidence = Math.min(100, Math.round(82 + usernameFromUrlScore * 18));
@@ -186,24 +198,39 @@ export function classifyResult(result: SearchResultInput, fullName: string, user
       platformVerified: true,
       similarityScore: Math.round(usernameFromUrlScore * 100),
     };
-  } else if (
-    hasUsernameMention ||
-    (platform && usernameFromUrlScore >= 0.6)
-  ) {
+  } else if (hasUsernameMention || (platform && usernameFromUrlScore >= 0.6)) {
     type = "Possible Identity Match";
-    confidence = Math.max(50, Math.min(79, Math.round(52 + usernameFromUrlScore * 25 + (hasFullName ? 8 : 0))));
+    confidence = Math.max(
+      50,
+      Math.min(
+        79,
+        Math.round(52 + usernameFromUrlScore * 25 + (hasFullName ? 8 : 0)),
+      ),
+    );
     reason = `Partial identity signal found on ${platform ?? "a public source"}`;
     metadata = {
       partialMatch: true,
       platformVerified: Boolean(platform),
-      similarityScore: Math.round(Math.max(usernameFromUrlScore, usernameContentScore) * 100),
+      similarityScore: Math.round(
+        Math.max(usernameFromUrlScore, usernameContentScore) * 100,
+      ),
     };
   } else if (Math.max(usernameFromUrlScore, usernameContentScore) >= 0.5) {
     type = "Username Similarity Detected";
-    confidence = Math.max(50, Math.min(79, Math.round(50 + Math.max(usernameFromUrlScore, usernameContentScore) * 25)));
+    confidence = Math.max(
+      50,
+      Math.min(
+        79,
+        Math.round(
+          50 + Math.max(usernameFromUrlScore, usernameContentScore) * 25,
+        ),
+      ),
+    );
     reason = "Username pattern is similar to monitored identity";
     metadata = {
-      similarityScore: Math.round(Math.max(usernameFromUrlScore, usernameContentScore) * 100),
+      similarityScore: Math.round(
+        Math.max(usernameFromUrlScore, usernameContentScore) * 100,
+      ),
       partialMatch: true,
       platformVerified: Boolean(platform),
     };
@@ -221,12 +248,15 @@ export function classifyResult(result: SearchResultInput, fullName: string, user
   else if (confidence >= 50) risk = "Medium Risk";
   else if (confidence >= 20) risk = "Low Risk";
 
-  const cleanHandle = username.split('@')[0];
+  const cleanHandle = username.split("@")[0];
   let imageUrl: string | undefined = undefined;
-  
-  if (platform === "Twitter") imageUrl = `https://unavatar.io/twitter/${cleanHandle}`;
-  else if (platform === "GitHub") imageUrl = `https://unavatar.io/github/${cleanHandle}`;
-  else if (platform === "Reddit") imageUrl = `https://unavatar.io/reddit/${cleanHandle}`;
+
+  if (platform === "Twitter")
+    imageUrl = `https://unavatar.io/twitter/${cleanHandle}`;
+  else if (platform === "GitHub")
+    imageUrl = `https://unavatar.io/github/${cleanHandle}`;
+  else if (platform === "Reddit")
+    imageUrl = `https://unavatar.io/reddit/${cleanHandle}`;
   else if (platform) imageUrl = `https://unavatar.io/${cleanHandle}`;
 
   return {
@@ -243,7 +273,9 @@ export function classifyResult(result: SearchResultInput, fullName: string, user
   };
 }
 
-export function deduplicateSignals(signals: IdentitySignal[]): IdentitySignal[] {
+export function deduplicateSignals(
+  signals: IdentitySignal[],
+): IdentitySignal[] {
   const seen = new Set<string>();
 
   return signals.filter((signal) => {
@@ -263,10 +295,14 @@ export function analyzeSearchResults(
   username: string,
   limit = 10,
 ): AnalysisResult {
-  const classified = results.map((result) => classifyResult(result, fullName, username));
+  const classified = results.map((result) =>
+    classifyResult(result, fullName, username),
+  );
 
   const filtered = deduplicateSignals(classified)
-    .filter((signal) => signal.type !== "Not Relevant" && signal.risk !== "Ignore")
+    .filter(
+      (signal) => signal.type !== "Not Relevant" && signal.risk !== "Ignore",
+    )
     .sort((left, right) => right.confidence - left.confidence)
     .slice(0, limit);
 
@@ -274,11 +310,18 @@ export function analyzeSearchResults(
     signals: filtered,
     summary: {
       totalResults: results.length,
-      highRiskCount: filtered.filter((signal) => signal.risk === "High Risk").length,
-      mediumRiskCount: filtered.filter((signal) => signal.risk === "Medium Risk").length,
-      lowRiskCount: filtered.filter((signal) => signal.risk === "Low Risk").length,
+      highRiskCount: filtered.filter((signal) => signal.risk === "High Risk")
+        .length,
+      mediumRiskCount: filtered.filter(
+        (signal) => signal.risk === "Medium Risk",
+      ).length,
+      lowRiskCount: filtered.filter((signal) => signal.risk === "Low Risk")
+        .length,
       averageConfidence: filtered.length
-        ? Math.round(filtered.reduce((sum, signal) => sum + signal.confidence, 0) / filtered.length)
+        ? Math.round(
+            filtered.reduce((sum, signal) => sum + signal.confidence, 0) /
+              filtered.length,
+          )
         : 0,
     },
     timestamp: new Date(),

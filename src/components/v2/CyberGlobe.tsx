@@ -5,13 +5,13 @@ import * as THREE from "three";
 
 function GlobeParticles() {
   const ref = useRef<THREE.Points>(null!);
-  
+
   const particles = useMemo(() => {
     const positions = new Float32Array(2000 * 3);
     for (let i = 0; i < 2000; i++) {
       const theta = THREE.MathUtils.randFloatSpread(360);
       const phi = THREE.MathUtils.randFloatSpread(360);
-      
+
       positions[i * 3] = 1.5 * Math.sin(theta) * Math.cos(phi);
       positions[i * 3 + 1] = 1.5 * Math.sin(theta) * Math.sin(phi);
       positions[i * 3 + 2] = 1.5 * Math.cos(theta);
