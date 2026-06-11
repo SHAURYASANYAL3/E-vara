@@ -11,7 +11,7 @@ const Hero = () => {
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[#050505]" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_40%,#007AFF15,transparent_50%)]" />
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="max-w-2xl">
@@ -22,10 +22,12 @@ const Hero = () => {
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8"
             >
               <div className="w-2 h-2 rounded-full bg-electric-blue animate-pulse" />
-              <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#007AFF]">CRISIS_RADAR_ACTIVE</span>
+              <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#007AFF]">
+                CRISIS_RADAR_ACTIVE
+              </span>
             </motion.div>
 
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
@@ -42,7 +44,9 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="text-lg lg:text-xl text-white/60 font-light max-w-lg mb-12 leading-relaxed"
             >
-              E-VARA is the early-warning radar for PR firms and high-profile executives. We detect synthetic media and coordinated smear campaigns in dark channels before they hit the mainstream.
+              E-VARA is the early-warning radar for PR firms and high-profile
+              executives. We detect synthetic media and coordinated smear
+              campaigns in dark channels before they hit the mainstream.
             </motion.p>
 
             <motion.div
@@ -76,8 +80,12 @@ const Hero = () => {
                 { label: "Early Warning Lead Time", val: "24-48h" },
               ].map((stat, i) => (
                 <div key={i}>
-                  <p className="text-2xl font-bold text-white mb-1 tracking-tighter">{stat.val}</p>
-                  <p className="text-[10px] font-mono text-white/40 uppercase tracking-widest">{stat.label}</p>
+                  <p className="text-2xl font-bold text-white mb-1 tracking-tighter">
+                    {stat.val}
+                  </p>
+                  <p className="text-[10px] font-mono text-white/40 uppercase tracking-widest">
+                    {stat.label}
+                  </p>
                 </div>
               ))}
             </motion.div>
@@ -89,7 +97,15 @@ const Hero = () => {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="relative hidden lg:block"
           >
-            <Suspense fallback={<div className="w-[500px] h-[500px] rounded-full border border-electric-blue/20 animate-pulse flex items-center justify-center"><span className="text-xs text-electric-blue font-mono uppercase">Loading Globe Engine...</span></div>}>
+            <Suspense
+              fallback={
+                <div className="w-[500px] h-[500px] rounded-full border border-electric-blue/20 animate-pulse flex items-center justify-center">
+                  <span className="text-xs text-electric-blue font-mono uppercase">
+                    Loading Globe Engine...
+                  </span>
+                </div>
+              }
+            >
               <CyberGlobe />
             </Suspense>
             {/* HUD Elements */}
@@ -100,13 +116,15 @@ const Hero = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div 
+      <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <div className="w-px h-12 bg-gradient-to-b from-electric-blue to-transparent" />
-        <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.3em]">Scroll_To_Explore</span>
+        <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.3em]">
+          Scroll_To_Explore
+        </span>
       </motion.div>
     </section>
   );

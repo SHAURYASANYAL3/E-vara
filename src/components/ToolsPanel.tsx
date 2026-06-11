@@ -1,6 +1,14 @@
-
 import { useState } from "react";
-import { Search, ExternalLink, AlertTriangle, Lock, Loader2, ShieldAlert, CheckCircle, FileText } from "lucide-react";
+import {
+  Search,
+  ExternalLink,
+  AlertTriangle,
+  Lock,
+  Loader2,
+  ShieldAlert,
+  CheckCircle,
+  FileText,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { generateExecutiveReport } from "@/lib/report-generator";
 import { sha256 } from "@/lib/crypto";
@@ -30,7 +38,8 @@ interface ScanResponse {
 
 const SEVERITY_BADGE: Record<string, string> = {
   low: "text-[hsl(var(--severity-low))] bg-[hsl(var(--severity-low)/0.15)]",
-  medium: "text-[hsl(var(--severity-medium))] bg-[hsl(var(--severity-medium)/0.15)]",
+  medium:
+    "text-[hsl(var(--severity-medium))] bg-[hsl(var(--severity-medium)/0.15)]",
   high: "text-[hsl(var(--severity-high))] bg-[hsl(var(--severity-high)/0.15)]",
 };
 
@@ -56,22 +65,23 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
       "Analyzing Dark Web Archives...",
       "Checking Global Repositories...",
       "Correlating found identity markers...",
-      "Generating Security Audit Dossier..."
+      "Generating Security Audit Dossier...",
     ];
 
     try {
       for (const step of steps) {
         setScanStep(step);
         // Minimum delay for UI feedback during the backend call
-        await new Promise(r => setTimeout(r, 600));
+        await new Promise((r) => setTimeout(r, 600));
       }
 
-      const emailToHash = identity.fullName.toLowerCase().replace(/\s/g, ".") + "@example.com";
+      const emailToHash =
+        identity.fullName.toLowerCase().replace(/\s/g, ".") + "@example.com";
       const hashedEmail = await sha256(emailToHash);
 
       const { data, error } = await supabase.functions.invoke("breach-check", {
         body: {
-          identityHash: hashedEmail
+          identityHash: hashedEmail,
         },
       });
       let scanData = data as ScanResponse | null;
@@ -79,17 +89,29 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
         // Mock offline response
         scanData = {
           results: [],
-          summary: { totalBreaches: 0, sourcesChecked: 15, highSeverity: 0, mediumSeverity: 0, lowSeverity: 0 },
-          scannedAt: new Date().toISOString()
+          summary: {
+            totalBreaches: 0,
+            sourcesChecked: 15,
+            highSeverity: 0,
+            mediumSeverity: 0,
+            lowSeverity: 0,
+          },
+          scannedAt: new Date().toISOString(),
         };
       }
       setScanResults(scanData);
     } catch (err) {
       // Catch network errors entirely and mock
       setScanResults({
-          results: [],
-          summary: { totalBreaches: 0, sourcesChecked: 15, highSeverity: 0, mediumSeverity: 0, lowSeverity: 0 },
-          scannedAt: new Date().toISOString()
+        results: [],
+        summary: {
+          totalBreaches: 0,
+          sourcesChecked: 15,
+          highSeverity: 0,
+          mediumSeverity: 0,
+          lowSeverity: 0,
+        },
+        scannedAt: new Date().toISOString(),
       });
     } finally {
       setScanning(false);
@@ -102,14 +124,21 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
       <div className="rounded-lg border border-border bg-card p-6">
         <div className="mb-4 flex items-center gap-2">
           <Search className="h-4 w-4 text-primary" />
-          <h3 className="text-sm font-mono font-semibold text-foreground uppercase tracking-wider">Reverse Image Search</h3>
+          <h3 className="text-sm font-mono font-semibold text-foreground uppercase tracking-wider">
+            Reverse Image Search
+          </h3>
         </div>
-        <p className="mb-4 text-xs text-muted-foreground font-body">Check if your images are being used elsewhere online.</p>
+        <p className="mb-4 text-xs text-muted-foreground font-body">
+          Check if your images are being used elsewhere online.
+        </p>
         <div className="space-y-2">
           {[
             { name: "Google Lens", url: "https://lens.google.com" },
             { name: "Yandex Images", url: "https://yandex.com/images" },
-            { name: "Bing Visual Search", url: "https://www.bing.com/visualsearch" },
+            {
+              name: "Bing Visual Search",
+              url: "https://www.bing.com/visualsearch",
+            },
           ].map((tool) => (
             <a
               key={tool.name}
@@ -129,7 +158,9 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
       <div className="rounded-lg border border-border bg-card p-6">
         <div className="mb-4 flex items-center gap-2">
           <AlertTriangle className="h-4 w-4 text-primary" />
-          <h3 className="text-sm font-mono font-semibold text-foreground uppercase tracking-wider">Reporting</h3>
+          <h3 className="text-sm font-mono font-semibold text-foreground uppercase tracking-wider">
+            Reporting
+          </h3>
         </div>
         <a
           href="https://cybercrime.gov.in/"
@@ -146,7 +177,9 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
       <div className="rounded-lg border border-border bg-card p-6">
         <div className="mb-4 flex items-center gap-2">
           <Lock className="h-4 w-4 text-primary" />
-          <h3 className="text-sm font-mono font-semibold text-foreground uppercase tracking-wider">Exposure Intelligence</h3>
+          <h3 className="text-sm font-mono font-semibold text-foreground uppercase tracking-wider">
+            Exposure Intelligence
+          </h3>
         </div>
         <p className="mb-4 text-xs text-muted-foreground font-body">
           Scan multiple breach databases for exposed data.
@@ -154,7 +187,9 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
 
         {!identity?.fullName ? (
           <div className="rounded-md border border-border bg-secondary px-4 py-4 text-center">
-            <p className="text-xs font-mono text-muted-foreground">Complete your identity profile to run a scan.</p>
+            <p className="text-xs font-mono text-muted-foreground">
+              Complete your identity profile to run a scan.
+            </p>
           </div>
         ) : (
           <>
@@ -166,7 +201,9 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
               {scanning ? (
                 <>
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  <span className="text-[10px] uppercase truncate">{scanStep}</span>
+                  <span className="text-[10px] uppercase truncate">
+                    {scanStep}
+                  </span>
                 </>
               ) : (
                 <>
@@ -178,7 +215,9 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
 
             {scanError && (
               <div className="mt-3 rounded-md border border-[hsl(var(--severity-high)/0.3)] bg-[hsl(var(--severity-high)/0.1)] px-3 py-2">
-                <p className="text-xs font-mono text-[hsl(var(--severity-high))]">{scanError}</p>
+                <p className="text-xs font-mono text-[hsl(var(--severity-high))]">
+                  {scanError}
+                </p>
               </div>
             )}
 
@@ -187,16 +226,28 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
                 {/* Summary */}
                 <div className="grid grid-cols-3 gap-2">
                   <div className="rounded-md border border-border bg-secondary px-2 py-2 text-center">
-                    <p className="text-lg font-mono font-bold text-foreground">{scanResults.summary?.totalBreaches || 0}</p>
-                    <p className="text-[10px] font-mono text-muted-foreground">Breaches</p>
+                    <p className="text-lg font-mono font-bold text-foreground">
+                      {scanResults.summary?.totalBreaches || 0}
+                    </p>
+                    <p className="text-[10px] font-mono text-muted-foreground">
+                      Breaches
+                    </p>
                   </div>
                   <div className="rounded-md border border-border bg-secondary px-2 py-2 text-center">
-                    <p className="text-lg font-mono font-bold text-[hsl(var(--severity-high))]">{scanResults.summary?.highSeverity || 0}</p>
-                    <p className="text-[10px] font-mono text-muted-foreground">High</p>
+                    <p className="text-lg font-mono font-bold text-[hsl(var(--severity-high))]">
+                      {scanResults.summary?.highSeverity || 0}
+                    </p>
+                    <p className="text-[10px] font-mono text-muted-foreground">
+                      High
+                    </p>
                   </div>
                   <div className="rounded-md border border-border bg-secondary px-2 py-2 text-center">
-                    <p className="text-lg font-mono font-bold text-foreground">{scanResults.summary?.sourcesChecked || 0}</p>
-                    <p className="text-[10px] font-mono text-muted-foreground">Sources</p>
+                    <p className="text-lg font-mono font-bold text-foreground">
+                      {scanResults.summary?.sourcesChecked || 0}
+                    </p>
+                    <p className="text-[10px] font-mono text-muted-foreground">
+                      Sources
+                    </p>
                   </div>
                 </div>
 
@@ -204,8 +255,12 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
                 {!scanResults.results || scanResults.results.length === 0 ? (
                   <div className="rounded-md border border-border bg-secondary px-4 py-4 text-center">
                     <CheckCircle className="mx-auto mb-2 h-5 w-5 text-[hsl(var(--severity-low))]" />
-                    <p className="text-xs font-mono text-foreground">No breaches found</p>
-                    <p className="text-[10px] font-body text-muted-foreground mt-1">Your identity was not found in any scanned databases.</p>
+                    <p className="text-xs font-mono text-foreground">
+                      No breaches found
+                    </p>
+                    <p className="text-[10px] font-body text-muted-foreground mt-1">
+                      Your identity was not found in any scanned databases.
+                    </p>
                   </div>
                 ) : (
                   <div className="max-h-[300px] space-y-2 overflow-y-auto pr-1">
@@ -215,21 +270,32 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
                         className="rounded-md border border-border bg-secondary p-3"
                       >
                         <div className="flex items-start justify-between gap-2 mb-1.5">
-                          <p className="text-xs font-mono font-semibold text-foreground">{result.breachName}</p>
-                          <span className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-mono uppercase ${SEVERITY_BADGE[result.severity]}`}>
+                          <p className="text-xs font-mono font-semibold text-foreground">
+                            {result.breachName}
+                          </p>
+                          <span
+                            className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-mono uppercase ${SEVERITY_BADGE[result.severity]}`}
+                          >
                             {result.severity}
                           </span>
                         </div>
-                        <p className="text-[10px] font-body text-muted-foreground mb-1.5">{result.description}</p>
+                        <p className="text-[10px] font-body text-muted-foreground mb-1.5">
+                          {result.description}
+                        </p>
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex flex-wrap gap-1">
-                            {result.dataTypes.map(t => (
-                              <span key={t} className="rounded bg-muted px-1.5 py-0.5 text-[9px] font-mono text-muted-foreground">
+                            {result.dataTypes.map((t) => (
+                              <span
+                                key={t}
+                                className="rounded bg-muted px-1.5 py-0.5 text-[9px] font-mono text-muted-foreground"
+                              >
                                 {t}
                               </span>
                             ))}
                           </div>
-                          <span className="text-[10px] font-mono text-muted-foreground shrink-0">{result.source}</span>
+                          <span className="text-[10px] font-mono text-muted-foreground shrink-0">
+                            {result.source}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -237,9 +303,12 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
                 )}
 
                 <p className="text-[10px] font-mono text-muted-foreground text-center">
-                  Scanned at {new Date(scanResults.scannedAt || new Date()).toLocaleString()}
+                  Scanned at{" "}
+                  {new Date(
+                    scanResults.scannedAt || new Date(),
+                  ).toLocaleString()}
                 </p>
-                
+
                 <button
                   onClick={() => generateExecutiveReport(identity, scanResults)}
                   className="w-full mt-2 flex items-center justify-center gap-2 rounded-md border border-primary/40 bg-primary/5 px-4 py-2.5 text-xs font-mono font-medium text-primary hover:bg-primary/10 transition-all shadow-[0_0_15px_rgba(var(--primary-rgb),0.1)]"

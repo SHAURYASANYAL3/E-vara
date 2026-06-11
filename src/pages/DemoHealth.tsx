@@ -18,30 +18,46 @@ export default function DemoHealth() {
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-             <div className="glass-panel p-4 rounded-lg">
-                <p className="text-[10px] uppercase font-mono text-muted-foreground">Build Version</p>
-                <p className="text-xl font-bold mt-1 text-cyan-400">RC-1.0.0</p>
-             </div>
-             <div className="glass-panel p-4 rounded-lg">
-                <p className="text-[10px] uppercase font-mono text-muted-foreground">Edge Worker Queue</p>
-                <p className="text-xl font-bold mt-1 text-emerald-400">0 pending</p>
-             </div>
-             <div className="glass-panel p-4 rounded-lg">
-                <p className="text-[10px] uppercase font-mono text-muted-foreground">Snapshot Freshness</p>
-                <p className="text-xl font-bold mt-1 text-emerald-400">Stable</p>
-             </div>
-             <div className="glass-panel p-4 rounded-lg">
-                <p className="text-[10px] uppercase font-mono text-muted-foreground">Console Errors</p>
-                <p className="text-xl font-bold mt-1 text-emerald-400">0</p>
-             </div>
-             <div className="glass-panel p-4 rounded-lg">
-                <p className="text-[10px] uppercase font-mono text-muted-foreground">Offline Fallback</p>
-                <p className="text-xl font-bold mt-1 text-emerald-400">Active</p>
-             </div>
-             <div className="glass-panel p-4 rounded-lg">
-                <p className="text-[10px] uppercase font-mono text-muted-foreground">Demo Mode</p>
-                <p className="text-xl font-bold mt-1 text-emerald-400">{import.meta.env.VITE_DEMO_MODE === 'true' ? 'ON' : 'OFF'}</p>
-             </div>
+            <div className="glass-panel p-4 rounded-lg">
+              <p className="text-[10px] uppercase font-mono text-muted-foreground">
+                Build Version
+              </p>
+              <p className="text-xl font-bold mt-1 text-cyan-400">RC-1.0.0</p>
+            </div>
+            <div className="glass-panel p-4 rounded-lg">
+              <p className="text-[10px] uppercase font-mono text-muted-foreground">
+                Edge Worker Queue
+              </p>
+              <p className="text-xl font-bold mt-1 text-emerald-400">
+                0 pending
+              </p>
+            </div>
+            <div className="glass-panel p-4 rounded-lg">
+              <p className="text-[10px] uppercase font-mono text-muted-foreground">
+                Snapshot Freshness
+              </p>
+              <p className="text-xl font-bold mt-1 text-emerald-400">Stable</p>
+            </div>
+            <div className="glass-panel p-4 rounded-lg">
+              <p className="text-[10px] uppercase font-mono text-muted-foreground">
+                Console Errors
+              </p>
+              <p className="text-xl font-bold mt-1 text-emerald-400">0</p>
+            </div>
+            <div className="glass-panel p-4 rounded-lg">
+              <p className="text-[10px] uppercase font-mono text-muted-foreground">
+                Offline Fallback
+              </p>
+              <p className="text-xl font-bold mt-1 text-emerald-400">Active</p>
+            </div>
+            <div className="glass-panel p-4 rounded-lg">
+              <p className="text-[10px] uppercase font-mono text-muted-foreground">
+                Demo Mode
+              </p>
+              <p className="text-xl font-bold mt-1 text-emerald-400">
+                {import.meta.env.VITE_DEMO_MODE === "true" ? "ON" : "OFF"}
+              </p>
+            </div>
           </div>
         </div>
       </main>
