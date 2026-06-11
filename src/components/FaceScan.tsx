@@ -21,7 +21,11 @@ const FaceScan = ({ onComplete, existingImage }: FaceScanProps) => {
     if (!video || !canvas) return null;
 
     // Ensure the video has actual frame data
-    if (video.readyState < 2 || video.videoWidth === 0 || video.videoHeight === 0) {
+    if (
+      video.readyState < 2 ||
+      video.videoWidth === 0 ||
+      video.videoHeight === 0
+    ) {
       return null;
     }
 
@@ -50,7 +54,11 @@ const FaceScan = ({ onComplete, existingImage }: FaceScanProps) => {
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } },
+        video: {
+          facingMode: "user",
+          width: { ideal: 640 },
+          height: { ideal: 480 },
+        },
       });
 
       if (videoRef.current) {
@@ -65,7 +73,7 @@ const FaceScan = ({ onComplete, existingImage }: FaceScanProps) => {
       }
     } catch (error) {
       toast.error("Camera access denied or unavailable", {
-        description: "Falling back to placeholder verification."
+        description: "Falling back to placeholder verification.",
       });
       // Camera not available — generate a styled placeholder
       const placeholderCanvas = document.createElement("canvas");
@@ -93,9 +101,13 @@ const FaceScan = ({ onComplete, existingImage }: FaceScanProps) => {
         // Corner brackets
         ctx.strokeStyle = "#38BDF8";
         ctx.lineWidth = 3;
-        const b = 20, s = 25;
+        const b = 20,
+          s = 25;
         [
-          [b, b], [320 - b - s, b], [b, 240 - b - s], [320 - b - s, 240 - b - s],
+          [b, b],
+          [320 - b - s, b],
+          [b, 240 - b - s],
+          [320 - b - s, 240 - b - s],
         ].forEach(([x, y], i) => {
           ctx.beginPath();
           const hx = i % 2 === 0 ? 1 : -1;
@@ -134,7 +146,7 @@ const FaceScan = ({ onComplete, existingImage }: FaceScanProps) => {
           setVideoReady(false);
         } else {
           toast.error("Capture Failed", {
-            description: "Unable to extract frame data from video stream."
+            description: "Unable to extract frame data from video stream.",
           });
           setScanning(false);
         }
@@ -146,7 +158,7 @@ const FaceScan = ({ onComplete, existingImage }: FaceScanProps) => {
     const timer = setTimeout(() => {
       setCountdown((c) => (c !== null ? c - 1 : null));
     }, 1000);
-    
+
     return () => clearTimeout(timer);
   }, [countdown, videoReady, scanning, captureFrame, onComplete, stopStream]);
 
@@ -221,15 +233,17 @@ const FaceScan = ({ onComplete, existingImage }: FaceScanProps) => {
         </button>
       )}
 
-
       <div className="mt-4 rounded-md border border-[hsl(48,96%,53%/0.3)] bg-[hsl(48,96%,53%/0.1)] px-3 py-2.5">
         <div className="flex gap-2">
           <span className="shrink-0 text-lg">⚠️</span>
           <div>
-            <p className="text-xs font-semibold text-[#d97706]">Face Verification Disclaimer</p>
+            <p className="text-xs font-semibold text-[#d97706]">
+              Face Verification Disclaimer
+            </p>
             <p className="mt-1 text-xs leading-relaxed text-[#b45309]">
-              Face verification is currently experimental. Real-world confidence ranges between 40–50%
-              depending on lighting, angle, and input quality.
+              Face verification is currently experimental. Real-world confidence
+              ranges between 40–50% depending on lighting, angle, and input
+              quality.
             </p>
           </div>
         </div>

@@ -1,7 +1,7 @@
-import { useThreatMonitor } from '@/hooks/useThreatMonitor';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { ShieldCheck, Loader2, AlertTriangle } from 'lucide-react';
+import { useThreatMonitor } from "@/hooks/useThreatMonitor";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { ShieldCheck, Loader2, AlertTriangle } from "lucide-react";
 
 export const ThreatMonitorList = () => {
   const { data: findings = [], isLoading: loading, error } = useThreatMonitor();
@@ -53,14 +53,22 @@ export const ThreatMonitorList = () => {
 
       <div className="grid gap-4 md:grid-cols-2">
         {findings.map((finding) => (
-          <Card key={finding.id} className="relative overflow-hidden border-l-4 border-l-destructive/50 hover:bg-accent/5 transition-colors">
+          <Card
+            key={finding.id}
+            className="relative overflow-hidden border-l-4 border-l-destructive/50 hover:bg-accent/5 transition-colors"
+          >
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start">
                 <CardTitle className="text-sm font-bold leading-tight max-w-[70%]">
                   {finding.title}
                 </CardTitle>
-                <Badge 
-                  variant={finding.severity === 'critical' || finding.severity === 'high' ? 'destructive' : 'secondary'}
+                <Badge
+                  variant={
+                    finding.severity === "critical" ||
+                    finding.severity === "high"
+                      ? "destructive"
+                      : "secondary"
+                  }
                   className="uppercase text-[10px]"
                 >
                   {finding.severity}

@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-export type ExposureMode = 'classic' | 'executive' | 'experimental';
+export type ExposureMode = "classic" | "executive" | "experimental";
 
 interface FeatureFlags {
   identityOS: boolean;
@@ -42,25 +42,25 @@ const DEFAULT_FEATURES: Record<ExposureMode, FeatureFlags> = {
     deviceTrust: true,
     timeline: true,
     explainability: true,
-  }
+  },
 };
 
 export const useFeatureFlags = create<FeatureStore>()(
   persist(
     (set) => ({
-      mode: 'classic',
+      mode: "classic",
       freezeState: false,
-      features: DEFAULT_FEATURES['classic'],
+      features: DEFAULT_FEATURES["classic"],
       setMode: (mode) => set({ mode, features: DEFAULT_FEATURES[mode] }),
       toggleFreeze: () => set((state) => ({ freezeState: !state.freezeState })),
-      toggleFeature: (feature) => set((state) => ({
-        features: { ...state.features, [feature]: !state.features[feature] }
-      })),
+      toggleFeature: (feature) =>
+        set((state) => ({
+          features: { ...state.features, [feature]: !state.features[feature] },
+        })),
       overrideFeatures: (features) => set({ features }),
     }),
     {
-      name: 'e-vara-labs-flags',
-    }
-  )
+      name: "e-vara-labs-flags",
+    },
+  ),
 );
-
