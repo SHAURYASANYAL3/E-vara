@@ -1,6 +1,6 @@
-import { useEffect, useRef, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
-import { trackEvent, log } from '@/lib/observability';
+import { useEffect, useRef, useCallback } from "react";
+import { useLocation } from "react-router-dom";
+import { trackEvent, log } from "@/lib/observability";
 
 // ─── Page View Tracking ───
 export function usePageView() {
@@ -8,9 +8,12 @@ export function usePageView() {
   const prevPath = useRef(location.pathname);
 
   useEffect(() => {
-    trackEvent('$pageview', {
+    trackEvent("$pageview", {
       path: location.pathname,
-      referrer: prevPath.current !== location.pathname ? prevPath.current : document.referrer,
+      referrer:
+        prevPath.current !== location.pathname
+          ? prevPath.current
+          : document.referrer,
       title: document.title,
       timestamp: new Date().toISOString(),
     });
@@ -27,7 +30,8 @@ export function useScrollDepth() {
     maxDepth.current = 0;
 
     const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       if (scrollHeight <= 0) return;
       const depth = Math.round((window.scrollY / scrollHeight) * 100);
 
@@ -37,7 +41,7 @@ export function useScrollDepth() {
         const milestones = [25, 50, 75, 100];
         for (const milestone of milestones) {
           if (depth >= milestone && maxDepth.current - depth < 5) {
-            trackEvent('scroll_depth', {
+            trackEvent("scroll_depth", {
               path: location.pathname,
               depth: milestone,
             });
@@ -46,20 +50,20 @@ export function useScrollDepth() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
 }
 
 // ─── Feature Usage Tracking ───
 export function useFeatureTrack() {
   return useCallback((feature: string, metadata?: Record<string, unknown>) => {
-    trackEvent('feature_used', {
+    trackEvent("feature_used", {
       feature,
       path: window.location.pathname,
       ...metadata,
     });
-    log('debug', `[Analytics] Feature used: ${feature}`, metadata);
+    log("debug", `[Analytics] Feature used: ${feature}`, metadata);
   }, []);
 }
 
@@ -70,14 +74,14 @@ export function useSessionDuration() {
   useEffect(() => {
     const handleBeforeUnload = () => {
       const duration = Math.round((Date.now() - sessionStart.current) / 1000);
-      trackEvent('session_end', {
+      trackEvent("session_end", {
         duration_seconds: duration,
-        pages_visited: performance.getEntriesByType('navigation').length,
+        pages_visited: performance.getEntriesByType("navigation").length,
       });
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 }
 
@@ -86,28 +90,32 @@ export function useClickTracking() {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const trackable = target.closest('[data-track]');
+      const trackable = target.closest("[data-track]");
       if (trackable) {
-        trackEvent('click', {
-          element: trackable.getAttribute('data-track'),
+        trackEvent("click", {
+          element: trackable.getAttribute("data-track"),
           text: trackable.textContent?.slice(0, 100),
           path: window.location.pathname,
         });
       }
     };
 
-    document.addEventListener('click', handleClick, { passive: true });
-    return () => document.removeEventListener('click', handleClick);
+    document.addEventListener("click", handleClick, { passive: true });
+    return () => document.removeEventListener("click", handleClick);
   }, []);
 }
 
 // ─── Conversion Tracking ───
-export const trackConversion = (type: string, value?: number, metadata?: Record<string, unknown>) => {
-  trackEvent('conversion', {
+export const trackConversion = (
+  type: string,
+  value?: number,
+  metadata?: Record<string, unknown>,
+) => {
+  trackEvent("conversion", {
     type,
     value,
     path: window.location.pathname,
     ...metadata,
   });
-  log('info', `[Analytics] Conversion: ${type}`, { value, ...metadata });
+  log("info", `[Analytics] Conversion: ${type}`, { value, ...metadata });
 };
