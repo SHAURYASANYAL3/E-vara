@@ -31,12 +31,12 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
     if (!user) return;
 
     setLoading(true);
-    
+
     try {
       const safeEmail = email.trim().toLowerCase();
       const safeUsername = username.trim();
       const safeFullName = fullName.trim();
-      
+
       if (!safeEmail) {
         toast.error("Validation Error", { description: "Email is required." });
         setLoading(false);
@@ -44,29 +44,35 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
       }
 
       // 1. Cryptographic Integrity: Hash before persistence
-      const identity_hash = await sha256(safeEmail); 
+      const identity_hash = await sha256(safeEmail);
 
       // 2. Real Persistence via useAuth (which now enforces hashing and Postgres RLS)
-      await saveIdentity({ email: safeEmail, username: safeUsername, fullName: safeFullName, faceImage: null });
+      await saveIdentity({
+        email: safeEmail,
+        username: safeUsername,
+        fullName: safeFullName,
+        faceImage: null,
+      });
 
       // 3. Trigger Intelligence Engine
       let scanResult = null;
       let scanError = null;
       try {
         const hashedEmail = await sha256(safeEmail);
-        
+
         // Simulation Guard
-        const simulationMode = localStorage.getItem('e_vara_simulation_mode') === 'true';
+        const simulationMode =
+          localStorage.getItem("e_vara_simulation_mode") === "true";
         if (simulationMode) {
           // Fake network delay
-          await new Promise(r => setTimeout(r, 1500));
+          await new Promise((r) => setTimeout(r, 1500));
           scanResult = { count: 5, status: "NODE_SIMULATED" };
         } else {
-          const res = await supabase.functions.invoke('breach-check', {
-            body: { 
-              identityHash: hashedEmail, 
-              userId: user.id
-            }
+          const res = await supabase.functions.invoke("breach-check", {
+            body: {
+              identityHash: hashedEmail,
+              userId: user.id,
+            },
           });
           scanResult = res.data;
           scanError = res.error;
@@ -78,7 +84,8 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
       let resultCount = 0;
       if (scanError) {
         toast.error("Intelligence Engine Offline", {
-          description: "Could not complete the breach scan. Ensure APIs are connected."
+          description:
+            "Could not complete the breach scan. Ensure APIs are connected.",
         });
         return; // Early return to prevent false success
       } else {
@@ -86,20 +93,26 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
       }
 
       toast.success("Identity monitoring active", {
-        description: `Analysis complete. Found ${resultCount} data markers.`
+        description: `Analysis complete. Found ${resultCount} data markers.`,
       });
 
-      if (onSave) onSave({ email: safeEmail, username: safeUsername, fullName: safeFullName });
+      if (onSave)
+        onSave({
+          email: safeEmail,
+          username: safeUsername,
+          fullName: safeFullName,
+        });
     } catch (err) {
       toast.error("Operational Error", {
-        description: "Failed to establish identity link. Check network status."
+        description: "Failed to establish identity link. Check network status.",
       });
     } finally {
       setLoading(false);
     }
   };
 
-  const inputClass = "w-full rounded-md border border-border bg-secondary/50 px-3 py-2 text-sm font-mono text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all";
+  const inputClass =
+    "w-full rounded-md border border-border bg-secondary/50 px-3 py-2 text-sm font-mono text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all";
 
   return (
     <div className="rounded-xl border border-border/50 bg-card/30 p-6 backdrop-blur-xl shadow-2xl relative overflow-hidden">
@@ -112,50 +125,60 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
           <User className="h-5 w-5 text-primary" />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-foreground uppercase tracking-[0.2em]">Identity Intelligence</h3>
-          <p className="text-[10px] text-muted-foreground uppercase">Configure monitoring targets</p>
+          <h3 className="text-sm font-bold text-foreground uppercase tracking-[0.2em]">
+            Identity Intelligence
+          </h3>
+          <p className="text-[10px] text-muted-foreground uppercase">
+            Configure monitoring targets
+          </p>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
         <div className="space-y-1.5">
-          <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Primary Email Target</label>
-          <input 
+          <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">
+            Primary Email Target
+          </label>
+          <input
             type="email"
-            value={email} 
-            onChange={e => setEmail(e.target.value)} 
-            required 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
             maxLength={255}
-            className={inputClass} 
-            placeholder="target@example.com" 
+            className={inputClass}
+            placeholder="target@example.com"
           />
         </div>
-        
+
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Public Handle</label>
-            <input 
-              value={username} 
-              onChange={e => setUsername(e.target.value)} 
+            <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">
+              Public Handle
+            </label>
+            <input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               maxLength={100}
-              className={inputClass} 
-              placeholder="@handle" 
+              className={inputClass}
+              placeholder="@handle"
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Legal Designation</label>
-            <input 
-              value={fullName} 
-              onChange={e => setFullName(e.target.value)} 
+            <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">
+              Legal Designation
+            </label>
+            <input
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               maxLength={100}
-              className={inputClass} 
-              placeholder="John Doe" 
+              className={inputClass}
+              placeholder="John Doe"
             />
           </div>
         </div>
 
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={loading}
           className="w-full mt-4 flex items-center justify-center gap-2 rounded-md bg-primary py-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-foreground hover:bg-primary/90 transition-all disabled:opacity-50"
         >
