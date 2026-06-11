@@ -1,8 +1,15 @@
-import { log, trackEvent } from './observability';
-import { toast } from 'sonner';
+import { log, trackEvent } from "./observability";
+import { toast } from "sonner";
 
 // ─── Recovery State Machine ───
-type RecoveryPhase = 'detect' | 'contain' | 'retry' | 'fallback' | 'repair' | 'validate' | 'recover';
+type RecoveryPhase =
+  | "detect"
+  | "contain"
+  | "retry"
+  | "fallback"
+  | "repair"
+  | "validate"
+  | "recover";
 
 interface RecoveryContext {
   subsystem: string;
@@ -25,15 +32,20 @@ export async function selfHeal<T>(
     retryDelay?: number;
     cacheKey?: string;
     silentFallback?: boolean;
-  } = {}
+  } = {},
 ): Promise<T> {
-  const { maxRetries = 3, retryDelay = 1000, cacheKey, silentFallback = false } = options;
+  const {
+    maxRetries = 3,
+    retryDelay = 1000,
+    cacheKey,
+    silentFallback = false,
+  } = options;
 
   // DETECT
   const ctx: RecoveryContext = {
     subsystem,
     error: null,
-    phase: 'detect',
+    phase: "detect",
     retryCount: 0,
     maxRetries,
     startedAt: Date.now(),
@@ -47,62 +59,73 @@ export async function selfHeal<T>(
       if (cached) {
         const parsed = JSON.parse(cached);
         if (parsed._healExpiry && parsed._healExpiry > Date.now()) {
-          log('debug', `[Self-Heal] Serving cached result for ${subsystem}`);
+          log("debug", `[Self-Heal] Serving cached result for ${subsystem}`);
           activeRecoveries.delete(subsystem);
           return parsed.data as T;
         }
       }
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
   }
 
   // RETRY loop
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    ctx.phase = attempt === 0 ? 'detect' : 'retry';
+    ctx.phase = attempt === 0 ? "detect" : "retry";
     ctx.retryCount = attempt;
 
     try {
       const result = await operation();
 
       // VALIDATE
-      ctx.phase = 'validate';
+      ctx.phase = "validate";
       if (result === undefined || result === null) {
         throw new Error(`${subsystem} returned empty result`);
       }
 
       // RECOVER - cache success
-      ctx.phase = 'recover';
+      ctx.phase = "recover";
       if (cacheKey) {
         try {
-          localStorage.setItem(cacheKey, JSON.stringify({
-            data: result,
-            _healExpiry: Date.now() + 5 * 60 * 1000, // 5 min cache
-          }));
-        } catch { /* storage full */ }
+          localStorage.setItem(
+            cacheKey,
+            JSON.stringify({
+              data: result,
+              _healExpiry: Date.now() + 5 * 60 * 1000, // 5 min cache
+            }),
+          );
+        } catch {
+          /* storage full */
+        }
       }
 
       activeRecoveries.delete(subsystem);
       return result;
     } catch (error) {
       ctx.error = error;
-      ctx.phase = 'contain';
-      log('warn', `[Self-Heal] ${subsystem} attempt ${attempt + 1}/${maxRetries + 1} failed`, {
-        error: error instanceof Error ? error.message : String(error),
-      });
+      ctx.phase = "contain";
+      log(
+        "warn",
+        `[Self-Heal] ${subsystem} attempt ${attempt + 1}/${maxRetries + 1} failed`,
+        {
+          error: error instanceof Error ? error.message : String(error),
+        },
+      );
 
       if (attempt < maxRetries) {
         const backoff = retryDelay * Math.pow(2, attempt);
-        await new Promise(resolve => setTimeout(resolve, backoff));
+        await new Promise((resolve) => setTimeout(resolve, backoff));
       }
     }
   }
 
   // FALLBACK
-  ctx.phase = 'fallback';
-  log('warn', `[Self-Heal] ${subsystem} exhausted retries, engaging fallback`);
-  trackEvent('self_heal_fallback', { subsystem, retryCount: ctx.retryCount });
+  ctx.phase = "fallback";
+  log("warn", `[Self-Heal] ${subsystem} exhausted retries, engaging fallback`);
+  trackEvent("self_heal_fallback", { subsystem, retryCount: ctx.retryCount });
 
   if (!silentFallback) {
-    toast.info('Reconnecting Intelligence Layer…', {
+    toast.info("Reconnecting Intelligence Layer…", {
       description: `${subsystem} is recovering. Simulated data active.`,
       duration: 4000,
     });
@@ -114,18 +137,26 @@ export async function selfHeal<T>(
     // REPAIR - cache fallback
     if (cacheKey && fallbackResult != null) {
       try {
-        localStorage.setItem(cacheKey, JSON.stringify({
-          data: fallbackResult,
-          _healExpiry: Date.now() + 2 * 60 * 1000, // 2 min for fallback
-        }));
-      } catch { /* storage full */ }
+        localStorage.setItem(
+          cacheKey,
+          JSON.stringify({
+            data: fallbackResult,
+            _healExpiry: Date.now() + 2 * 60 * 1000, // 2 min for fallback
+          }),
+        );
+      } catch {
+        /* storage full */
+      }
     }
 
     activeRecoveries.delete(subsystem);
     return fallbackResult;
   } catch (fallbackError) {
-    log('error', `[Self-Heal] ${subsystem} fallback also failed`, {
-      error: fallbackError instanceof Error ? fallbackError.message : String(fallbackError),
+    log("error", `[Self-Heal] ${subsystem} fallback also failed`, {
+      error:
+        fallbackError instanceof Error
+          ? fallbackError.message
+          : String(fallbackError),
     });
     activeRecoveries.delete(subsystem);
     throw fallbackError;
@@ -136,23 +167,25 @@ export async function selfHeal<T>(
 let isOnline = navigator.onLine;
 const onlineListeners = new Set<(online: boolean) => void>();
 
-window.addEventListener('online', () => {
+window.addEventListener("online", () => {
   isOnline = true;
-  log('info', '[Self-Heal] Network restored');
-  trackEvent('network_restored');
-  toast.success('Connection Restored', { description: 'Intelligence systems back online.' });
-  onlineListeners.forEach(fn => fn(true));
+  log("info", "[Self-Heal] Network restored");
+  trackEvent("network_restored");
+  toast.success("Connection Restored", {
+    description: "Intelligence systems back online.",
+  });
+  onlineListeners.forEach((fn) => fn(true));
 });
 
-window.addEventListener('offline', () => {
+window.addEventListener("offline", () => {
   isOnline = false;
-  log('warn', '[Self-Heal] Network lost');
-  trackEvent('network_lost');
-  toast.warning('Reconnecting Intelligence Layer…', {
-    description: 'Operating in local simulation mode.',
+  log("warn", "[Self-Heal] Network lost");
+  trackEvent("network_lost");
+  toast.warning("Reconnecting Intelligence Layer…", {
+    description: "Operating in local simulation mode.",
     duration: 8000,
   });
-  onlineListeners.forEach(fn => fn(false));
+  onlineListeners.forEach((fn) => fn(false));
 });
 
 export const getNetworkStatus = () => isOnline;
@@ -165,11 +198,16 @@ export const onNetworkChange = (listener: (online: boolean) => void) => {
 // ─── Form Autosave ───
 export const autosaveForm = (formId: string, data: Record<string, unknown>) => {
   try {
-    localStorage.setItem(`e_vara_autosave_${formId}`, JSON.stringify({
-      data,
-      savedAt: Date.now(),
-    }));
-  } catch { /* storage full */ }
+    localStorage.setItem(
+      `e_vara_autosave_${formId}`,
+      JSON.stringify({
+        data,
+        savedAt: Date.now(),
+      }),
+    );
+  } catch {
+    /* storage full */
+  }
 };
 
 export const restoreForm = (formId: string): Record<string, unknown> | null => {
@@ -194,21 +232,26 @@ export const preserveSession = () => {
     const sessionData = {
       path: window.location.pathname,
       timestamp: Date.now(),
-      demoAuth: localStorage.getItem('e_vara_demo_auth'),
+      demoAuth: localStorage.getItem("e_vara_demo_auth"),
     };
-    sessionStorage.setItem('e_vara_preserved_session', JSON.stringify(sessionData));
-  } catch { /* ignore */ }
+    sessionStorage.setItem(
+      "e_vara_preserved_session",
+      JSON.stringify(sessionData),
+    );
+  } catch {
+    /* ignore */
+  }
 };
 
 export const restoreSession = (): string | null => {
   try {
-    const saved = sessionStorage.getItem('e_vara_preserved_session');
+    const saved = sessionStorage.getItem("e_vara_preserved_session");
     if (!saved) return null;
     const parsed = JSON.parse(saved);
     // Only restore if within last 10 minutes
     if (parsed.timestamp && Date.now() - parsed.timestamp < 10 * 60 * 1000) {
       if (parsed.demoAuth) {
-        localStorage.setItem('e_vara_demo_auth', parsed.demoAuth);
+        localStorage.setItem("e_vara_demo_auth", parsed.demoAuth);
       }
       return parsed.path;
     }
@@ -222,17 +265,21 @@ export const restoreSession = (): string | null => {
 export const getSystemHealth = () => {
   return {
     online: isOnline,
-    activeRecoveries: Array.from(activeRecoveries.entries()).map(([key, ctx]) => ({
-      subsystem: key,
-      phase: ctx.phase,
-      retryCount: ctx.retryCount,
-      elapsed: Date.now() - ctx.startedAt,
-    })),
-    simulationMode: localStorage.getItem('e_vara_simulation_mode') === 'true',
+    activeRecoveries: Array.from(activeRecoveries.entries()).map(
+      ([key, ctx]) => ({
+        subsystem: key,
+        phase: ctx.phase,
+        retryCount: ctx.retryCount,
+        elapsed: Date.now() - ctx.startedAt,
+      }),
+    ),
+    simulationMode: localStorage.getItem("e_vara_simulation_mode") === "true",
     logEntries: (() => {
       try {
-        return JSON.parse(localStorage.getItem('e_vara_logs') || '[]').length;
-      } catch { return 0; }
+        return JSON.parse(localStorage.getItem("e_vara_logs") || "[]").length;
+      } catch {
+        return 0;
+      }
     })(),
   };
 };

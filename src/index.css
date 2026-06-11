@@ -38,7 +38,8 @@
 
 @layer components {
   .hud-grid {
-    background-image: linear-gradient(rgba(0, 122, 255, 0.05) 1px, transparent 1px),
+    background-image:
+      linear-gradient(rgba(0, 122, 255, 0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0, 122, 255, 0.05) 1px, transparent 1px);
     background-size: 50px 50px;
   }
@@ -54,11 +55,24 @@
   }
   body {
     @apply bg-[#050505] text-foreground font-body antialiased;
-    background-image: 
-      radial-gradient(circle at 50% -20%, rgba(0, 122, 255, 0.15), transparent 50%),
-      radial-gradient(circle at 100% 100%, rgba(138, 43, 226, 0.05), transparent 40%);
+    background-image:
+      radial-gradient(
+        circle at 50% -20%,
+        rgba(0, 122, 255, 0.15),
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 100% 100%,
+        rgba(138, 43, 226, 0.05),
+        transparent 40%
+      );
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-mono font-bold tracking-tight;
   }
 }
@@ -71,9 +85,9 @@
   background: #050608;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1C1C1E;
+  background: #1c1c1e;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #007AFF;
+  background: #007aff;
 }

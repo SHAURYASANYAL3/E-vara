@@ -32,17 +32,31 @@ const FuturisticSplash = ({ onDone }: FuturisticSplashProps) => {
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-[#0a0f1c] text-[#00e5ff]">
-      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "linear-gradient(rgba(0,229,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.15) 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(0,229,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.15) 1px, transparent 1px)",
+          backgroundSize: "36px 36px",
+        }}
+      />
       <div className="scan-lines absolute inset-0" />
 
       <div className="relative flex h-full flex-col items-center justify-center px-4">
         <div className="hud-ring relative mb-8 h-36 w-36 rounded-full border border-cyan-300/40">
           <div className="logo-pulse absolute inset-[28%] rounded-full border border-cyan-300/40" />
         </div>
-        <h1 className="mb-3 text-4xl font-semibold tracking-[0.25em]">E-VARA</h1>
-        <p className="mb-6 min-h-6 text-sm tracking-[0.12em] text-cyan-100">{stages[stage]}</p>
+        <h1 className="mb-3 text-4xl font-semibold tracking-[0.25em]">
+          E-VARA
+        </h1>
+        <p className="mb-6 min-h-6 text-sm tracking-[0.12em] text-cyan-100">
+          {stages[stage]}
+        </p>
         <div className="h-1 w-full max-w-sm overflow-hidden rounded bg-cyan-950">
-          <div className="h-full bg-[#00e5ff] shadow-[0_0_14px_#00e5ff] transition-all duration-700" style={{ width: `${progress}%` }} />
+          <div
+            className="h-full bg-[#00e5ff] shadow-[0_0_14px_#00e5ff] transition-all duration-700"
+            style={{ width: `${progress}%` }}
+          />
         </div>
       </div>
       <style>{`

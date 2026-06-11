@@ -1,30 +1,52 @@
-import { useState } from 'react';
-import { MessageSquare, Bug, Lightbulb, Send, X, ChevronUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { trackEvent, log } from '@/lib/observability';
-import { toast } from 'sonner';
-import { checkRateLimit } from '@/lib/security';
+import { useState } from "react";
+import {
+  MessageSquare,
+  Bug,
+  Lightbulb,
+  Send,
+  X,
+  ChevronUp,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { trackEvent, log } from "@/lib/observability";
+import { toast } from "sonner";
+import { checkRateLimit } from "@/lib/security";
 
-type FeedbackType = 'feedback' | 'bug' | 'feature';
+type FeedbackType = "feedback" | "bug" | "feature";
 
 const FeedbackWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [type, setType] = useState<FeedbackType>('feedback');
-  const [message, setMessage] = useState('');
-  const [email, setEmail] = useState('');
+  const [type, setType] = useState<FeedbackType>("feedback");
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const feedbackTypes = [
-    { key: 'feedback' as const, label: 'Feedback', icon: <MessageSquare className="h-3.5 w-3.5" />, color: 'text-primary' },
-    { key: 'bug' as const, label: 'Bug Report', icon: <Bug className="h-3.5 w-3.5" />, color: 'text-alert' },
-    { key: 'feature' as const, label: 'Feature Request', icon: <Lightbulb className="h-3.5 w-3.5" />, color: 'text-warning' },
+    {
+      key: "feedback" as const,
+      label: "Feedback",
+      icon: <MessageSquare className="h-3.5 w-3.5" />,
+      color: "text-primary",
+    },
+    {
+      key: "bug" as const,
+      label: "Bug Report",
+      icon: <Bug className="h-3.5 w-3.5" />,
+      color: "text-alert",
+    },
+    {
+      key: "feature" as const,
+      label: "Feature Request",
+      icon: <Lightbulb className="h-3.5 w-3.5" />,
+      color: "text-warning",
+    },
   ];
 
   const handleSubmit = async () => {
     if (!message.trim()) return;
 
-    if (!checkRateLimit('feedback_submit', 3, 60000)) {
-      toast.error('Rate limit exceeded. Please try again later.');
+    if (!checkRateLimit("feedback_submit", 3, 60000)) {
+      toast.error("Rate limit exceeded. Please try again later.");
       return;
     }
 
@@ -41,23 +63,25 @@ const FeedbackWidget = () => {
       };
 
       // Store in local feedback queue
-      const queue = JSON.parse(localStorage.getItem('e_vara_feedback_queue') || '[]');
+      const queue = JSON.parse(
+        localStorage.getItem("e_vara_feedback_queue") || "[]",
+      );
       queue.push(feedbackEntry);
-      localStorage.setItem('e_vara_feedback_queue', JSON.stringify(queue));
+      localStorage.setItem("e_vara_feedback_queue", JSON.stringify(queue));
 
       // Track the event
-      trackEvent('feedback_submitted', feedbackEntry);
-      log('info', `[Feedback] ${type} submitted`, feedbackEntry);
+      trackEvent("feedback_submitted", feedbackEntry);
+      log("info", `[Feedback] ${type} submitted`, feedbackEntry);
 
-      toast.success('Feedback Received', {
-        description: 'Thank you for helping improve E-VARA.',
+      toast.success("Feedback Received", {
+        description: "Thank you for helping improve E-VARA.",
       });
 
-      setMessage('');
-      setEmail('');
+      setMessage("");
+      setEmail("");
       setIsOpen(false);
     } catch (error) {
-      toast.error('Failed to submit feedback. Please try again.');
+      toast.error("Failed to submit feedback. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -68,8 +92,13 @@ const FeedbackWidget = () => {
       {isOpen && (
         <div className="mb-3 w-80 bg-[#0c0f16]/95 border border-white/10 rounded-2xl shadow-2xl backdrop-blur-xl overflow-hidden animate-fade-in">
           <div className="flex items-center justify-between p-4 border-b border-white/5">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-foreground">Send Feedback</h3>
-            <button onClick={() => setIsOpen(false)} className="text-muted-foreground hover:text-foreground transition">
+            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-foreground">
+              Send Feedback
+            </h3>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-muted-foreground hover:text-foreground transition"
+            >
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -83,8 +112,8 @@ const FeedbackWidget = () => {
                   onClick={() => setType(ft.key)}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-[9px] font-bold uppercase tracking-wider transition-all border ${
                     type === ft.key
-                      ? 'bg-primary/10 border-primary/40 text-primary'
-                      : 'border-white/5 text-muted-foreground hover:border-white/20'
+                      ? "bg-primary/10 border-primary/40 text-primary"
+                      : "border-white/5 text-muted-foreground hover:border-white/20"
                   }`}
                 >
                   {ft.icon}
@@ -97,7 +126,13 @@ const FeedbackWidget = () => {
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder={type === 'bug' ? 'Describe the issue...' : type === 'feature' ? 'Describe your idea...' : 'Your feedback...'}
+              placeholder={
+                type === "bug"
+                  ? "Describe the issue..."
+                  : type === "feature"
+                    ? "Describe your idea..."
+                    : "Your feedback..."
+              }
               className="w-full h-24 bg-black/40 border border-white/10 rounded-lg p-3 text-xs font-body text-foreground placeholder:text-muted-foreground/50 resize-none focus:outline-none focus:border-primary/40 transition"
               maxLength={1000}
             />
@@ -118,7 +153,7 @@ const FeedbackWidget = () => {
               className="w-full bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary text-[10px] uppercase tracking-widest font-bold"
             >
               <Send className="h-3 w-3 mr-2" />
-              {submitting ? 'Sending...' : 'Submit'}
+              {submitting ? "Sending..." : "Submit"}
             </Button>
           </div>
         </div>
@@ -134,7 +169,9 @@ const FeedbackWidget = () => {
         ) : (
           <>
             <MessageSquare className="h-4 w-4" />
-            <span className="text-[10px] font-bold uppercase tracking-widest">Feedback</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest">
+              Feedback
+            </span>
           </>
         )}
       </button>
