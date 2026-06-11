@@ -10,7 +10,9 @@ export interface GitHubEvent {
   // other fields omitted for brevity
 }
 
-export async function fetchPublicEvents(username: string): Promise<GitHubEvent[]> {
+export async function fetchPublicEvents(
+  username: string,
+): Promise<GitHubEvent[]> {
   const url = `https://api.github.com/users/${encodeURIComponent(username)}/events/public`;
   const resp = await fetch(url, {
     headers: {

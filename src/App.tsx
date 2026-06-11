@@ -32,14 +32,22 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import FeedbackWidget from "@/components/FeedbackWidget";
 import Index from "./pages/Index";
 import Labs from "./pages/Labs";
-import { usePageView, useScrollDepth, useSessionDuration, useClickTracking } from "@/hooks/useAnalytics";
+import {
+  usePageView,
+  useScrollDepth,
+  useSessionDuration,
+  useClickTracking,
+} from "@/hooks/useAnalytics";
 import { QueryCache, MutationCache } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
-      console.warn(`[Self-Healing Query Failover] ${query.queryKey.join(":")}:`, error);
+      console.warn(
+        `[Self-Healing Query Failover] ${query.queryKey.join(":")}:`,
+        error,
+      );
     },
   }),
   mutationCache: new MutationCache({
@@ -53,7 +61,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 3,
-      retryDelay: (attemptIndex) => Math.min(1000 * Math.pow(2, attemptIndex), 10000),
+      retryDelay: (attemptIndex) =>
+        Math.min(1000 * Math.pow(2, attemptIndex), 10000),
       refetchOnWindowFocus: false,
     },
   },
@@ -67,7 +76,13 @@ interface ProtectedRouteProps {
   requireActiveBilling?: boolean;
 }
 
-const ProtectedRoute = ({ children, user, profile, profileError, requireActiveBilling = false }: ProtectedRouteProps) => {
+const ProtectedRoute = ({
+  children,
+  user,
+  profile,
+  profileError,
+  requireActiveBilling = false,
+}: ProtectedRouteProps) => {
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
@@ -77,7 +92,7 @@ const ProtectedRoute = ({ children, user, profile, profileError, requireActiveBi
     return <Navigate to="/auth" replace />;
   }
 
-  if (requireActiveBilling && profile?.billing_status !== 'active') {
+  if (requireActiveBilling && profile?.billing_status !== "active") {
     return <Navigate to="/billing" replace />;
   }
 
@@ -101,77 +116,106 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <AnalyticsProvider>
-      <Suspense fallback={<CyberDashboardLoader />}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/solutions" element={<SolutionsPage />} />
-          <Route path="/billing" element={<BillingPage />} />
-          <Route path="/support" element={<SupportPage />} />
-          <Route path="/contribution" element={<Contribution />} />
-          <Route path="/demo-health" element={<DemoHealth />} />
-          <Route path="/threat-detection" element={<ThreatDetectionPage />} />
-          <Route path="/resources" element={<ResourcesPage />} />
-          <Route path="/docs" element={<DocsPage />} />
-          <Route path="/book-demo" element={<BookDemo />} />
-          <Route path="/legal" element={<LegalProtocol />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/cookies" element={<CookieNotice />} />
-          <Route path="/trust-center" element={<TrustCenter />} />
-          <Route path="/" element={<Index />} />
-          <Route path="/labs" element={<Labs />} />
-          
-          {/* Protected Routes */}
-          <Route 
-            path="/client-portal" 
-            element={
-              <ProtectedRoute user={user} profile={profile} profileError={profileError} requireActiveBilling={true}>
-                <ClientPortal />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/identity-records" 
-            element={
-              <ProtectedRoute user={user} profile={profile} profileError={profileError} requireActiveBilling={true}>
-                <IdentityRecords />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/billing" 
-            element={
-              <ProtectedRoute user={user} profile={profile} profileError={profileError}>
-                <BillingPage />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/support" 
-            element={
-              <ProtectedRoute user={user} profile={profile} profileError={profileError}>
-                <SupportPage />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute user={user} profile={profile} profileError={profileError} requireActiveBilling={true}>
-                <Dashboard onLogout={logout} />
-              </ProtectedRoute>
-            } 
-          />
+        <Suspense fallback={<CyberDashboardLoader />}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/solutions" element={<SolutionsPage />} />
+            <Route path="/billing" element={<BillingPage />} />
+            <Route path="/support" element={<SupportPage />} />
+            <Route path="/contribution" element={<Contribution />} />
+            <Route path="/demo-health" element={<DemoHealth />} />
+            <Route path="/threat-detection" element={<ThreatDetectionPage />} />
+            <Route path="/resources" element={<ResourcesPage />} />
+            <Route path="/docs" element={<DocsPage />} />
+            <Route path="/book-demo" element={<BookDemo />} />
+            <Route path="/legal" element={<LegalProtocol />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/cookies" element={<CookieNotice />} />
+            <Route path="/trust-center" element={<TrustCenter />} />
+            <Route path="/" element={<Index />} />
+            <Route path="/labs" element={<Labs />} />
 
-          {/* Auth Route */}
-          <Route 
-            path="/auth" 
-            element={user ? <Navigate to="/dashboard" /> : <AuthPage onAuth={() => {}} />} 
-          />
+            {/* Protected Routes */}
+            <Route
+              path="/client-portal"
+              element={
+                <ProtectedRoute
+                  user={user}
+                  profile={profile}
+                  profileError={profileError}
+                  requireActiveBilling={true}
+                >
+                  <ClientPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/identity-records"
+              element={
+                <ProtectedRoute
+                  user={user}
+                  profile={profile}
+                  profileError={profileError}
+                  requireActiveBilling={true}
+                >
+                  <IdentityRecords />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/billing"
+              element={
+                <ProtectedRoute
+                  user={user}
+                  profile={profile}
+                  profileError={profileError}
+                >
+                  <BillingPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/support"
+              element={
+                <ProtectedRoute
+                  user={user}
+                  profile={profile}
+                  profileError={profileError}
+                >
+                  <SupportPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute
+                  user={user}
+                  profile={profile}
+                  profileError={profileError}
+                  requireActiveBilling={true}
+                >
+                  <Dashboard onLogout={logout} />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+            {/* Auth Route */}
+            <Route
+              path="/auth"
+              element={
+                user ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <AuthPage onAuth={() => {}} />
+                )
+              }
+            />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </AnalyticsProvider>
     </BrowserRouter>
   );

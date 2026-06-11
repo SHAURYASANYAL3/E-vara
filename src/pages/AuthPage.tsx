@@ -53,9 +53,12 @@ const AuthPage = ({ onAuth }: AuthPageProps) => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#050608] px-4 font-mono">
       <div className="absolute inset-0 hud-grid opacity-5 pointer-events-none" />
-      
+
       <div className="w-full max-w-md relative z-10">
-        <Link to="/" className="inline-flex items-center gap-2 text-[10px] uppercase font-bold text-muted-foreground hover:text-primary mb-8 transition-colors">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-[10px] uppercase font-bold text-muted-foreground hover:text-primary mb-8 transition-colors"
+        >
           <ArrowLeft className="h-3 w-3" /> Back to Grid
         </Link>
 
@@ -64,21 +67,27 @@ const AuthPage = ({ onAuth }: AuthPageProps) => {
             <div className="p-2 bg-primary rounded-lg security-orange-glow">
               <Shield className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-2xl font-black text-foreground tracking-tighter uppercase">E-Vara</h1>
+            <h1 className="text-2xl font-black text-foreground tracking-tighter uppercase">
+              E-Vara
+            </h1>
           </div>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-[0.4em]">Establishing Secure Session</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-[0.4em]">
+            Establishing Secure Session
+          </p>
         </div>
 
         <div className="rounded-[24px] border border-white/10 bg-[#11141B] p-8 md:p-10 shadow-2xl relative overflow-hidden">
           <div className="absolute inset-0 hud-grid opacity-[0.03] pointer-events-none" />
-          
+
           <h2 className="mb-8 text-xl font-bold text-foreground uppercase tracking-tight relative z-10">
             {mode === "login" ? "Identity_Verify" : "Register_Protocol"}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
             <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Email_Designation</label>
+              <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">
+                Email_Designation
+              </label>
               <input
                 type="email"
                 value={email}
@@ -91,7 +100,9 @@ const AuthPage = ({ onAuth }: AuthPageProps) => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Access_Key</label>
+              <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">
+                Access_Key
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -102,7 +113,11 @@ const AuthPage = ({ onAuth }: AuthPageProps) => {
                   placeholder="••••••••"
                   maxLength={128}
                 />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary">
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary"
+                >
                   <Eye className="h-4 w-4" />
                 </button>
               </div>
@@ -110,7 +125,9 @@ const AuthPage = ({ onAuth }: AuthPageProps) => {
 
             {mode === "register" && (
               <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Confirm_Access_Key</label>
+                <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">
+                  Confirm_Access_Key
+                </label>
                 <input
                   type="password"
                   value={confirmPassword}
@@ -136,19 +153,26 @@ const AuthPage = ({ onAuth }: AuthPageProps) => {
             >
               {loading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Processing...
                 </>
+              ) : mode === "login" ? (
+                "Initialize_Link"
               ) : (
-                mode === "login" ? "Initialize_Link" : "Establish_Protocol"
+                "Establish_Protocol"
               )}
             </button>
           </form>
 
           <p className="mt-8 text-center text-[10px] text-muted-foreground uppercase tracking-widest">
-            {mode === "login" ? "No account designation?" : "Identity already verified?"}{" "}
+            {mode === "login"
+              ? "No account designation?"
+              : "Identity already verified?"}{" "}
             <button
-              onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(""); }}
+              onClick={() => {
+                setMode(mode === "login" ? "register" : "login");
+                setError("");
+              }}
               className="text-primary hover:underline font-bold"
             >
               {mode === "login" ? "[Register]" : "[Sign_In]"}

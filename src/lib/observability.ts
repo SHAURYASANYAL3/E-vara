@@ -1,17 +1,17 @@
 import * as Sentry from "@sentry/react";
-import posthog from 'posthog-js';
+import posthog from "posthog-js";
 
 export const initObservability = () => {
   // PostHog Init
   if (import.meta.env.VITE_POSTHOG_KEY) {
     posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
-      api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com',
+      api_host: import.meta.env.VITE_POSTHOG_HOST || "https://us.i.posthog.com",
       autocapture: true,
       capture_pageview: false, // handled by usePageView hook for accurate SPA routing
       capture_pageleave: true,
       session_recording: {
         maskAllInputs: true,
-        maskTextSelector: '[data-mask]',
+        maskTextSelector: "[data-mask]",
       },
     });
   }
@@ -30,24 +30,30 @@ export const initObservability = () => {
       replaysOnErrorSampleRate: 1.0,
       enableLogs: true,
       environment: import.meta.env.MODE,
-      release: `e-vara@${import.meta.env.VITE_APP_VERSION || '0.0.0'}`,
+      release: `e-vara@${import.meta.env.VITE_APP_VERSION || "0.0.0"}`,
     });
   }
 };
 
 // Centralized event tracking
-export const trackEvent = (eventName: string, properties?: Record<string, unknown>) => {
+export const trackEvent = (
+  eventName: string,
+  properties?: Record<string, unknown>,
+) => {
   try {
     if (import.meta.env.VITE_POSTHOG_KEY) {
       posthog.capture(eventName, properties);
     }
   } catch (e) {
-    console.warn('[Observability] Event capture failed:', e);
+    console.warn("[Observability] Event capture failed:", e);
   }
 };
 
 // Identify user for PostHog
-export const identifyUser = (userId: string, traits?: Record<string, unknown>) => {
+export const identifyUser = (
+  userId: string,
+  traits?: Record<string, unknown>,
+) => {
   try {
     if (import.meta.env.VITE_POSTHOG_KEY) {
       posthog.identify(userId, traits);
@@ -56,7 +62,7 @@ export const identifyUser = (userId: string, traits?: Record<string, unknown>) =
       Sentry.setUser({ id: userId, ...traits });
     }
   } catch (e) {
-    console.warn('[Observability] User identify failed:', e);
+    console.warn("[Observability] User identify failed:", e);
   }
 };
 
@@ -66,14 +72,18 @@ export const resetTracking = () => {
     posthog.reset();
     Sentry.setUser(null);
   } catch (e) {
-    console.warn('[Observability] Tracking reset failed:', e);
+    console.warn("[Observability] Tracking reset failed:", e);
   }
 };
 
 // Structured logging
-export type LogLevel = 'info' | 'warn' | 'error' | 'debug';
+export type LogLevel = "info" | "warn" | "error" | "debug";
 
-export const log = (level: LogLevel, message: string, context?: Record<string, unknown>) => {
+export const log = (
+  level: LogLevel,
+  message: string,
+  context?: Record<string, unknown>,
+) => {
   const entry = {
     timestamp: new Date().toISOString(),
     level,
@@ -82,19 +92,19 @@ export const log = (level: LogLevel, message: string, context?: Record<string, u
   };
 
   switch (level) {
-    case 'error':
+    case "error":
       console.error(`[E-VARA] ${message}`, context);
       if (import.meta.env.VITE_SENTRY_DSN) {
-        Sentry.captureMessage(message, { level: 'error', extra: context });
+        Sentry.captureMessage(message, { level: "error", extra: context });
       }
       break;
-    case 'warn':
+    case "warn":
       console.warn(`[E-VARA] ${message}`, context);
       break;
-    case 'info':
+    case "info":
       console.info(`[E-VARA] ${message}`, context);
       break;
-    case 'debug':
+    case "debug":
       if (!import.meta.env.PROD) {
         console.debug(`[E-VARA] ${message}`, context);
       }
@@ -103,10 +113,12 @@ export const log = (level: LogLevel, message: string, context?: Record<string, u
 
   // Store in a rotating local log buffer for searchable events
   try {
-    const logs = JSON.parse(localStorage.getItem('e_vara_logs') || '[]');
+    const logs = JSON.parse(localStorage.getItem("e_vara_logs") || "[]");
     logs.push(entry);
     // Keep last 500 entries
     if (logs.length > 500) logs.splice(0, logs.length - 500);
-    localStorage.setItem('e_vara_logs', JSON.stringify(logs));
-  } catch (e) { /* storage full, ignore */ }
+    localStorage.setItem("e_vara_logs", JSON.stringify(logs));
+  } catch (e) {
+    /* storage full, ignore */
+  }
 };

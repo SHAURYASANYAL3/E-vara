@@ -47,7 +47,9 @@ export const GitHubEventsCard = ({ username }: Props) => {
       {error && <p className="text-xs text-red-500">Error: {error}</p>}
 
       {!loading && !error && events.length === 0 && (
-        <p className="text-xs text-muted-foreground">No recent public activity.</p>
+        <p className="text-xs text-muted-foreground">
+          No recent public activity.
+        </p>
       )}
 
       <ul className="space-y-2 text-xs">
@@ -65,7 +67,9 @@ export const GitHubEventsCard = ({ username }: Props) => {
                 {ev.repo.name}
               </a>
             </div>
-            <p className="ml-5 text-muted-foreground">{new Date(ev.created_at).toLocaleString()}</p>
+            <p className="ml-5 text-muted-foreground">
+              {new Date(ev.created_at).toLocaleString()}
+            </p>
           </li>
         ))}
       </ul>

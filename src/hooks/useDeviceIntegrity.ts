@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface DeviceIntegrityScore {
   score: number;
@@ -26,11 +26,12 @@ export const useDeviceIntegrity = () => {
       // 1. Check WebAuthn / Passkey Support
       if (window.PublicKeyCredential) {
         try {
-          const available = await window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+          const available =
+            await window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
           if (available) {
             currentScore += 30;
             passkeySupported = true;
-            factors.push('Hardware Authenticator Available');
+            factors.push("Hardware Authenticator Available");
           }
         } catch (e) {
           // Ignore
@@ -40,22 +41,22 @@ export const useDeviceIntegrity = () => {
       // 2. Browser Environment Checks (Basic heuristic for isolation)
       if (window.isSecureContext) {
         currentScore += 10;
-        factors.push('Secure Context (HTTPS)');
+        factors.push("Secure Context (HTTPS)");
       }
 
       // 3. Hardware Concurrency / Memory (Rough heuristic to detect basic VMs/headless)
       if (navigator.hardwareConcurrency && navigator.hardwareConcurrency >= 4) {
         currentScore += 10;
-        factors.push('Standard Hardware Signature');
+        factors.push("Standard Hardware Signature");
       } else {
-        factors.push('Suspicious Hardware Allocation');
+        factors.push("Suspicious Hardware Allocation");
       }
 
       setIntegrity({
         score: Math.min(100, currentScore),
         factors,
         passkeySupported,
-        secureEnclave
+        secureEnclave,
       });
     };
 
@@ -64,4 +65,3 @@ export const useDeviceIntegrity = () => {
 
   return integrity;
 };
-

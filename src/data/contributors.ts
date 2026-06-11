@@ -1,5 +1,17 @@
-export type ContributionLevel = 'Explorer' | 'Contributor' | 'Core Contributor' | 'Maintainer' | 'Founding Contributor';
-export type BadgeType = 'Frontend' | 'Backend' | 'Security' | 'Design' | 'Research' | 'Product' | 'NSOC\'26';
+export type ContributionLevel =
+  | "Explorer"
+  | "Contributor"
+  | "Core Contributor"
+  | "Maintainer"
+  | "Founding Contributor";
+export type BadgeType =
+  | "Frontend"
+  | "Backend"
+  | "Security"
+  | "Design"
+  | "Research"
+  | "Product"
+  | "NSOC'26";
 
 export interface Contributor {
   id: string;
@@ -32,7 +44,7 @@ export const contributors: Contributor[] = [
     is_founding: true,
     level: "Founding Contributor",
     badges: ["Backend", "Security", "Product", "NSOC'26"],
-    joinedAt: "Jan 2024"
+    joinedAt: "Jan 2024",
   },
   {
     id: "c_002",
@@ -47,6 +59,6 @@ export const contributors: Contributor[] = [
     is_founding: true,
     level: "Core Contributor",
     badges: ["Frontend", "Design", "NSOC'26"],
-    joinedAt: "Feb 2024"
-  }
+    joinedAt: "Feb 2024",
+  },
 ];

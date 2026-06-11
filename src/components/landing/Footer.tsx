@@ -10,30 +10,107 @@ const Footer = () => (
             <div className="p-2 bg-primary rounded-lg">
               <Shield className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-black tracking-tight uppercase font-mono">E-VARA</span>
+            <span className="text-xl font-black tracking-tight uppercase font-mono">
+              E-VARA
+            </span>
           </div>
           <p className="text-muted-foreground max-w-sm font-body leading-relaxed">
-            Autonomous identity intelligence and threat containment for the modern executive. Built in the grid, verified by the source.
+            Autonomous identity intelligence and threat containment for the
+            modern executive. Built in the grid, verified by the source.
           </p>
         </div>
         <div>
-          <h4 className="font-bold uppercase tracking-widest text-xs mb-6">Core Systems</h4>
+          <h4 className="font-bold uppercase tracking-widest text-xs mb-6">
+            Core Systems
+          </h4>
           <ul className="space-y-4 text-sm text-muted-foreground font-mono uppercase tracking-tighter">
-            <li><Link to="/client-portal" className="hover:text-primary transition-colors">Client Portal</Link></li>
-            <li><Link to="/dashboard" className="hover:text-primary transition-colors">Neural Net Scan</Link></li>
-            <li><Link to="/identity-records" className="hover:text-primary transition-colors">Identity Engine</Link></li>
-            <li><Link to="/client-portal" className="hover:text-primary transition-colors">Threat Surface</Link></li>
-            <li><Link to="/support" className="hover:text-primary transition-colors">API Keys</Link></li>
+            <li>
+              <Link
+                to="/client-portal"
+                className="hover:text-primary transition-colors"
+              >
+                Client Portal
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/dashboard"
+                className="hover:text-primary transition-colors"
+              >
+                Neural Net Scan
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/identity-records"
+                className="hover:text-primary transition-colors"
+              >
+                Identity Engine
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/client-portal"
+                className="hover:text-primary transition-colors"
+              >
+                Threat Surface
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/support"
+                className="hover:text-primary transition-colors"
+              >
+                API Keys
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
-          <h4 className="font-bold uppercase tracking-widest text-xs mb-6">Legal Protocol</h4>
+          <h4 className="font-bold uppercase tracking-widest text-xs mb-6">
+            Legal Protocol
+          </h4>
           <ul className="space-y-4 text-sm text-muted-foreground font-mono uppercase tracking-tighter">
-            <li><Link to="/legal#data-privacy" className="hover:text-primary transition-colors">Data Privacy</Link></li>
-            <li><Link to="/trust-center" className="hover:text-primary transition-colors">Trust Center</Link></li>
-            <li><Link to="/legal#terms" className="hover:text-primary transition-colors">Terms of Use</Link></li>
-            <li><Link to="/legal#ethics" className="hover:text-primary transition-colors">Security Ethics</Link></li>
-            <li><Link to="/legal" className="hover:text-primary transition-colors">Compliance</Link></li>
+            <li>
+              <Link
+                to="/legal#data-privacy"
+                className="hover:text-primary transition-colors"
+              >
+                Data Privacy
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/trust-center"
+                className="hover:text-primary transition-colors"
+              >
+                Trust Center
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/legal#terms"
+                className="hover:text-primary transition-colors"
+              >
+                Terms of Use
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/legal#ethics"
+                className="hover:text-primary transition-colors"
+              >
+                Security Ethics
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/legal"
+                className="hover:text-primary transition-colors"
+              >
+                Compliance
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
