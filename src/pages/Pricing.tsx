@@ -45,8 +45,7 @@ const PricingPage = () => {
           </h1>
           <p className="text-muted-foreground font-body text-lg">
             We do not sell software. We sell absolute digital awareness. Fully
-            managed exposure, OSINT, and synthetic media monitoring for
-            high-value targets.
+            managed exposure, OSINT, physical travel-risk intel, and home-network security for founders, family offices, and executives.
           </p>
         </div>
 
@@ -121,13 +120,14 @@ const PricingPage = () => {
 
             <div className="space-y-4 mb-10 flex-grow">
               {[
-                "Monitor up to 5 Clients",
+                "Family & Spouse Protection (Up to 5 Clients)",
+                "Executive Impersonation Takedowns",
+                "Personal Data Broker Removal",
+                "Automated Deepfake & Synthetic Media Detection",
+                "Travel-Risk Intelligence & Alerts",
+                "Home-Network Security Assessments for CEOs",
                 "24/7 Telegram & Dark Forum Crawling",
-                "Automated Synthetic Audio/Video Detection",
-                "Instant SMS/Email Early Warnings",
                 "Human-Verified Signal (Zero False Positives)",
-                "Weekly Analyst Reports",
-                "Dashboard Access for PR Team",
               ].map((feature, j) => (
                 <div key={j} className="flex items-center gap-3">
                   <div className="h-5 w-5 rounded-full flex items-center justify-center border border-[#007AFF]/30 bg-[#007AFF]/10">

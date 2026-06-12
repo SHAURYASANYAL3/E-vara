@@ -1,0 +1,35 @@
+name: Update Contributors Wall
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight UTC
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-contributors:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Update Contributors
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/update-contributors.js
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/contributors.ts
+          # Only commit if there are changes
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-update contributor wall" && git push)

@@ -34,6 +34,36 @@
 
     --radius: 1.5rem;
   }
+
+  .high-contrast {
+    --primary: 212 100% 70%;
+    --muted-foreground: 240 5% 80%;
+    color: #ffffff;
+  }
+  .high-contrast .text-cyan-400,
+  .high-contrast .text-cyan-300,
+  .high-contrast .text-cyan-200,
+  .high-contrast .text-cyan-100 {
+    color: #ffffff !important;
+  }
+  .high-contrast .text-slate-400,
+  .high-contrast .text-slate-500 {
+    color: #d1d5db !important;
+  }
+
+  @media (prefers-contrast: more) {
+    :root {
+      --primary: 212 100% 70%;
+      --muted-foreground: 240 5% 80%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-pulse,
+    .scanline {
+      animation: none !important;
+    }
+  }
 }
 
 @layer components {

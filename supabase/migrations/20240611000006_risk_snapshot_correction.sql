@@ -20,7 +20,7 @@ CREATE POLICY "System can insert risk snapshots" ON public.risk_snapshots FOR IN
 
 -- 3. Throttle Identity Events
 CREATE OR REPLACE FUNCTION public.log_identity_event(p_user_id UUID, p_event_type TEXT, p_metadata JSONB)
-RETURNS void AS \$\$
+RETURNS void AS $$
 DECLARE
     v_recent_event_id UUID;
 BEGIN
@@ -42,9 +42,8 @@ BEGIN
         VALUES (p_user_id, p_event_type, p_metadata);
     END IF;
 END;
-\$\$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Remove the old trigger that was overly aggressive
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 DROP FUNCTION IF EXISTS public.log_identity_event();
-

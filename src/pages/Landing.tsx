@@ -22,6 +22,12 @@ const PremiumNavbar = () => (
       </Link>
       <div className="hidden md:flex items-center gap-8">
         <Link
+          to="/executive-protection"
+          className="text-[10px] font-mono font-bold uppercase tracking-widest text-white/60 hover:text-[#007AFF] transition-colors"
+        >
+          Executive Protection
+        </Link>
+        <Link
           to="/solutions"
           className="text-[10px] font-mono font-bold uppercase tracking-widest text-white/60 hover:text-[#007AFF] transition-colors"
         >
@@ -249,6 +255,14 @@ const LandingPage = () => {
             <ul className="space-y-4">
               <li>
                 <Link
+                  to="/executive-protection"
+                  className="text-sm text-white/60 hover:text-white transition-colors"
+                >
+                  Executive Protection
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/solutions"
                   className="text-sm text-white/60 hover:text-white transition-colors"
                 >
@@ -261,6 +275,14 @@ const LandingPage = () => {
                   className="text-sm text-white/60 hover:text-white transition-colors"
                 >
                   Pricing
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/vs-competitors"
+                  className="text-sm text-white/60 hover:text-white transition-colors"
+                >
+                  Vs Competitors
                 </Link>
               </li>
               <li>

@@ -66,11 +66,15 @@ export async function runResilient<T>(
     }
   }
 
-  toast.error("Network Error", {
-    description:
-      "Could not fetch latest data from the server. Running in degraded mode.",
-    duration: 5000,
-  });
+  if (import.meta.env.VITE_DEMO_MODE !== "true") {
+    toast.error("Network Error", {
+      description:
+        "Could not fetch latest data from the server. Running in degraded mode.",
+      duration: 5000,
+    });
+  } else {
+    console.warn("Network Error (Supabase unlinked). Running in degraded mode.");
+  }
 
   return emptyFallback;
 }

@@ -53,6 +53,8 @@ const ScanStep = ({
   done: boolean;
 }) => (
   <div
+    role="listitem"
+    aria-current={active ? "step" : undefined}
     className={`rounded-md border px-3 py-2 text-xs tracking-wide ${active ? "border-cyan-400 text-cyan-200 shadow-[0_0_18px_rgba(0,229,255,0.25)]" : done ? "border-cyan-800/70 text-cyan-400" : "border-slate-700 text-slate-400"}`}
   >
     {step}
@@ -115,8 +117,8 @@ export default function FuturisticThreatConsole({
   const ThreatIcon = threatMeta[threatLevel].icon;
 
   return (
-    <section className="space-y-4 rounded-2xl border border-cyan-500/20 bg-[#0a0f1c] p-4">
-      <div className="grid gap-3 md:grid-cols-2">
+    <section aria-label="Threat Console" className="space-y-4 rounded-2xl border border-cyan-500/20 bg-[#0a0f1c] p-4">
+      <div role="status" aria-live="polite" aria-label="Scan progress" className="grid gap-3 md:grid-cols-2">
         {scanStages.map((s, i) => (
           <ScanStep
             key={s}
@@ -144,6 +146,7 @@ export default function FuturisticThreatConsole({
           <div className="rounded-xl border border-cyan-500/20 bg-slate-900/40 p-4">
             <div className="flex items-center gap-3">
               <ThreatIcon
+                aria-hidden="true"
                 className={`h-5 w-5 ${threatMeta[threatLevel].tone}`}
               />
               <p className="text-sm text-slate-100">

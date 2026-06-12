@@ -22,16 +22,44 @@ export const AIChatAssistant = () => {
     [open],
   );
 
-  const ask = (question: string) => {
-    setMessages((prev) => [...prev, { role: "user", text: question }]);
+  const ask = async (questionText: string) => {
+    if (!questionText.trim()) return;
+
+    const newMessages = [...messages, { role: "user" as const, text: questionText }];
+    setMessages(newMessages);
     setTyping(true);
-    const reply =
-      RESPONSES[question] ||
-      "I can provide a focused risk summary based on your monitoring telemetry.";
-    setTimeout(() => {
+
+    try {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are E-Vara, an AI cybersecurity assistant for the E-VARA website. You must ONLY answer questions related to cybersecurity. Provide only legal and ethical advice. If any question is regarding the E-VARA website or platform, think twice and provide an accurate answer based on the fact that E-VARA is an Enterprise Identity Defense & Intelligence OS providing autonomous identity defense, real-time threat monitoring, and executive security auditing. If asked something illegal or unrelated to cybersecurity, politely decline to answer."
+            },
+            ...newMessages.map(m => ({ role: m.role, content: m.text }))
+          ]
+        })
+      });
+
+      if (!response.ok) throw new Error("API Error");
+      
+      const data = await response.json();
+      const reply = data.choices[0].message.content;
+      
       setMessages((prev) => [...prev, { role: "assistant", text: reply }]);
+    } catch (e) {
+      console.error(e);
+      setMessages((prev) => [...prev, { role: "assistant", text: "Error connecting to E-Vara Intelligence Core." }]);
+    } finally {
       setTyping(false);
-    }, 900);
+    }
   };
 
   useEffect(() => {
@@ -78,7 +106,7 @@ export const AIChatAssistant = () => {
               </div>
             )}
           </div>
-          <div className="mt-3 flex flex-wrap gap-1.5">
+          <div className="mt-3 flex flex-wrap gap-1.5 mb-3">
             {PRESETS.map((preset) => (
               <button
                 disabled={typing}
@@ -90,6 +118,31 @@ export const AIChatAssistant = () => {
               </button>
             ))}
           </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const input = e.currentTarget.elements.namedItem("chatInput") as HTMLInputElement;
+              if (input && input.value) {
+                ask(input.value);
+                input.value = "";
+              }
+            }}
+            className="flex gap-2"
+          >
+            <input
+              name="chatInput"
+              autoComplete="off"
+              placeholder="Ask E-Vara..."
+              className="flex-1 rounded-md border border-primary/30 bg-secondary/50 px-2 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:outline-none"
+            />
+            <button
+              type="submit"
+              disabled={typing}
+              className="rounded-md bg-primary/20 px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/30 disabled:opacity-50 border border-primary/30"
+            >
+              Send
+            </button>
+          </form>
         </div>
       )}
       <button

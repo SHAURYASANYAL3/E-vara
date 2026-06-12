@@ -1,0 +1,79 @@
+name: PR Label Automation
+
+on:
+  pull_request_review:
+    types: [submitted]
+  issue_comment:
+    types: [created]
+
+jobs:
+  label_pr:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Apply PR Labels Based on Review or Comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const eventName = context.eventName;
+            const payload = context.payload;
+            let body = "";
+            let prNumber = null;
+            let reviewState = "";
+
+            if (eventName === 'pull_request_review') {
+              body = payload.review.body ? payload.review.body.toLowerCase() : "";
+              prNumber = payload.pull_request.number;
+              reviewState = payload.review.state; 
+            } else if (eventName === 'issue_comment' && payload.issue.pull_request) {
+              body = payload.comment.body ? payload.comment.body.toLowerCase() : "";
+              prNumber = payload.issue.number;
+            }
+
+            if (!prNumber) return;
+
+            // Determine which label to add
+            let labelToAdd = null;
+            if (body.includes("ready to merge") || reviewState === 'approved') {
+              labelToAdd = "Ready to Merge";
+            } else if (body.includes("do not merge yet")) {
+              labelToAdd = "Do Not Merge Yet";
+            } else if (body.includes("needs minor changes") || body.includes("needs minor change") || body.includes("minor changes needed")) {
+              labelToAdd = "Needs Minor Changes";
+            } else if (reviewState === 'changes_requested') {
+              labelToAdd = "Do Not Merge Yet";
+            }
+
+            if (!labelToAdd) return;
+
+            const labelsToRemove = ["Ready to Merge", "Do Not Merge Yet", "Needs Minor Changes"].filter(l => l !== labelToAdd);
+
+            // Add the new label
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                labels: [labelToAdd]
+              });
+              console.log(`Added label: ${labelToAdd}`);
+            } catch (err) {
+              console.error(`Error adding label: ${err}`);
+            }
+
+            // Remove old conflicting labels
+            for (const label of labelsToRemove) {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  name: label
+                });
+                console.log(`Removed label: ${label}`);
+              } catch (err) {
+                // Ignore if the label wasn't there
+              }
+            }

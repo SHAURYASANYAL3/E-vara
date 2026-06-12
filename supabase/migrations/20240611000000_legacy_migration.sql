@@ -1,0 +1,2 @@
+-- Dummy file to satisfy Supabase CLI for the old migration version 20240611
+-- which was already recorded in the remote database before we renamed the duplicates.

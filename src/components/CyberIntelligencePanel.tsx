@@ -231,21 +231,44 @@ const CyberIntelligencePanel = ({
     timeoutsRef.current.push(endT);
   };
 
-  const askQuestion = (type: "exposure" | "reduce") => {
-    const question =
-      type === "exposure"
-        ? "Where am I most exposed?"
-        : "How can I reduce my risk?";
-    setChatMessages((prev) => [...prev, { role: "user", text: question }]);
+  const askQuestion = async (questionText: string) => {
+    if (!questionText.trim()) return;
+
+    const newMessages = [...chatMessages, { role: "user" as const, text: questionText }];
+    setChatMessages(newMessages);
     setTyping(true);
-    const t = window.setTimeout(() => {
+
+    try {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are E-Vara, an AI cybersecurity assistant for the E-VARA website. You must ONLY answer questions related to cybersecurity. Provide only legal and ethical advice. If any question is regarding the E-VARA website or platform, think twice and provide an accurate answer based on the fact that E-VARA is an Enterprise Identity Defense & Intelligence OS providing autonomous identity defense, real-time threat monitoring, and executive security auditing. If asked something illegal or unrelated to cybersecurity, politely decline to answer."
+            },
+            ...newMessages.map(m => ({ role: m.role, content: m.text }))
+          ]
+        })
+      });
+
+      if (!response.ok) throw new Error("API Error");
+      
+      const data = await response.json();
+      const reply = data.choices[0].message.content;
+      
+      setChatMessages((prev) => [...prev, { role: "assistant", text: reply }]);
+    } catch (e) {
+      console.error(e);
+      setChatMessages((prev) => [...prev, { role: "assistant", text: "Error connecting to E-Vara Intelligence Core." }]);
+    } finally {
       setTyping(false);
-      setChatMessages((prev) => [
-        ...prev,
-        { role: "assistant", text: CHAT_RESPONSES[type] },
-      ]);
-    }, 950);
-    timeoutsRef.current.push(t);
+    }
   };
 
   return (
@@ -351,6 +374,8 @@ const CyberIntelligencePanel = ({
                 >
                   <button
                     onClick={() => setExpandedEvent(open ? null : event.id)}
+                    aria-expanded={open}
+                    aria-controls={`event-detail-${event.id}`}
                     className="flex w-full items-center justify-between gap-3 text-left"
                   >
                     <div>
@@ -371,7 +396,7 @@ const CyberIntelligencePanel = ({
                     )}
                   </button>
                   {open && (
-                    <p className="mt-2 text-xs text-muted-foreground">
+                    <p id={`event-detail-${event.id}`} className="mt-2 text-xs text-muted-foreground">
                       {event.detail}
                     </p>
                   )}
@@ -393,6 +418,8 @@ const CyberIntelligencePanel = ({
               <button
                 key={node.id}
                 onClick={() => setSelectedNode(node)}
+                aria-pressed={selectedNode?.id === node.id}
+                aria-label={`${node.label} exposure ${node.exposure}%`}
                 className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full px-2 py-1 text-[10px] font-mono transition-all ${
                   selectedNode?.id === node.id
                     ? "bg-primary/30 shadow-[0_0_22px_hsl(var(--primary)/0.65)]"
@@ -403,9 +430,7 @@ const CyberIntelligencePanel = ({
                   top: `${node.y}%`,
                   border: `1px solid hsl(var(--severity-${node.exposure > 65 ? "high" : node.exposure > 45 ? "medium" : "low"}) / 0.8)`,
                 }}
-              >
-                {node.label}
-              </button>
+              />
             ))}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/80 bg-primary/20 px-3 py-1 text-xs font-semibold shadow-[0_0_28px_hsl(var(--primary)/0.55)]">
               {username || fullName}
@@ -431,6 +456,8 @@ const CyberIntelligencePanel = ({
             <button
               disabled={simulating}
               onClick={runSimulation}
+              aria-label="Run attack simulation"
+              aria-busy={simulating}
               className="neon-button rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground disabled:opacity-50"
             >
               Simulate Attack
@@ -477,7 +504,7 @@ const CyberIntelligencePanel = ({
               Ask E-Vara
             </h4>
           </div>
-          <div className="mb-3 flex-1 space-y-2 overflow-y-auto pr-1">
+          <div role="feed" aria-label="Chat messages" className="mb-3 flex-1 space-y-2 overflow-y-auto pr-1">
             {chatMessages.map((message, idx) => (
               <div
                 key={`${message.role}-${idx}`}
@@ -492,20 +519,31 @@ const CyberIntelligencePanel = ({
               </p>
             )}
           </div>
-          <div className="grid gap-2">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const input = e.currentTarget.elements.namedItem("chatInput") as HTMLInputElement;
+              if (input && input.value) {
+                askQuestion(input.value);
+                input.value = "";
+              }
+            }}
+            className="flex gap-2"
+          >
+            <input
+              name="chatInput"
+              autoComplete="off"
+              placeholder="Ask a security question..."
+              className="flex-1 rounded-md border border-primary/30 bg-secondary px-2 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+            />
             <button
-              onClick={() => askQuestion("exposure")}
-              className="neon-button rounded-md border border-primary/30 bg-secondary px-2 py-2 text-xs"
+              type="submit"
+              disabled={typing}
+              className="neon-button rounded-md border border-primary/30 bg-primary/20 px-3 py-2 text-xs text-primary hover:bg-primary/30 disabled:opacity-50"
             >
-              Where am I most exposed?
+              Send
             </button>
-            <button
-              onClick={() => askQuestion("reduce")}
-              className="neon-button rounded-md border border-primary/30 bg-secondary px-2 py-2 text-xs"
-            >
-              How can I reduce my risk?
-            </button>
-          </div>
+          </form>
         </aside>
       </div>
 

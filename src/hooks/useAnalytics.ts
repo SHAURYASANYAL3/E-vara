@@ -69,10 +69,12 @@ export function useFeatureTrack() {
 
 // ─── Session Duration Tracking ───
 export function useSessionDuration() {
-  const sessionStart = useRef(Date.now());
+  const sessionStart = useRef<number>(0);
 
   useEffect(() => {
+    sessionStart.current = Date.now();
     const handleBeforeUnload = () => {
+      if (sessionStart.current === 0) return;
       const duration = Math.round((Date.now() - sessionStart.current) / 1000);
       trackEvent("session_end", {
         duration_seconds: duration,

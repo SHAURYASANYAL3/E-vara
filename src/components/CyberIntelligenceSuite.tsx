@@ -184,26 +184,46 @@ export default function CyberIntelligenceSuite({
     "Attacker confirms identity through leaked credential overlap",
   ];
 
-  const askAssistant = (question: string) => {
-    const lower = question.toLowerCase();
-    setChatMessages((prev) => [
-      ...prev,
-      { from: "user", text: question },
-      { from: "assistant", text: "Analyzing..." },
-    ]);
-    const t = window.setTimeout(() => {
-      setChatMessages((prev) => {
-        const next = [...prev];
-        next[next.length - 1] = {
-          from: "assistant",
-          text: lower.includes("reduce")
-            ? "Prioritize unique emails per platform, lock down public profiles, and enable MFA on high-risk nodes first."
-            : "Your highest exposure currently clusters around Instagram, Twitter/X, and reused identity tokens from older breach data.",
-        };
-        return next;
+  const [typing, setTyping] = useState(false);
+
+  const askAssistant = async (questionText: string) => {
+    if (!questionText.trim()) return;
+
+    const newMessages = [...chatMessages, { from: "user", text: questionText }];
+    setChatMessages(newMessages);
+    setTyping(true);
+
+    try {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are E-Vara, an AI cybersecurity assistant for the E-VARA website. You must ONLY answer questions related to cybersecurity. Provide only legal and ethical advice. If any question is regarding the E-VARA website or platform, think twice and provide an accurate answer based on the fact that E-VARA is an Enterprise Identity Defense & Intelligence OS providing autonomous identity defense, real-time threat monitoring, and executive security auditing. If asked something illegal or unrelated to cybersecurity, politely decline to answer."
+            },
+            ...newMessages.map(m => ({ role: m.from === "user" ? "user" : "assistant", content: m.text }))
+          ]
+        })
       });
-    }, 900);
-    timeoutsRef.current.push(t);
+
+      if (!response.ok) throw new Error("API Error");
+      
+      const data = await response.json();
+      const reply = data.choices[0].message.content;
+      
+      setChatMessages((prev) => [...prev, { from: "assistant", text: reply }]);
+    } catch (e) {
+      console.error(e);
+      setChatMessages((prev) => [...prev, { from: "assistant", text: "Error connecting to E-Vara Intelligence Core." }]);
+    } finally {
+      setTyping(false);
+    }
   };
 
   const runSimulation = () => {
@@ -518,21 +538,37 @@ export default function CyberIntelligenceSuite({
                 {msg.text}
               </div>
             ))}
+            {typing && (
+              <div className="rounded-md px-2.5 py-2 text-xs bg-secondary/45 text-muted-foreground animate-pulse">
+                E-Vara is typing...
+              </div>
+            )}
           </div>
-          <div className="mt-3 grid grid-cols-1 gap-2">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const input = e.currentTarget.elements.namedItem("chatInput") as HTMLInputElement;
+              if (input && input.value) {
+                askAssistant(input.value);
+                input.value = "";
+              }
+            }}
+            className="mt-3 flex gap-2"
+          >
+            <input
+              name="chatInput"
+              autoComplete="off"
+              placeholder="Ask E-Vara..."
+              className="flex-1 rounded-md border border-border/70 bg-secondary/35 px-2 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
+            />
             <button
-              onClick={() => askAssistant("Where am I most exposed?")}
-              className="neon-button rounded-md border border-border/70 px-2 py-2 text-left text-xs text-muted-foreground hover:text-foreground"
+              type="submit"
+              disabled={typing}
+              className="neon-button rounded-md border border-border/70 bg-secondary/35 px-3 py-2 text-xs text-muted-foreground hover:border-primary/50 hover:text-foreground disabled:opacity-50"
             >
-              Where am I most exposed?
+              Send
             </button>
-            <button
-              onClick={() => askAssistant("How can I reduce my risk?")}
-              className="neon-button rounded-md border border-border/70 px-2 py-2 text-left text-xs text-muted-foreground hover:text-foreground"
-            >
-              How can I reduce my risk?
-            </button>
-          </div>
+          </form>
         </div>
       )}
 

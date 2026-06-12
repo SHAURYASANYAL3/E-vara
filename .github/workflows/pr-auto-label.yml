@@ -1,0 +1,96 @@
+name: PR Auto-Check and Label
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-and-label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Build
+        id: build
+        run: npm run build
+        continue-on-error: true
+
+      - name: Run Lint
+        id: lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Apply Automated Labels
+        uses: actions/github-script@v7
+        env:
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          LINT_OUTCOME: ${{ steps.lint.outcome }}
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const buildSuccess = process.env.BUILD_OUTCOME === 'success';
+            const lintSuccess = process.env.LINT_OUTCOME === 'success';
+            
+            let labelToAdd = "Ready to Merge";
+            let commentBody = "";
+            
+            if (!buildSuccess) {
+              labelToAdd = "Do Not Merge Yet";
+              commentBody = "🚨 **Automated PR Check Failed:** The project failed to build. Please check the logs and fix the compilation errors.";
+            } else if (!lintSuccess) {
+              labelToAdd = "Needs Minor Changes";
+              commentBody = "⚠️ **Automated PR Check Warning:** The build succeeded, but ESLint found issues. Please run `npm run lint` locally and fix the warnings.";
+            } else {
+              labelToAdd = "Ready to Merge";
+            }
+            
+            const labelsToRemove = ["Ready to Merge", "Do Not Merge Yet", "Needs Minor Changes"].filter(l => l !== labelToAdd);
+            
+            // Add the new label
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                labels: [labelToAdd]
+              });
+            } catch (err) {
+              console.error(`Error adding label: ${err}`);
+            }
+            
+            // Remove old conflicting labels
+            for (const label of labelsToRemove) {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  name: label
+                });
+              } catch (err) {
+                // Ignore
+              }
+            }
+            
+            // Leave a comment if there are errors so the contributor knows why
+            if (!buildSuccess || !lintSuccess) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: commentBody
+              });
+            }

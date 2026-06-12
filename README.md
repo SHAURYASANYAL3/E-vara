@@ -13,16 +13,16 @@ E-VARA is a privacy-first identity intelligence platform engineered for real-tim
 
 ## 💎 Value Proposition: The Executive Defense Layer
 E-VARA combines exposure monitoring, trust scoring, explainable risk analysis, and executive reporting into a single operating layer. The goal isn’t surveillance. The goal is helping users understand trust instead of collecting everything.
-- **Exposure Intelligence**: Privacy-preserving ingestion that monitors exposure signals while minimizing storage of raw identifiers.
-- **Explainable Risk**: Automated monitoring that surfaces risk and translates technical findings into understandable security decisions.
-- **Executive Reporting**: Institutional-grade PDF dossiers ready for C-suite review.
-- **Architectural Excellence**: Built with a production-oriented architecture and a modern, scalable stack (React, TypeScript, Supabase, Tailwind CSS).
+- **Exposure Intelligence**: Privacy-preserving ingestion that monitors exposure signals using cryptographic hashing at the edge, strictly minimizing storage of raw identifiers.
+- **Explainable Risk**: Automated monitoring that surfaces risk and translates technical findings into understandable security decisions with a localized, dynamic risk score.
+- **Executive Reporting & Protection**: Institutional-grade PDF dossiers ready for C-suite review, accompanied by stateless rate-limiting to prevent enumeration attacks.
+- **Architectural Excellence**: Built with a production-oriented asynchronous edge worker architecture (React, TypeScript, Supabase, Tailwind CSS).
 - **Compliance Ready**: Designed with industry-standard cryptographic protections and SHA-256 client-side hashing protocols.
 
 ## 🚀 Key Features
 - **Advanced Identity Correlation Engine**: Maps identity markers across 5+ major social networks and the deep web.
 - **Executive Threat Auditing**: Generates multi-page, professional-grade "Identity Dossiers" for executive security audits.
-- **Dark Web Breach Integration**: Deep integration with historical leak databases via secure Edge Functions.
+- **Validated Threat Intelligence Integration**: Real, configurable deep-web integrations with industry standards like HaveIBeenPwned (HIBP) and DeHashed via asynchronous Supabase Edge Workers.
 - **Real-time Threat Visualization**: Interactive HUD-style dashboard with attack vector simulations.
 - **SaaS Infrastructure**: Integrated multi-tier pricing, billing entry points, and robust user management.
 
@@ -84,6 +84,7 @@ E-VARA is positioned at the intersection of Cybersecurity and Executive Protecti
 
 ## 📄 Documentation
 - [Architecture Blueprint](./ARCHITECTURE.md)
+- [Threat Intelligence Methodology](./THREAT_INTELLIGENCE.md)
 - [Contributing Guidelines](./CONTRIBUTING.md)
 - [Security Disclosure Policy](./SECURITY.md)
 

@@ -4,6 +4,8 @@ import {
   Briefcase,
   GraduationCap,
   Server,
+  Users,
+  Home,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -41,6 +43,18 @@ const SolutionsPage = () => {
       title: "Public Sector & Defense",
       description:
         "Comply with stringent sovereign data requirements while monitoring the exposure of key government personnel and contractors.",
+    },
+    {
+      icon: <Users className="h-6 w-6 text-primary" />,
+      title: "Founders & Family Offices",
+      description:
+        "Comprehensive protection for high-net-worth individuals, their spouses, and children, including personal data broker removal and impersonation takedowns.",
+    },
+    {
+      icon: <Home className="h-6 w-6 text-primary" />,
+      title: "Physical & Digital Crossover",
+      description:
+        "End-to-end security bridging the gap between digital footprints and physical safety, featuring CEO home-network security and travel-risk intelligence.",
     },
   ];
 

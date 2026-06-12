@@ -16,7 +16,7 @@ CREATE OR REPLACE FUNCTION reap_stuck_osint_jobs()
 RETURNS void
 LANGUAGE plpgsql
 SECURITY DEFINER
-AS \$\$
+AS $$
 BEGIN
     -- 1. Identify jobs that have exceeded lease without a heartbeat OR lease fully expired
     -- 2. If recovery_count >= 3, kill it permanently (Poison job)
@@ -41,5 +41,5 @@ BEGIN
       AND lease_expiry_at < NOW()
       AND recovery_count < 3;
 END;
-\$\$;
+$$;
 

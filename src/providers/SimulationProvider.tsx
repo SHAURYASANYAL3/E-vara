@@ -17,15 +17,11 @@ const SimulationContext = createContext<SimulationContextType | undefined>(
 export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isSimulationMode, setIsSimulationMode] = useState(false);
-
-  useEffect(() => {
+  const [isSimulationMode, setIsSimulationMode] = useState(() => {
     // Feature flag: Ensure simulation is strictly explicitly enabled
     const flag = localStorage.getItem("e_vara_simulation_mode");
-    if (flag === "true" && import.meta.env.DEV) {
-      setIsSimulationMode(true);
-    }
-  }, []);
+    return flag === "true" && import.meta.env.DEV;
+  });
 
   const enableSimulation = () => {
     if (!import.meta.env.DEV) return;

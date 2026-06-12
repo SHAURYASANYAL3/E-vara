@@ -1,0 +1,90 @@
+name: "PR Automation & Reminders"
+
+on:
+  schedule:
+    - cron: "0 */4 * * *" # Runs every 4 hours
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  pr-reminders:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Check PR Statuses and Send Reminders
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open'
+            });
+
+            for (const pr of prs) {
+              // Fetch detailed PR data to get mergeable status
+              const { data: pull } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number
+              });
+
+              const labels = pull.labels.map(l => l.name);
+              const now = new Date();
+              const updatedAt = new Date(pull.updated_at);
+              const hoursSinceUpdate = (now.getTime() - updatedAt.getTime()) / (1000 * 60 * 60);
+
+              console.log(`Checking PR #${pull.number} - Mergeable: ${pull.mergeable}, Hours Since Update: ${hoursSinceUpdate}`);
+
+              // 1. Check for Merge Conflicts
+              if (pull.mergeable === false) {
+                if (!labels.includes('Merge Conflicts')) {
+                  console.log(`Adding conflict label and comment to PR #${pull.number}`);
+                  await github.rest.issues.addLabels({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pull.number,
+                    labels: ['Merge Conflicts']
+                  });
+                  await github.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pull.number,
+                    body: `🚨 **Merge Conflicts Detected!**\n\nHi @${pull.user.login}, it looks like this PR now has merge conflicts with the \`main\` branch. \n\nCould you please resolve these conflicts so we can proceed with testing and merging? Let us know if you need any help!`
+                  });
+                }
+              } else if (pull.mergeable === true && labels.includes('Merge Conflicts')) {
+                console.log(`Removing conflict label from PR #${pull.number}`);
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pull.number,
+                  name: 'Merge Conflicts'
+                });
+              }
+
+              // 2. Reminder for Inactive PRs (e.g., Needs Minor Changes)
+              if (labels.includes('Needs Minor Changes') && hoursSinceUpdate > 24) {
+                // Check if we already reminded them recently
+                const { data: comments } = await github.rest.issues.listComments({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pull.number
+                });
+                
+                const reminderComment = comments.reverse().find(c => c.body.includes('Friendly reminder') && c.user.login.includes('github-actions'));
+                const lastReminder = reminderComment ? new Date(reminderComment.created_at) : null;
+                const hoursSinceLastReminder = lastReminder ? (now.getTime() - lastReminder.getTime()) / (1000 * 60 * 60) : Infinity;
+
+                if (hoursSinceLastReminder > 48) {
+                  console.log(`Sending reminder comment to PR #${pull.number}`);
+                  await github.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pull.number,
+                    body: `⏳ **Friendly reminder!**\n\nHi @${pull.user.login}, this PR was marked as needing minor changes. It hasn't seen any activity recently.\n\nAre you still working on this? Let us know if you need any help or clarification on the requested changes!`
+                  });
+                }
+              }
+            }

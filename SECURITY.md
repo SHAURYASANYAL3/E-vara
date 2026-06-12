@@ -4,7 +4,7 @@ E-VARA takes security seriously. We value the work of security researchers and a
 
 ## Responsible Disclosure
 If you believe you have found a security vulnerability in E-VARA, please report it to us as soon as possible.
-- **Reporting**: Email security@e-vara.com (placeholder) or open a private security advisory on GitHub.
+- **Reporting**: Email evara.securityai@gmail.com (placeholder) or open a private security advisory on GitHub.
 - **Confidentiality**: Do not disclose the vulnerability publicly until we have had a reasonable amount of time to address it.
 - **Scope**: Vulnerabilities in the core application, infrastructure, or data processing logic.
 

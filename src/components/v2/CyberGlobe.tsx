@@ -36,7 +36,7 @@ function GlobeParticles() {
           blending={THREE.AdditiveBlending}
         />
       </Points>
-      <Sphere args={[1.48, 64, 64]}>
+      <Sphere args={[1.48, 32, 32]}>
         <meshBasicMaterial color="#000" transparent opacity={0.3} />
       </Sphere>
     </group>
@@ -46,7 +46,11 @@ function GlobeParticles() {
 const CyberGlobe = () => {
   return (
     <div className="w-full h-[600px] lg:h-[800px] relative">
-      <Canvas camera={{ position: [0, 0, 4], fov: 45 }}>
+      <Canvas
+        camera={{ position: [0, 0, 4], fov: 45 }}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
+      >
         <ambientLight intensity={0.5} />
         <GlobeParticles />
       </Canvas>

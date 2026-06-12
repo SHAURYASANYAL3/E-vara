@@ -26,6 +26,7 @@ const SupportPage = () => {
   ]);
 
   const sessionId = useMemo(
+     
     () => Math.random().toString(36).substring(7).toUpperCase(),
     [],
   );

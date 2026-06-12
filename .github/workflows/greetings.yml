@@ -15,6 +15,6 @@ jobs:
     steps:
       - uses: actions/first-interaction@v3
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-message: "Welcome to E-VARA! 🎉 Thank you so much for opening your first issue. Our team will look into this shortly. In the meantime, feel free to join our community discussions!"
-          pr-message: "Welcome to E-VARA! 🚀 Thank you for your first pull request! We deeply appreciate your contribution to identity intelligence. A maintainer will review your code soon."
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          issue_message: "Welcome to E-VARA! 🎉 Thank you so much for opening your first issue. Our team will look into this shortly. In the meantime, feel free to join our community discussions!"
+          pr_message: "Welcome to E-VARA! 🚀 Thank you for your first pull request! We deeply appreciate your contribution to identity intelligence. A maintainer will review your code soon."

@@ -306,6 +306,35 @@ const ContributorWall = () => {
                   </span>
                 ))}
               </div>
+
+              {c.resolved_issues && c.resolved_issues.length > 0 && (
+                <div className="mb-4">
+                  <h5 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-2 flex items-center gap-1">
+                    <CheckCircle2 className="h-3 w-3" /> Impact Delivered
+                  </h5>
+                  <div className="space-y-2">
+                    {c.resolved_issues.map((issue) => (
+                      <div key={issue.issueNumber} className="bg-black/30 border border-white/5 rounded-lg p-3 text-sm transition-colors hover:border-cyan-500/30">
+                        <div className="flex justify-between items-start mb-1">
+                          <span className="font-bold text-white text-xs leading-tight">
+                            <span className="text-cyan-500 mr-1">#{issue.issueNumber}</span>
+                            {issue.title}
+                          </span>
+                          {issue.prLink && (
+                            <a href={issue.prLink} target="_blank" rel="noreferrer" className="text-cyan-500 hover:text-cyan-400 ml-2 flex-shrink-0 mt-0.5">
+                              <ExternalLink className="h-3 w-3" />
+                            </a>
+                          )}
+                        </div>
+                        <p className="text-muted-foreground text-[11px] leading-relaxed mt-1">
+                          {issue.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="pt-4 border-t border-border/50 flex justify-between items-center">
                 <span className="text-xs text-muted-foreground">
                   Joined {c.joinedAt}

@@ -8,6 +8,12 @@ import {
   Globe,
 } from "lucide-react";
 
+const FLOATING_NODES = Array.from({ length: 5 }).map((_, i) => ({
+  id: i,
+  x: [Math.random() * 200 - 100, Math.random() * 200 - 100],
+  y: [Math.random() * 100 - 50, Math.random() * 100 - 50],
+}));
+
 const DashboardMockup = () => {
   return (
     <div className="relative group">
@@ -107,12 +113,12 @@ const DashboardMockup = () => {
               />
 
               {/* Floating Data Nodes */}
-              {Array.from({ length: 5 }).map((_, i) => (
+              {FLOATING_NODES.map((node, i) => (
                 <motion.div
-                  key={i}
+                  key={node.id}
                   animate={{
-                    x: [Math.random() * 200 - 100, Math.random() * 200 - 100],
-                    y: [Math.random() * 100 - 50, Math.random() * 100 - 50],
+                    x: node.x,
+                    y: node.y,
                   }}
                   transition={{
                     duration: 10 + i,
