@@ -1,8 +1,37 @@
+import { useState, useEffect } from "react";
 import { Shield } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 
 export default function DemoHealth() {
+  const [swStatus, setSwStatus] = useState<"Active" | "Inactive" | "Unsupported">(() => {
+    if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
+      return "Unsupported";
+    }
+    return "Inactive";
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
+      return;
+    }
+
+    const checkServiceWorker = async () => {
+      if (navigator.serviceWorker.controller) {
+        setSwStatus("Active");
+      } else {
+        const reg = await navigator.serviceWorker.getRegistration();
+        if (reg && (reg.active || reg.installing || reg.waiting)) {
+          setSwStatus("Active");
+        } else {
+          setSwStatus("Inactive");
+        }
+      }
+    };
+
+    checkServiceWorker();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
       <Navbar />
@@ -48,7 +77,17 @@ export default function DemoHealth() {
               <p className="text-[10px] uppercase font-mono text-muted-foreground">
                 Offline Fallback
               </p>
-              <p className="text-xl font-bold mt-1 text-emerald-400">Active</p>
+              <p
+                className={`text-xl font-bold mt-1 ${
+                  swStatus === "Active"
+                    ? "text-emerald-400"
+                    : swStatus === "Inactive"
+                      ? "text-amber-400"
+                      : "text-red-400"
+                }`}
+              >
+                {swStatus}
+              </p>
             </div>
             <div className="glass-panel p-4 rounded-lg">
               <p className="text-[10px] uppercase font-mono text-muted-foreground">

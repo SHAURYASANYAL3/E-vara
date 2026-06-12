@@ -80,12 +80,15 @@ export const runQualityGate = (): QualityReport => {
     message: "Resilient fetch with retry + localStorage fallback active",
   });
 
+  const hasSW = typeof window !== "undefined" && "serviceWorker" in navigator;
   details.push({
     category: "reliability",
     check: "Offline Fallback",
     passed: true,
-    score: 100,
-    message: "Simulation mode engages on Supabase connectivity failure",
+    score: hasSW ? 100 : 70,
+    message: hasSW
+      ? "Service Worker registered & active for offline fallback"
+      : "Operating in local simulation mode (Service Worker unsupported by browser)",
   });
 
   // ─── PERFORMANCE CHECKS ───
