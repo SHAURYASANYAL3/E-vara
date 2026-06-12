@@ -1,0 +1,48 @@
+name: 🐛 Bug Report
+description: Create a report to help us improve E-VARA
+title: "bug: <short description>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Your detailed feedback helps us maintain the quality of E-VARA.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce the issue?
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Browser Context
+      description: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Brave
+  - type: input
+    id: version
+    attributes:
+      label: System Context
+      description: Operating system or device details? (e.g. Windows 11, macOS Sonoma, iOS)
+    validations:
+      required: true
