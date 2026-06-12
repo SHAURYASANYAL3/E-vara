@@ -1,0 +1,375 @@
+# Instincts generated from https://github.com/SHAURYASANYAL3/E-vara
+# Generated: 2026-06-11T17:56:05.945Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: E-vara-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/SHAURYASANYAL3/E-vara
+---
+
+# E Vara Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: chore, style
+
+## Evidence
+
+- 2 commits analyzed
+- Detected conventional commit pattern
+- Examples: chore(deps): bump posthog-js from 1.384.1 to 1.386.5, style: 🎨 auto-format code with Prettier
+
+---
+id: E-vara-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/SHAURYASANYAL3/E-vara
+---
+
+# E Vara Commit Length
+
+## Action
+
+Keep commit messages concise (~46 characters)
+
+## Evidence
+
+- Average commit message length: 46 chars
+- Based on 2 commits
+
+---
+id: E-vara-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/SHAURYASANYAL3/E-vara
+---
+
+# E Vara Naming Files
+
+## Action
+
+Use PascalCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: PascalCase
+
+---
+id: E-vara-import-alias
+trigger: "when importing modules"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/SHAURYASANYAL3/E-vara
+---
+
+# E Vara Import Alias
+
+## Action
+
+Use path aliases (@/, ~/) instead of relative imports
+
+## Evidence
+
+- Import analysis shows alias pattern
+- Example: import { x } from '@/lib/x'
+
+---
+id: E-vara-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/SHAURYASANYAL3/E-vara
+---
+
+# E Vara Export Style
+
+## Action
+
+Prefer default exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: default
+
+---
+id: E-vara-arch-type-based
+trigger: "when adding new code"
+confidence: 0.8
+domain: architecture
+source: repo-analysis
+source_repo: https://github.com/SHAURYASANYAL3/E-vara
+---
+
+# E Vara Arch Type Based
+
+## Action
+
+Place code in the appropriate type folder (components/, services/, utils/, etc.)
+
+## Evidence
+
+- Type-based module organization detected
+- Folders: components, data, hooks, integrations, lib
+
+---
+id: E-vara-test-colocate
+trigger: "when writing tests"
+confidence: 0.85
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/SHAURYASANYAL3/E-vara
+---
+
+# E Vara Test Colocate
+
+## Action
+
+Place test file next to the source file (e.g., Button.test.tsx next to Button.tsx)
+
+## Evidence
+
+- Colocated test pattern detected
+- Tests live alongside source files
+
+---
+id: e-vara-instinct-file-naming
+trigger: "When creating a new file in src/"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct File Naming
+
+## Action
+
+Name the file using PascalCase (e.g., MyComponent.tsx).
+
+## Evidence
+
+- Pattern in files: src/components, src/hooks, src/pages
+
+---
+id: e-vara-instinct-function-naming
+trigger: "When defining a function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Function Naming
+
+## Action
+
+Name the function using camelCase.
+
+## Evidence
+
+- Pattern in code: src/hooks, src/lib
+
+---
+id: e-vara-instinct-class-naming
+trigger: "When defining a class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Class Naming
+
+## Action
+
+Name the class using PascalCase.
+
+## Evidence
+
+- Pattern in code: src/components, src/lib
+
+---
+id: e-vara-instinct-constant-naming
+trigger: "When declaring a constant"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Constant Naming
+
+## Action
+
+Name the constant using SCREAMING_SNAKE_CASE.
+
+## Evidence
+
+- Pattern in code: src/lib
+
+---
+id: e-vara-instinct-import-alias
+trigger: "When importing modules"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Import Alias
+
+## Action
+
+Use alias-based import paths instead of relative paths.
+
+## Evidence
+
+- Pattern in code: src/components, src/pages
+
+---
+id: e-vara-instinct-default-export
+trigger: "When exporting a module"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Default Export
+
+## Action
+
+Use default export style.
+
+## Evidence
+
+- Pattern in code: src/components, src/pages
+
+---
+id: e-vara-instinct-colocated-tests
+trigger: "When adding a test for a module"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Colocated Tests
+
+## Action
+
+Place the test file in the same folder as the module (colocated).
+
+## Evidence
+
+- Pattern in folder structure: testLocation is 'colocated'
+
+---
+id: e-vara-instinct-type-based-folders
+trigger: "When creating a new module or feature"
+confidence: 0.8
+domain: architecture
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Type Based Folders
+
+## Action
+
+Organize files by type (e.g., components, hooks, data) rather than by feature.
+
+## Evidence
+
+- Pattern in folder structure: type-based organization
+
+---
+id: e-vara-instinct-conventional-commit-chore
+trigger: "When updating dependencies or performing maintenance"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Conventional Commit Chore
+
+## Action
+
+Use a commit message starting with 'chore:' followed by a description.
+
+## Evidence
+
+- Seen in commit: 'chore(deps): bump posthog-js from 1.384.1 to 1.386.5'
+
+---
+id: e-vara-instinct-conventional-commit-style
+trigger: "When making code formatting or style changes"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Conventional Commit Style
+
+## Action
+
+Use a commit message starting with 'style:' followed by a description.
+
+## Evidence
+
+- Seen in commit: 'style: 🎨 auto-format code with Prettier'
+
+---
+id: e-vara-instinct-commit-length
+trigger: "When writing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Commit Length
+
+## Action
+
+Keep the commit message concise, around 46 characters on average.
+
+## Evidence
+
+- Pattern: average commit length is 46
+
+---
+id: e-vara-instinct-error-boundary
+trigger: "When handling errors in React components"
+confidence: 0.8
+domain: architecture
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Error Boundary
+
+## Action
+
+Use error boundaries for error handling.
+
+## Evidence
+
+- Pattern: errorBoundaries is true
+

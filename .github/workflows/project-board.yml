@@ -1,0 +1,23 @@
+name: Add to Project Board
+
+on:
+  issues:
+    types:
+      - opened
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  add-to-project:
+    name: Auto-assign to Kanban
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v1.0.2
+        with:
+          # SECURITY REQUIREMENT:
+          # 1. Create a GitHub Project Board and put the URL in Repo Secrets as PROJECT_URL
+          # 2. Create a GitHub Personal Access Token (PAT) with `project` scope
+          # 3. Save the PAT in Repo Secrets as PROJECT_TOKEN
+          project-url: ${{ secrets.PROJECT_URL }}
+          github-token: ${{ secrets.PROJECT_TOKEN }}

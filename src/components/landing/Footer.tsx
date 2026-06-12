@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Footer = () => (
   <footer className="py-20 border-t border-white/5">
     <div className="container mx-auto px-6">
-      <div className="grid md:grid-cols-4 gap-12 mb-20">
+      <div className="grid md:grid-cols-5 gap-12 mb-20">
         <div className="col-span-2">
           <div className="flex items-center gap-2 mb-6">
             <div className="p-2 bg-primary rounded-lg">
@@ -109,6 +109,29 @@ const Footer = () => (
                 className="hover:text-primary transition-colors"
               >
                 Compliance
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-bold uppercase tracking-widest text-xs mb-6">
+            Resources
+          </h4>
+          <ul className="space-y-4 text-sm text-muted-foreground font-mono uppercase tracking-tighter">
+            <li>
+              <Link
+                to="/blog"
+                className="hover:text-primary transition-colors"
+              >
+                Intelligence Blog
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/resources"
+                className="hover:text-primary transition-colors"
+              >
+                Whitepapers
               </Link>
             </li>
           </ul>

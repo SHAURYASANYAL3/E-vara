@@ -27,11 +27,13 @@ const CookieNotice = lazy(() => import("./pages/CookieNotice.tsx"));
 const DemoHealth = lazy(() => import("./pages/DemoHealth.tsx"));
 const Contribution = lazy(() => import("./pages/Contribution.tsx"));
 const TrustCenter = lazy(() => import("./pages/TrustCenter.tsx"));
+const BlogList = lazy(() => import("./pages/BlogList.tsx"));
+const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import FeedbackWidget from "@/components/FeedbackWidget";
-import Index from "./pages/Index";
-import Labs from "./pages/Labs";
+const Index = lazy(() => import("./pages/Index.tsx"));
+const Labs = lazy(() => import("./pages/Labs.tsx"));
 import {
   usePageView,
   useScrollDepth,
@@ -133,6 +135,8 @@ const AppRouter = () => {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/cookies" element={<CookieNotice />} />
             <Route path="/trust-center" element={<TrustCenter />} />
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/" element={<Index />} />
             <Route path="/labs" element={<Labs />} />
 

@@ -6,6 +6,11 @@
 
 E-VARA is a privacy-first identity intelligence platform engineered for real-time identity monitoring, threat surface analysis, and executive digital protection. Built for executives, founders, operators, and public-facing teams, E-VARA helps users understand what changed, what matters, and what action to take next.
 
+<div align="center">
+  <img src="public/ss/dashboard-1.png" alt="E-VARA Main Dashboard" width="800" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
+</div>
+<br/>
+
 ## 💎 Value Proposition: The Executive Defense Layer
 E-VARA combines exposure monitoring, trust scoring, explainable risk analysis, and executive reporting into a single operating layer. The goal isn’t surveillance. The goal is helping users understand trust instead of collecting everything.
 - **Exposure Intelligence**: Privacy-preserving ingestion that monitors exposure signals while minimizing storage of raw identifiers.
@@ -21,8 +26,28 @@ E-VARA combines exposure monitoring, trust scoring, explainable risk analysis, a
 - **Real-time Threat Visualization**: Interactive HUD-style dashboard with attack vector simulations.
 - **SaaS Infrastructure**: Integrated multi-tier pricing, billing entry points, and robust user management.
 
+<div align="center">
+  <img src="public/ss/dashboard-2.png" width="49%" style="border-radius: 8px;" />
+  <img src="public/ss/dashboard-3.png" width="49%" style="border-radius: 8px;" />
+</div>
+<div align="center">
+  <img src="public/ss/dashboard-4.png" width="800" style="border-radius: 8px; margin-top: 10px;" />
+</div>
+<br/>
+
 ## 🛠 Technical Architecture
+
 E-VARA utilizes a cutting-edge serverless architecture for maximum scalability and performance.
+
+```mermaid
+graph TD
+    Client["React / Vite Frontend"] -->|"REST & WebSockets"| Edge["Supabase Edge Functions"]
+    Edge --> DB[("PostgreSQL Database")]
+    Edge --> ThirdParty["Dark Web / Intelligence APIs"]
+    DB --> RLS{"Row Level Security"}
+    RLS --> Auth["Supabase Auth"]
+    Client --> Crypto["Web Crypto API (Local Hash)"]
+```
 - **Frontend**: React 18 (TypeScript), Vite, Tailwind CSS, Framer Motion.
 - **Infrastructure**: Supabase (PostgreSQL, Auth, Edge Functions, RLS).
 - **Visualization**: Custom HUD components, Recharts, Lucide Icons.
