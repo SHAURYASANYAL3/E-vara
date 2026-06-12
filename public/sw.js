@@ -22,7 +22,7 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
+          if (cacheName.startsWith("e-vara-cache-") && cacheName !== CACHE_NAME) {
             return caches.delete(cacheName);
           }
         })
