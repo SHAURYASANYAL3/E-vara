@@ -12,7 +12,9 @@ const BlogPost = () => {
     // Dynamic SEO update
     if (post) {
       document.title = `${post.title} | E-VARA Intelligence`;
-      const metaDescription = document.querySelector('meta[name="description"]');
+      const metaDescription = document.querySelector(
+        'meta[name="description"]',
+      );
       if (metaDescription) {
         metaDescription.setAttribute("content", post.excerpt);
       }
@@ -26,14 +28,14 @@ const BlogPost = () => {
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white pt-24 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
-        <Link 
-          to="/blog" 
+        <Link
+          to="/blog"
           className="inline-flex items-center text-sm font-medium text-gray-400 hover:text-emerald-400 transition-colors mb-8"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to all articles
         </Link>
-        
+
         <motion.article
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,14 +52,12 @@ const BlogPost = () => {
             <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">
               {post.title}
             </h1>
-            <p className="text-xl text-gray-400 font-medium">
-              {post.excerpt}
-            </p>
+            <p className="text-xl text-gray-400 font-medium">{post.excerpt}</p>
           </header>
-          
+
           <div className="w-full h-px bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 mb-10"></div>
-          
-          <div 
+
+          <div
             className="prose prose-invert prose-lg max-w-none prose-headings:text-emerald-50 prose-headings:font-bold prose-a:text-emerald-400 hover:prose-a:text-emerald-300 prose-p:text-gray-300"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />

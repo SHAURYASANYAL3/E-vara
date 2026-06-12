@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { blogPosts } from "@/data/blogPosts";
-import { Helmet } from "react-helmet"; // Assuming they might use helmet for SEO, or I'll just use raw DOM or skip it if not installed. 
+import { Helmet } from "react-helmet"; // Assuming they might use helmet for SEO, or I'll just use raw DOM or skip it if not installed.
 // Actually, I won't assume react-helmet is installed. I will just build the UI.
 
 const BlogList = () => {
@@ -10,20 +10,21 @@ const BlogList = () => {
     <main className="min-h-screen bg-[#0a0a0a] text-white pt-24 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-4"
           >
             Executive Identity Intelligence Blog
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="text-xl text-gray-400 max-w-3xl mx-auto"
           >
-            Insights, analysis, and threat research from the E-VARA Engineering and Intelligence teams.
+            Insights, analysis, and threat research from the E-VARA Engineering
+            and Intelligence teams.
           </motion.p>
         </div>
 
@@ -49,8 +50,10 @@ const BlogList = () => {
                   {post.excerpt}
                 </p>
                 <div className="mt-auto pt-4 border-t border-gray-800 flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-300">{post.author}</span>
-                  <Link 
+                  <span className="text-sm font-medium text-gray-300">
+                    {post.author}
+                  </span>
+                  <Link
                     to={`/blog/${post.slug}`}
                     className="text-emerald-400 hover:text-emerald-300 font-medium text-sm transition-colors"
                   >

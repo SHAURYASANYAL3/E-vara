@@ -119,10 +119,7 @@ const Footer = () => (
           </h4>
           <ul className="space-y-4 text-sm text-muted-foreground font-mono uppercase tracking-tighter">
             <li>
-              <Link
-                to="/blog"
-                className="hover:text-primary transition-colors"
-              >
+              <Link to="/blog" className="hover:text-primary transition-colors">
                 Intelligence Blog
               </Link>
             </li>
