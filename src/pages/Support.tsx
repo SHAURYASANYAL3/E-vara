@@ -26,7 +26,7 @@ const SupportPage = () => {
   ]);
 
   const [sessionId] = useState(() =>
-    Math.random().toString(36).substring(7).toUpperCase()
+    Math.random().toString(36).substring(7).toUpperCase(),
   );
 
   const handleSend = (e: React.FormEvent) => {

@@ -1,4 +1,4 @@
-﻿import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const corsHeaders = {
@@ -8,17 +8,23 @@ const corsHeaders = {
 
 // Verify GitHub webhook signature (HMAC SHA-256)
 async function verifySignature(secret: string, payload: string, signature: string | null): Promise<boolean> {
-  if (!signature) return false
+  if (!signature || !signature.startsWith('sha256=')) return false
+  
   const key = await crypto.subtle.importKey(
     "raw",
     new TextEncoder().encode(secret),
     { name: "HMAC", hash: "SHA-256" },
     false,
-    ["sign"]
+    ["verify"]
   )
-  const mac = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(payload))
-  const expected = "sha256=" + Array.from(new Uint8Array(mac)).map(b => b.toString(16).padStart(2, "0")).join("")
-  return expected === signature
+  
+  const sigHex = signature.slice(7)
+  const sigBytes = new Uint8Array(sigHex.length / 2)
+  for (let i = 0; i < sigHex.length; i += 2) {
+    sigBytes[i / 2] = parseInt(sigHex.substring(i, i + 2), 16)
+  }
+  
+  return await crypto.subtle.verify("HMAC", key, sigBytes, new TextEncoder().encode(payload))
 }
 
 serve(async (req) => {
