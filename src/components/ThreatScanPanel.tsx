@@ -116,7 +116,11 @@ const ThreatScanPanel = () => {
 
       <div className="space-y-4">
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          <StatCard label="Overall Threat Level" value={level} tooltipText="Aggregated threat level based on the severity of all active findings." />
+          <StatCard
+            label="Overall Threat Level"
+            value={level}
+            tooltipText="Aggregated threat level based on the severity of all active findings."
+          />
           <StatCard
             label="Calculated Risk Snapshot"
             value={`${riskScore}%`}

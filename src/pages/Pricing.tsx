@@ -45,7 +45,8 @@ const PricingPage = () => {
           </h1>
           <p className="text-muted-foreground font-body text-lg">
             We do not sell software. We sell absolute digital awareness. Fully
-            managed exposure, OSINT, physical travel-risk intel, and home-network security for founders, family offices, and executives.
+            managed exposure, OSINT, physical travel-risk intel, and
+            home-network security for founders, family offices, and executives.
           </p>
         </div>
 

@@ -54,7 +54,9 @@ export default function DemoHealth() {
           const logs = JSON.parse(logsStr);
           if (Array.isArray(logs)) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const errorCount = logs.filter((l: any) => l.level === "error").length;
+            const errorCount = logs.filter(
+              (l: any) => l.level === "error",
+            ).length;
             setConsoleErrors(errorCount);
             return;
           }
@@ -97,7 +99,6 @@ export default function DemoHealth() {
         freshnessText = "Unavailable";
         freshnessColor = "text-cyan-400";
       } else {
-         
         const now = Date.now();
         if (now > expiresAt) {
           freshnessText = "Stale";

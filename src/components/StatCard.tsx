@@ -1,6 +1,10 @@
 import type { ReactNode } from "react";
 import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface StatCardProps {
   icon?: ReactNode;
@@ -51,7 +55,9 @@ const StatCard = ({
                   <Info className="h-3.5 w-3.5 text-cyan-400/70 hover:text-cyan-300 cursor-help transition-colors" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p className="max-w-xs text-xs font-sans normal-case tracking-normal">{tooltipText}</p>
+                  <p className="max-w-xs text-xs font-sans normal-case tracking-normal">
+                    {tooltipText}
+                  </p>
                 </TooltipContent>
               </Tooltip>
             )}

@@ -7,7 +7,11 @@ import {
   TrendingUp,
   Info,
 } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   Bar,
   BarChart,
@@ -63,7 +67,15 @@ const ScanStep = ({
   </div>
 );
 
-const StatCard = ({ label, value, tooltipText }: { label: string; value: string; tooltipText?: string }) => (
+const StatCard = ({
+  label,
+  value,
+  tooltipText,
+}: {
+  label: string;
+  value: string;
+  tooltipText?: string;
+}) => (
   <div className="rounded-lg border border-cyan-500/20 bg-slate-900/50 p-3">
     <div className="flex items-center gap-2">
       <p className="text-[10px] uppercase tracking-[0.18em] text-slate-400">
@@ -75,7 +87,9 @@ const StatCard = ({ label, value, tooltipText }: { label: string; value: string;
             <Info className="h-3 w-3 text-cyan-400/50 hover:text-cyan-300 cursor-help transition-colors" />
           </TooltipTrigger>
           <TooltipContent>
-            <p className="max-w-xs text-xs font-sans normal-case tracking-normal">{tooltipText}</p>
+            <p className="max-w-xs text-xs font-sans normal-case tracking-normal">
+              {tooltipText}
+            </p>
           </TooltipContent>
         </Tooltip>
       )}
@@ -131,8 +145,16 @@ export default function FuturisticThreatConsole({
   const ThreatIcon = threatMeta[threatLevel].icon;
 
   return (
-    <section aria-label="Threat Console" className="space-y-4 rounded-2xl border border-cyan-500/20 bg-[#0a0f1c] p-4">
-      <div role="status" aria-live="polite" aria-label="Scan progress" className="grid gap-3 md:grid-cols-2">
+    <section
+      aria-label="Threat Console"
+      className="space-y-4 rounded-2xl border border-cyan-500/20 bg-[#0a0f1c] p-4"
+    >
+      <div
+        role="status"
+        aria-live="polite"
+        aria-label="Scan progress"
+        className="grid gap-3 md:grid-cols-2"
+      >
         {scanStages.map((s, i) => (
           <ScanStep
             key={s}
@@ -146,8 +168,16 @@ export default function FuturisticThreatConsole({
       {done && (
         <>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <StatCard label="Threat Level" value={threatLevel} tooltipText="Based on recent anomalies and perimeter scans." />
-            <StatCard label="Identity Risk Snapshot" value={`${riskScore}%`} tooltipText="Overall exposure score calculated from data breaches." />
+            <StatCard
+              label="Threat Level"
+              value={threatLevel}
+              tooltipText="Based on recent anomalies and perimeter scans."
+            />
+            <StatCard
+              label="Identity Risk Snapshot"
+              value={`${riskScore}%`}
+              tooltipText="Overall exposure score calculated from data breaches."
+            />
             <StatCard
               label="Account Compromise"
               value={`${Math.min(95, riskScore - 4)}%`}
@@ -222,7 +252,11 @@ export default function FuturisticThreatConsole({
             </ChartCard>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
-            <StatCard label="Threats detected" value={String(alertCount)} tooltipText="Total number of active threat alerts in the system." />
+            <StatCard
+              label="Threats detected"
+              value={String(alertCount)}
+              tooltipText="Total number of active threat alerts in the system."
+            />
             <StatCard
               label="Last scan time"
               value={new Date().toLocaleTimeString()}

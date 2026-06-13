@@ -7,7 +7,8 @@ import { toast } from "sonner";
 const ResourcesPage = () => {
   useSEO({
     title: "Digital Reputation Blog & Identity Protection Guides | E-VARA",
-    description: "Learn how to clean up your digital footprint, remove personal info from Google, and protect your identity online with E-VARA's expert guides.",
+    description:
+      "Learn how to clean up your digital footprint, remove personal info from Google, and protect your identity online with E-VARA's expert guides.",
     canonicalUrl: "https://e-vara.vercel.app/resources",
   });
 

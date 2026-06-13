@@ -234,38 +234,51 @@ const CyberIntelligencePanel = ({
   const askQuestion = async (questionText: string) => {
     if (!questionText.trim()) return;
 
-    const newMessages = [...chatMessages, { role: "user" as const, text: questionText }];
+    const newMessages = [
+      ...chatMessages,
+      { role: "user" as const, text: questionText },
+    ];
     setChatMessages(newMessages);
     setTyping(true);
 
     try {
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json"
+      const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "openai/gpt-3.5-turbo",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "You are E-Vara, an AI cybersecurity assistant for the E-VARA website. You must ONLY answer questions related to cybersecurity. Provide only legal and ethical advice. If any question is regarding the E-VARA website or platform, think twice and provide an accurate answer based on the fact that E-VARA is an Enterprise Identity Defense & Intelligence OS providing autonomous identity defense, real-time threat monitoring, and executive security auditing. If asked something illegal or unrelated to cybersecurity, politely decline to answer.",
+              },
+              ...newMessages.map((m) => ({ role: m.role, content: m.text })),
+            ],
+          }),
         },
-        body: JSON.stringify({
-          model: "openai/gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are E-Vara, an AI cybersecurity assistant for the E-VARA website. You must ONLY answer questions related to cybersecurity. Provide only legal and ethical advice. If any question is regarding the E-VARA website or platform, think twice and provide an accurate answer based on the fact that E-VARA is an Enterprise Identity Defense & Intelligence OS providing autonomous identity defense, real-time threat monitoring, and executive security auditing. If asked something illegal or unrelated to cybersecurity, politely decline to answer."
-            },
-            ...newMessages.map(m => ({ role: m.role, content: m.text }))
-          ]
-        })
-      });
+      );
 
       if (!response.ok) throw new Error("API Error");
-      
+
       const data = await response.json();
       const reply = data.choices[0].message.content;
-      
+
       setChatMessages((prev) => [...prev, { role: "assistant", text: reply }]);
     } catch (e) {
       console.error(e);
-      setChatMessages((prev) => [...prev, { role: "assistant", text: "Error connecting to E-Vara Intelligence Core." }]);
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          text: "Error connecting to E-Vara Intelligence Core.",
+        },
+      ]);
     } finally {
       setTyping(false);
     }
@@ -396,7 +409,10 @@ const CyberIntelligencePanel = ({
                     )}
                   </button>
                   {open && (
-                    <p id={`event-detail-${event.id}`} className="mt-2 text-xs text-muted-foreground">
+                    <p
+                      id={`event-detail-${event.id}`}
+                      className="mt-2 text-xs text-muted-foreground"
+                    >
                       {event.detail}
                     </p>
                   )}
@@ -504,7 +520,11 @@ const CyberIntelligencePanel = ({
               Ask E-Vara
             </h4>
           </div>
-          <div role="feed" aria-label="Chat messages" className="mb-3 flex-1 space-y-2 overflow-y-auto pr-1">
+          <div
+            role="feed"
+            aria-label="Chat messages"
+            className="mb-3 flex-1 space-y-2 overflow-y-auto pr-1"
+          >
             {chatMessages.map((message, idx) => (
               <div
                 key={`${message.role}-${idx}`}
@@ -522,7 +542,9 @@ const CyberIntelligencePanel = ({
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              const input = e.currentTarget.elements.namedItem("chatInput") as HTMLInputElement;
+              const input = e.currentTarget.elements.namedItem(
+                "chatInput",
+              ) as HTMLInputElement;
               if (input && input.value) {
                 askQuestion(input.value);
                 input.value = "";

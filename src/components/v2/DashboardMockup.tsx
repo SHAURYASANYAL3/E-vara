@@ -1,6 +1,13 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Shield, Activity, Lock, Search, AlertCircle, Globe } from "lucide-react";
+import {
+  Shield,
+  Activity,
+  Lock,
+  Search,
+  AlertCircle,
+  Globe,
+} from "lucide-react";
 
 const generateNodes = () => {
   return Array.from({ length: 5 }).map((_, i) => ({
@@ -19,7 +26,11 @@ const DashboardMockup = () => {
       <div className="relative rounded-[24px] border border-white/10 bg-graphite/80 backdrop-blur-xl p-8">
         <h2 className="text-white">Dashboard Mockup</h2>
         {floatingNodes.map((node) => (
-          <motion.div key={node.id} animate={{ x: node.x, y: node.y }} className="absolute text-white">
+          <motion.div
+            key={node.id}
+            animate={{ x: node.x, y: node.y }}
+            className="absolute text-white"
+          >
             SCANNING...
           </motion.div>
         ))}
