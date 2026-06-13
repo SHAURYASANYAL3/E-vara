@@ -1,4 +1,4 @@
-﻿import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -22,15 +22,6 @@ import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/landing/Navbar";
 
 const TrustCenter = () => {
-  const { user } = useAuth();
-  const handleExportData = async () => {
-    if (!user) {
-      toast({ title: "Authentication required", variant: "destructive" });
-      return;
-    }
-    toast({ title: "Export Initiated", description: "Your data is being prepared." });
-  };
-
   const handleExport = () => {
     toast({
       title: "Data Export Initiated",
@@ -193,7 +184,7 @@ const TrustCenter = () => {
             <CardHeader>
               <CardTitle>Data Lifecycle</CardTitle>
               <CardDescription>
-                Collected â†’ Processed â†’ Retained â†’ Deleted
+                Collected → Processed → Retained → Deleted
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -284,4 +275,3 @@ const TrustCenter = () => {
 };
 
 export default TrustCenter;
-
