@@ -70,7 +70,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </div>
               <div>
                 <h1 className="text-sm font-black tracking-[0.25em] uppercase text-white">
-                  Cyber Command Alert
+                  Security Alert
                 </h1>
                 <p className="text-[9px] text-[#ff453a]/70 uppercase tracking-widest font-bold">
                   Resiliency layer engaged

@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { Info } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface StatCardProps {
   icon?: ReactNode;
@@ -10,6 +12,7 @@ interface StatCardProps {
   updatedAt?: string;
   evidence?: "Low" | "Medium" | "High";
   reality?: "LIVE" | "SIMULATED" | "LIMITED DATA" | "REFRESHING";
+  tooltipText?: string;
 }
 
 const ACCENT = {
@@ -24,6 +27,11 @@ const StatCard = ({
   value,
   accent = "cyan",
   subtext,
+  confidence,
+  evidence,
+  updatedAt,
+  reality,
+  tooltipText,
 }: StatCardProps) => (
   <div
     className={`relative overflow-hidden rounded-xl border bg-[#0a0f1c]/85 p-4 ${ACCENT[accent]} shadow-[0_0_24px_rgba(0,229,255,0.12)]`}
@@ -37,6 +45,16 @@ const StatCard = ({
             <span className="text-[10px] uppercase tracking-[0.2em]">
               {label}
             </span>
+            {tooltipText && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-3.5 w-3.5 text-cyan-400/70 hover:text-cyan-300 cursor-help transition-colors" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="max-w-xs text-xs font-sans normal-case tracking-normal">{tooltipText}</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
           </div>
           {reality && (
             <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border bg-black/40 text-cyan-400 border-cyan-400/50">

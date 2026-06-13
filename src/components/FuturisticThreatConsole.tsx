@@ -5,7 +5,9 @@ import {
   ShieldX,
   TrendingDown,
   TrendingUp,
+  Info,
 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   Bar,
   BarChart,
@@ -61,11 +63,23 @@ const ScanStep = ({
   </div>
 );
 
-const StatCard = ({ label, value }: { label: string; value: string }) => (
+const StatCard = ({ label, value, tooltipText }: { label: string; value: string; tooltipText?: string }) => (
   <div className="rounded-lg border border-cyan-500/20 bg-slate-900/50 p-3">
-    <p className="text-[10px] uppercase tracking-[0.18em] text-slate-400">
-      {label}
-    </p>
+    <div className="flex items-center gap-2">
+      <p className="text-[10px] uppercase tracking-[0.18em] text-slate-400">
+        {label}
+      </p>
+      {tooltipText && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Info className="h-3 w-3 text-cyan-400/50 hover:text-cyan-300 cursor-help transition-colors" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="max-w-xs text-xs font-sans normal-case tracking-normal">{tooltipText}</p>
+          </TooltipContent>
+        </Tooltip>
+      )}
+    </div>
     <p className="mt-2 text-sm text-slate-100">{value}</p>
   </div>
 );
@@ -146,15 +160,17 @@ export default function FuturisticThreatConsole({
       {done && (
         <>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <StatCard label="Threat Level" value={threatLevel} />
-            <StatCard label="Identity Risk Snapshot" value={`${riskScore}%`} />
+            <StatCard label="Threat Level" value={threatLevel} tooltipText="Based on recent anomalies and perimeter scans." />
+            <StatCard label="Identity Risk Snapshot" value={`${riskScore}%`} tooltipText="Overall exposure score calculated from data breaches." />
             <StatCard
               label="Account Compromise"
               value={`${Math.min(95, riskScore - 4)}%`}
+              tooltipText="Probability of one or more accounts being compromised."
             />
             <StatCard
               label="Data Exposure"
               value={`${Math.max(20, riskScore - 18)}%`}
+              tooltipText="Amount of sensitive data exposed on public domains."
             />
           </div>
           <div className="rounded-xl border border-cyan-500/20 bg-slate-900/40 p-4">
@@ -220,14 +236,16 @@ export default function FuturisticThreatConsole({
             </ChartCard>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
-            <StatCard label="Threats detected" value={String(alertCount)} />
+            <StatCard label="Threats detected" value={String(alertCount)} tooltipText="Total number of active threat alerts in the system." />
             <StatCard
               label="Last scan time"
               value={new Date().toLocaleTimeString()}
+              tooltipText="Timestamp of the most recent security sweep."
             />
             <StatCard
               label="Risk trend"
               value={alertCount > 2 ? "Rising" : "Falling"}
+              tooltipText="Direction of the overall risk score over the last 24 hours."
             />
           </div>
           <div className="flex items-center gap-2 text-xs text-cyan-300">

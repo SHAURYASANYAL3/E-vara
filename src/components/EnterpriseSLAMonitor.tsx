@@ -4,7 +4,7 @@ import { Activity, ShieldCheck, Zap, Globe } from "lucide-react";
 const EnterpriseSLAMonitor = () => {
   const systems = [
     {
-      name: "Identity Engine",
+      name: "Identity Protection",
       status: "Operational",
       latency: "12ms",
       uptime: "99.99%",

@@ -47,12 +47,12 @@ serve(async (req) => {
       const dehashedApiKey = Deno.env.get('DEHASHED_API_KEY');
       const dehashedEmail = Deno.env.get('DEHASHED_EMAIL');
       
-      interface Finding {
+      type Finding = {
         source: string;
         severity: string;
         data_types: string[];
         date: string;
-      }
+      };
       let findings: Finding[] = [];
 
       if (hibpApiKey) {
@@ -66,7 +66,8 @@ serve(async (req) => {
         
         if (hibpRes.ok) {
           const hibpData = await hibpRes.json();
-          findings = findings.concat(hibpData.map((b: { Name: string; DataClasses: string[]; BreachDate: string }) => ({
+          type HIBPData = { Name: string; DataClasses: string[]; BreachDate: string };
+          findings = findings.concat(hibpData.map((b: HIBPData) => ({
             source: b.Name,
             severity: b.DataClasses.includes('Passwords') ? 'high' : 'medium',
             data_types: b.DataClasses,
@@ -89,10 +90,11 @@ serve(async (req) => {
         if (dehashedRes.ok) {
           const dehashedData = await dehashedRes.json();
           if (dehashedData.entries) {
-             findings = findings.concat(dehashedData.entries.map((e: { database_name?: string; email?: string; password?: string }) => ({
+             type DeHashedEntry = { database_name?: string; password?: string; email?: string };
+             findings = findings.concat(dehashedData.entries.map((e: DeHashedEntry) => ({
                source: e.database_name || 'Dark Web Dump',
                severity: e.password ? 'high' : 'medium',
-               data_types: [e.email ? 'Email' : null, e.password ? 'Passwords' : null].filter(Boolean),
+               data_types: [e.email ? 'Email' : null, e.password ? 'Passwords' : null].filter(Boolean) as string[],
                date: new Date().toISOString() // DeHashed entries often lack strict dates
              })));
           }

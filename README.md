@@ -4,7 +4,7 @@
 [![Security: Enterprise Grade](https://img.shields.io/badge/Security-Enterprise%20Grade-blue.svg)]()
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)]()
 
-E-VARA is a privacy-first identity intelligence platform engineered for real-time identity monitoring, threat surface analysis, and executive digital protection. Built for executives, founders, operators, and public-facing teams, E-VARA helps users understand what changed, what matters, and what action to take next.
+E-VARA is a privacy-first identity intelligence platform engineered for real-time identity monitoring, threat surface analysis, and comprehensive executive digital protection. Built for executives, founders, operators, and public-facing teams, E-VARA helps users understand what changed, what matters, and what action to take next.
 
 <div align="center">
   <img src="public/ss/dashboard-1.png" alt="E-VARA Main Dashboard" width="800" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />

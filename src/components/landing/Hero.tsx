@@ -39,7 +39,7 @@ const Hero = () => (
         </div>
       </div>
 
-      {/* Security Dashboard Preview */}
+      {/* Identity Dashboard Preview */}
       <div className="mt-24 relative max-w-6xl mx-auto animate-fade-in">
         <div className="absolute -inset-1 bg-gradient-to-b from-primary/20 to-transparent rounded-[32px] blur-2xl opacity-20" />
         <div className="relative rounded-[24px] border border-white/5 bg-[#11141B] p-2 shadow-2xl overflow-hidden shadow-primary/5">
