@@ -1,0 +1,3 @@
+﻿-- Migration: Encrypt Sensitive User Data before Database Storage
+-- Tables affected: identity_records / users
+-- Note: PII columns are now stored as AES-256 encrypted hex strings application-side.
