@@ -88,43 +88,53 @@ serve(async (req) => {
 
     if (snapshotError) throw snapshotError;
 
-    // Trigger registered webhooks for this user
+    // Trigger registered webhooks for this user (non‑blocking, with timeout)
     try {
       const { data: hooks, error: hooksError } = await supabase
         .from('webhooks')
         .select('url, secret')
         .eq('user_id', user.id);
       if (!hooksError && hooks && hooks.length > 0) {
-        // Send POST to each webhook (fire-and-forget, ignore errors)
         for (const hook of hooks) {
-          try {
-            const payload = {
-              event: 'risk_snapshot_created',
-              snapshot,
-            };
-            // Simple HMAC signature using secret
-            const encoder = new TextEncoder();
-            const key = await crypto.subtle.importKey(
-              'raw',
-              encoder.encode(hook.secret),
-              { name: 'HMAC', hash: 'SHA-256' },
-              false,
-              ['sign']
-            );
-            const mac = await crypto.subtle.sign('HMAC', key, encoder.encode(JSON.stringify(payload)));
-            const signature = 'sha256=' + Array.from(new Uint8Array(mac)).map(b => b.toString(16).padStart(2, '0')).join('');
+          (async () => {
+            try {
+              const payload = {
+                event: 'risk_snapshot_created',
+                snapshot,
+              };
+              // HMAC signature
+              const encoder = new TextEncoder();
+              const key = await crypto.subtle.importKey(
+                'raw',
+                encoder.encode(hook.secret),
+                { name: 'HMAC', hash: 'SHA-256' },
+                false,
+                ['sign']
+              );
+              const mac = await crypto.subtle.sign('HMAC', key, encoder.encode(JSON.stringify(payload)));
+              const signature = 'sha256=' + Array.from(new Uint8Array(mac)).map(b => b.toString(16).padStart(2, '0')).join('');
 
-            await fetch(hook.url, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-Hub-Signature-256': signature,
-              },
-              body: JSON.stringify(payload),
-            });
-          } catch (whError) {
-            console.error('Webhook delivery failed', whError);
-          }
+              const controller = new AbortController();
+              const timeout = setTimeout(() => controller.abort(), 3000); // 3 s timeout
+              try {
+                await fetch(hook.url, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-Hub-Signature-256': signature,
+                  },
+                  body: JSON.stringify(payload),
+                  signal: controller.signal,
+                });
+              } catch (e) {
+                console.error('Webhook delivery error (timeout or network)', e);
+              } finally {
+                clearTimeout(timeout);
+              }
+            } catch (whError) {
+              console.error('Webhook preparation failed', whError);
+            }
+          })(); // fire‑and‑forget
         }
       }
     } catch (hookFetchError) {
