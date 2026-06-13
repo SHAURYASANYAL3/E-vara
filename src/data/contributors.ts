@@ -37,5 +37,5 @@ export interface Contributor {
   resolved_issues?: ResolvedIssue[];
 }
 
-import contributorsData from './contributors.json';
+import contributorsData from "./contributors.json";
 export const contributors: Contributor[] = contributorsData as Contributor[];
