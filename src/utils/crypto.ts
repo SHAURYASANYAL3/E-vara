@@ -1,4 +1,4 @@
-﻿// Browser-compatible encryption utility using Web Crypto API (AES-GCM)
+// Browser-compatible encryption utility using Web Crypto API (AES-GCM)
 const ENCRYPTION_KEY_SECRET = "super-secret-key-must-be-32-bytes-long!"; // Fallback string
 
 // Helper to derive a stable CryptoKey from a secret string
