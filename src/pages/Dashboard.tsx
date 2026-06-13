@@ -7,6 +7,7 @@ import {
   Database,
   Activity,
   CreditCard,
+  ChartLine,
 } from "lucide-react";
 import { useAuth, IdentityInfo } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
@@ -26,6 +27,7 @@ import AttackSimulationPanel from "@/components/AttackSimulationPanel";
 import AIInsightPanel from "@/components/AIInsightPanel";
 import NetworkTraffic from "@/components/NetworkTraffic";
 import EnterpriseSLAMonitor from "@/components/EnterpriseSLAMonitor";
+import { AnalyticsDashboard } from "@/components/AnalyticsDashboard";
 
 const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
   const { user, profile, identity, logout, saveIdentity } = useAuth();
@@ -204,6 +206,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                 className="mt-0 focus-visible:ring-0 space-y-6"
               >
                 <EnterpriseSLAMonitor />
+                    <AnalyticsDashboard />
                 <div className="grid gap-6 md:grid-cols-2">
                   <DigitalFootprintMap
                     username={identity?.username || "identity"}
