@@ -28,8 +28,8 @@ const StatsCards = ({
 
   useEffect(() => {
     if (!monitoringActive || !monitoringStartTime) {
-      setUptime("00:00:00");
-      return;
+      const id = setTimeout(() => setUptime("00:00:00"), 0);
+      return () => clearTimeout(id);
     }
     const tick = () => {
       const diff = Math.floor(

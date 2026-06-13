@@ -80,15 +80,22 @@ export const runQualityGate = (): QualityReport => {
     message: "Resilient fetch with retry + localStorage fallback active",
   });
 
-  const swActive = typeof window !== "undefined" && "serviceWorker" in navigator && !!navigator.serviceWorker.controller;
+  let swStatus = "Unsupported";
+  if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+    swStatus = navigator.serviceWorker.controller ? "Active" : "Inactive";
+  }
+
   details.push({
     category: "reliability",
     check: "Offline Fallback",
     passed: true,
-    score: swActive ? 100 : 70,
-    message: swActive
-      ? "Service Worker active and controlling current client"
-      : "Operating in local simulation mode (Service Worker not controlling client)",
+    score: swStatus === "Active" ? 100 : swStatus === "Inactive" ? 70 : 0,
+    message:
+      swStatus === "Active"
+        ? "Service Worker active and controlling current client"
+        : swStatus === "Inactive"
+          ? "Service Worker registered but not controlling client"
+          : "Service Workers are unsupported in this browser",
   });
 
   // ─── PERFORMANCE CHECKS ───

@@ -20,7 +20,9 @@ export default function DemoHealth() {
     return () => clearTimeout(timer);
   }, []);
 
-  const [swStatus, setSwStatus] = useState<"Active" | "Inactive" | "Unsupported">(() => {
+  const [swStatus, setSwStatus] = useState<
+    "Active" | "Inactive" | "Unsupported"
+  >(() => {
     if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
       return "Unsupported";
     }
@@ -41,9 +43,15 @@ export default function DemoHealth() {
     };
 
     checkServiceWorker();
-    navigator.serviceWorker.addEventListener("controllerchange", checkServiceWorker);
+    navigator.serviceWorker.addEventListener(
+      "controllerchange",
+      checkServiceWorker,
+    );
     return () => {
-      navigator.serviceWorker.removeEventListener("controllerchange", checkServiceWorker);
+      navigator.serviceWorker.removeEventListener(
+        "controllerchange",
+        checkServiceWorker,
+      );
     };
   }, []);
 
@@ -88,8 +96,9 @@ export default function DemoHealth() {
         if (logsStr) {
           const logs = JSON.parse(logsStr);
           if (Array.isArray(logs)) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const errorCount = logs.filter((l: any) => l.level === "error").length;
+            const errorCount = logs.filter(
+              (l: { level?: string }) => l.level === "error",
+            ).length;
             setConsoleErrors(errorCount);
             return;
           }

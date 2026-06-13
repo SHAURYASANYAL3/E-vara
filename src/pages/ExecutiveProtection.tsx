@@ -6,7 +6,7 @@ import {
   Database,
   Users,
   VideoOff,
-  UserCheck
+  UserCheck,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -108,7 +108,9 @@ const ExecutiveProtectionPage = () => {
             <span className="text-primary italic">Protection</span>
           </h1>
           <p className="text-muted-foreground font-body text-lg leading-relaxed">
-            World-class digital executive protection. We secure the personal attack surface of founders, CEOs, and their families against targeted intelligence operations.
+            World-class digital executive protection. We secure the personal
+            attack surface of founders, CEOs, and their families against
+            targeted intelligence operations.
           </p>
         </div>
 
@@ -136,7 +138,8 @@ const ExecutiveProtectionPage = () => {
             Is Your Leadership Team Exposed?
           </h2>
           <p className="text-muted-foreground font-body mb-8 max-w-xl mx-auto">
-            Threat actors bypass corporate firewalls by targeting the personal digital lives of executives. Secure your apex targets today.
+            Threat actors bypass corporate firewalls by targeting the personal
+            digital lives of executives. Secure your apex targets today.
           </p>
           <Link to="/book-demo">
             <Button className="bg-primary hover:bg-primary/90 text-white rounded-[14px] px-8 py-6 uppercase tracking-widest text-xs font-bold security-orange-glow">

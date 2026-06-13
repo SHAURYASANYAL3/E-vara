@@ -314,14 +314,24 @@ const ContributorWall = () => {
                   </h5>
                   <div className="space-y-2">
                     {c.resolved_issues.map((issue) => (
-                      <div key={issue.issueNumber} className="bg-black/30 border border-white/5 rounded-lg p-3 text-sm transition-colors hover:border-cyan-500/30">
+                      <div
+                        key={issue.issueNumber}
+                        className="bg-black/30 border border-white/5 rounded-lg p-3 text-sm transition-colors hover:border-cyan-500/30"
+                      >
                         <div className="flex justify-between items-start mb-1">
                           <span className="font-bold text-white text-xs leading-tight">
-                            <span className="text-cyan-500 mr-1">#{issue.issueNumber}</span>
+                            <span className="text-cyan-500 mr-1">
+                              #{issue.issueNumber}
+                            </span>
                             {issue.title}
                           </span>
                           {issue.prLink && (
-                            <a href={issue.prLink} target="_blank" rel="noreferrer" className="text-cyan-500 hover:text-cyan-400 ml-2 flex-shrink-0 mt-0.5">
+                            <a
+                              href={issue.prLink}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-cyan-500 hover:text-cyan-400 ml-2 flex-shrink-0 mt-0.5"
+                            >
                               <ExternalLink className="h-3 w-3" />
                             </a>
                           )}

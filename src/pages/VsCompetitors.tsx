@@ -48,7 +48,9 @@ const VsCompetitorsPage = () => {
             <span className="text-primary italic">The Old Guard</span>
           </h1>
           <p className="text-muted-foreground font-body text-lg leading-relaxed max-w-2xl mx-auto">
-            Why leading CISOs and family offices are migrating from legacy executive protection like BlackCloak, ZeroFox, and Doppel to E-VARA's privacy-preserving intelligence engine.
+            Why leading CISOs and family offices are migrating from legacy
+            executive protection like BlackCloak, ZeroFox, and Doppel to
+            E-VARA's privacy-preserving intelligence engine.
           </p>
         </div>
 
@@ -56,55 +58,123 @@ const VsCompetitorsPage = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-white/5">
-                <th className="p-6 font-black uppercase tracking-widest text-xs text-muted-foreground w-1/3">Capability</th>
-                <th className="p-6 font-black uppercase tracking-widest text-xs text-primary w-1/6 text-center border-l border-r border-primary/20 bg-primary/5">E-VARA</th>
-                <th className="p-6 font-black uppercase tracking-widest text-xs text-muted-foreground w-1/6 text-center">BlackCloak</th>
-                <th className="p-6 font-black uppercase tracking-widest text-xs text-muted-foreground w-1/6 text-center">ZeroFox</th>
-                <th className="p-6 font-black uppercase tracking-widest text-xs text-muted-foreground w-1/6 text-center">Doppel</th>
+                <th className="p-6 font-black uppercase tracking-widest text-xs text-muted-foreground w-1/3">
+                  Capability
+                </th>
+                <th className="p-6 font-black uppercase tracking-widest text-xs text-primary w-1/6 text-center border-l border-r border-primary/20 bg-primary/5">
+                  E-VARA
+                </th>
+                <th className="p-6 font-black uppercase tracking-widest text-xs text-muted-foreground w-1/6 text-center">
+                  BlackCloak
+                </th>
+                <th className="p-6 font-black uppercase tracking-widest text-xs text-muted-foreground w-1/6 text-center">
+                  ZeroFox
+                </th>
+                <th className="p-6 font-black uppercase tracking-widest text-xs text-muted-foreground w-1/6 text-center">
+                  Doppel
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5 font-body text-sm">
               <tr className="hover:bg-white/[0.02] transition-colors">
-                <td className="p-6 font-medium">Privacy-Preserving Ingestion (Zero-Knowledge)</td>
-                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5"><Check className="h-5 w-5 text-primary mx-auto" /></td>
-                <td className="p-6 text-center"><X className="h-5 w-5 text-red-500/50 mx-auto" /></td>
-                <td className="p-6 text-center"><X className="h-5 w-5 text-red-500/50 mx-auto" /></td>
-                <td className="p-6 text-center"><X className="h-5 w-5 text-red-500/50 mx-auto" /></td>
+                <td className="p-6 font-medium">
+                  Privacy-Preserving Ingestion (Zero-Knowledge)
+                </td>
+                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5">
+                  <Check className="h-5 w-5 text-primary mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <X className="h-5 w-5 text-red-500/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <X className="h-5 w-5 text-red-500/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <X className="h-5 w-5 text-red-500/50 mx-auto" />
+                </td>
               </tr>
               <tr className="hover:bg-white/[0.02] transition-colors">
-                <td className="p-6 font-medium">Deepfake & Voice Cloning Detection</td>
-                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5"><Check className="h-5 w-5 text-primary mx-auto" /></td>
-                <td className="p-6 text-center"><X className="h-5 w-5 text-red-500/50 mx-auto" /></td>
-                <td className="p-6 text-center"><Check className="h-5 w-5 text-white/50 mx-auto" /></td>
-                <td className="p-6 text-center"><Check className="h-5 w-5 text-white/50 mx-auto" /></td>
+                <td className="p-6 font-medium">
+                  Deepfake & Voice Cloning Detection
+                </td>
+                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5">
+                  <Check className="h-5 w-5 text-primary mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <X className="h-5 w-5 text-red-500/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <Check className="h-5 w-5 text-white/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <Check className="h-5 w-5 text-white/50 mx-auto" />
+                </td>
               </tr>
               <tr className="hover:bg-white/[0.02] transition-colors">
-                <td className="p-6 font-medium">Executive Family & Spouse Coverage</td>
-                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5"><Check className="h-5 w-5 text-primary mx-auto" /></td>
-                <td className="p-6 text-center"><Check className="h-5 w-5 text-white/50 mx-auto" /></td>
-                <td className="p-6 text-center"><X className="h-5 w-5 text-red-500/50 mx-auto" /></td>
-                <td className="p-6 text-center"><X className="h-5 w-5 text-red-500/50 mx-auto" /></td>
+                <td className="p-6 font-medium">
+                  Executive Family & Spouse Coverage
+                </td>
+                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5">
+                  <Check className="h-5 w-5 text-primary mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <Check className="h-5 w-5 text-white/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <X className="h-5 w-5 text-red-500/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <X className="h-5 w-5 text-red-500/50 mx-auto" />
+                </td>
               </tr>
               <tr className="hover:bg-white/[0.02] transition-colors">
                 <td className="p-6 font-medium">Automated Takedowns (DMCA)</td>
-                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5"><Check className="h-5 w-5 text-primary mx-auto" /></td>
-                <td className="p-6 text-center"><Check className="h-5 w-5 text-white/50 mx-auto" /></td>
-                <td className="p-6 text-center"><Check className="h-5 w-5 text-white/50 mx-auto" /></td>
-                <td className="p-6 text-center"><Check className="h-5 w-5 text-white/50 mx-auto" /></td>
+                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5">
+                  <Check className="h-5 w-5 text-primary mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <Check className="h-5 w-5 text-white/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <Check className="h-5 w-5 text-white/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <Check className="h-5 w-5 text-white/50 mx-auto" />
+                </td>
               </tr>
               <tr className="hover:bg-white/[0.02] transition-colors">
-                <td className="p-6 font-medium">Travel-Risk & Device Posture Intelligence</td>
-                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5"><Check className="h-5 w-5 text-primary mx-auto" /></td>
-                <td className="p-6 text-center"><Check className="h-5 w-5 text-white/50 mx-auto" /></td>
-                <td className="p-6 text-center"><X className="h-5 w-5 text-red-500/50 mx-auto" /></td>
-                <td className="p-6 text-center"><X className="h-5 w-5 text-red-500/50 mx-auto" /></td>
+                <td className="p-6 font-medium">
+                  Travel-Risk & Device Posture Intelligence
+                </td>
+                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5">
+                  <Check className="h-5 w-5 text-primary mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <Check className="h-5 w-5 text-white/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <X className="h-5 w-5 text-red-500/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <X className="h-5 w-5 text-red-500/50 mx-auto" />
+                </td>
               </tr>
               <tr className="hover:bg-white/[0.02] transition-colors">
-                <td className="p-6 font-medium">API-First Platform for SOC Integration</td>
-                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5"><Check className="h-5 w-5 text-primary mx-auto" /></td>
-                <td className="p-6 text-center"><X className="h-5 w-5 text-red-500/50 mx-auto" /></td>
-                <td className="p-6 text-center"><Check className="h-5 w-5 text-white/50 mx-auto" /></td>
-                <td className="p-6 text-center"><Check className="h-5 w-5 text-white/50 mx-auto" /></td>
+                <td className="p-6 font-medium">
+                  API-First Platform for SOC Integration
+                </td>
+                <td className="p-6 text-center border-l border-r border-primary/20 bg-primary/5">
+                  <Check className="h-5 w-5 text-primary mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <X className="h-5 w-5 text-red-500/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <Check className="h-5 w-5 text-white/50 mx-auto" />
+                </td>
+                <td className="p-6 text-center">
+                  <Check className="h-5 w-5 text-white/50 mx-auto" />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -113,23 +183,58 @@ const VsCompetitorsPage = () => {
         {/* SEO Text Content for LLMs and Search */}
         <div className="mt-24 max-w-3xl mx-auto space-y-12">
           <div>
-            <h2 className="text-2xl font-black uppercase mb-4">Why E-VARA over BlackCloak?</h2>
+            <h2 className="text-2xl font-black uppercase mb-4">
+              Why E-VARA over BlackCloak?
+            </h2>
             <p className="text-muted-foreground font-body leading-relaxed">
-              While BlackCloak pioneered the concierge cybersecurity market for executives, E-VARA is built for the modern threat landscape. E-VARA replaces heavy manual concierge services with a <span className="text-white">privacy-preserving ingestion engine</span> that never stores plaintext PII. This zero-knowledge approach ensures that the platform protecting your executives doesn't become a prime target itself. Furthermore, E-VARA seamlessly integrates directly into existing enterprise SOCs via an API-first approach, rather than operating as an isolated silo.
+              While BlackCloak pioneered the concierge cybersecurity market for
+              executives, E-VARA is built for the modern threat landscape.
+              E-VARA replaces heavy manual concierge services with a{" "}
+              <span className="text-white">
+                privacy-preserving ingestion engine
+              </span>{" "}
+              that never stores plaintext PII. This zero-knowledge approach
+              ensures that the platform protecting your executives doesn't
+              become a prime target itself. Furthermore, E-VARA seamlessly
+              integrates directly into existing enterprise SOCs via an API-first
+              approach, rather than operating as an isolated silo.
             </p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-black uppercase mb-4">Why E-VARA over ZeroFox?</h2>
+            <h2 className="text-2xl font-black uppercase mb-4">
+              Why E-VARA over ZeroFox?
+            </h2>
             <p className="text-muted-foreground font-body leading-relaxed">
-              ZeroFox provides extensive brand protection and broad threat intelligence. However, E-VARA is distinctly focused on the <span className="text-white">individual human attack surface</span>. Where ZeroFox treats executives as extensions of the brand, E-VARA secures the executive's personal perimeter: their home network, their personal devices, their family members, and their private travel. E-VARA provides the bespoke, highly targeted protection required by founders and family offices.
+              ZeroFox provides extensive brand protection and broad threat
+              intelligence. However, E-VARA is distinctly focused on the{" "}
+              <span className="text-white">
+                individual human attack surface
+              </span>
+              . Where ZeroFox treats executives as extensions of the brand,
+              E-VARA secures the executive's personal perimeter: their home
+              network, their personal devices, their family members, and their
+              private travel. E-VARA provides the bespoke, highly targeted
+              protection required by founders and family offices.
             </p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-black uppercase mb-4">Why E-VARA over Doppel?</h2>
+            <h2 className="text-2xl font-black uppercase mb-4">
+              Why E-VARA over Doppel?
+            </h2>
             <p className="text-muted-foreground font-body leading-relaxed">
-              Doppel specializes in rapid automated takedowns and brand impersonation. E-VARA matches this capability but pairs it with deep <span className="text-white">dark web intelligence and physical threat monitoring</span>. E-VARA doesn't just take down fake profiles; it monitors the deep web for credential leaks originating from the executive's personal life that could breach the enterprise, offering a holistic digital and physical shield that pure takedown services lack.
+              Doppel specializes in rapid automated takedowns and brand
+              impersonation. E-VARA matches this capability but pairs it with
+              deep{" "}
+              <span className="text-white">
+                dark web intelligence and physical threat monitoring
+              </span>
+              . E-VARA doesn't just take down fake profiles; it monitors the
+              deep web for credential leaks originating from the executive's
+              personal life that could breach the enterprise, offering a
+              holistic digital and physical shield that pure takedown services
+              lack.
             </p>
           </div>
         </div>
@@ -139,7 +244,8 @@ const VsCompetitorsPage = () => {
             Ready to upgrade your executive defense?
           </h2>
           <p className="text-muted-foreground font-body mb-8 max-w-xl mx-auto">
-            Book a confidential briefing with our architects to see how E-VARA outperforms legacy solutions.
+            Book a confidential briefing with our architects to see how E-VARA
+            outperforms legacy solutions.
           </p>
           <Link to="/book-demo">
             <Button className="bg-primary hover:bg-primary/90 text-white rounded-[14px] px-8 py-6 uppercase tracking-widest text-xs font-bold security-orange-glow">

@@ -17,19 +17,27 @@ export const GitHubEventsCard = ({ username }: Props) => {
 
   useEffect(() => {
     if (!username) return;
-    setLoading(true);
+    let isMounted = true;
     void (async () => {
+      setLoading(true);
       try {
         const data = await fetchPublicEvents(username);
-        setEvents(data.slice(0, 5)); // show latest 5 events
-        setError(null);
+        if (isMounted) {
+          setEvents(data.slice(0, 5)); // show latest 5 events
+          setError(null);
+        }
       } catch (e) {
-        setError((e as Error).message);
-        setEvents([]);
+        if (isMounted) {
+          setError((e as Error).message);
+          setEvents([]);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     })();
+    return () => {
+      isMounted = false;
+    };
   }, [username]);
 
   if (!username) return null;

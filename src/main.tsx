@@ -19,11 +19,8 @@ requestIdleCallback(() => {
 // Register Service Worker for true offline fallback support
 if (typeof window !== "undefined" && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .catch((err) => {
-        console.warn("[Service Worker] Registration failed:", err);
-      });
+    navigator.serviceWorker.register("/sw.js").catch((err) => {
+      console.warn("[Service Worker] Registration failed:", err);
+    });
   });
 }
-

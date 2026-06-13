@@ -47,7 +47,13 @@ serve(async (req) => {
       const dehashedApiKey = Deno.env.get('DEHASHED_API_KEY');
       const dehashedEmail = Deno.env.get('DEHASHED_EMAIL');
       
-      let findings: any[] = [];
+      interface Finding {
+        source: string;
+        severity: string;
+        data_types: string[];
+        date: string;
+      }
+      let findings: Finding[] = [];
 
       if (hibpApiKey) {
         // HIBP Integration
@@ -60,7 +66,7 @@ serve(async (req) => {
         
         if (hibpRes.ok) {
           const hibpData = await hibpRes.json();
-          findings = findings.concat(hibpData.map((b: any) => ({
+          findings = findings.concat(hibpData.map((b: { Name: string; DataClasses: string[]; BreachDate: string }) => ({
             source: b.Name,
             severity: b.DataClasses.includes('Passwords') ? 'high' : 'medium',
             data_types: b.DataClasses,
@@ -83,7 +89,7 @@ serve(async (req) => {
         if (dehashedRes.ok) {
           const dehashedData = await dehashedRes.json();
           if (dehashedData.entries) {
-             findings = findings.concat(dehashedData.entries.map((e: any) => ({
+             findings = findings.concat(dehashedData.entries.map((e: { database_name?: string; email?: string; password?: string }) => ({
                source: e.database_name || 'Dark Web Dump',
                severity: e.password ? 'high' : 'medium',
                data_types: [e.email ? 'Email' : null, e.password ? 'Passwords' : null].filter(Boolean),
@@ -104,7 +110,7 @@ serve(async (req) => {
       // Ensure jobs array is typed as jsonb
       const { error: insertError } = await supabase
         .from('identity_breaches')
-        .insert(findings.map((f: Record<string, any>) => ({
+        .insert(findings.map((f: Finding) => ({
           user_id: job.user_id,
           identity_id: job.identity_id,
           source_name: f.source,

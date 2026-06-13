@@ -94,7 +94,10 @@ export default function FuturisticThreatConsole({
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    setDone(false);
+    const initTimer = setTimeout(() => {
+      setDone(false);
+      setStage(0);
+    }, 0);
     const timer = setInterval(() => {
       setStage((s) => {
         if (s >= scanStages.length - 1) {
@@ -105,7 +108,10 @@ export default function FuturisticThreatConsole({
         return s + 1;
       });
     }, 1200);
-    return () => clearInterval(timer);
+    return () => {
+      clearTimeout(initTimer);
+      clearInterval(timer);
+    };
   }, [alertCount]);
 
   const riskScore = useMemo(
@@ -117,8 +123,16 @@ export default function FuturisticThreatConsole({
   const ThreatIcon = threatMeta[threatLevel].icon;
 
   return (
-    <section aria-label="Threat Console" className="space-y-4 rounded-2xl border border-cyan-500/20 bg-[#0a0f1c] p-4">
-      <div role="status" aria-live="polite" aria-label="Scan progress" className="grid gap-3 md:grid-cols-2">
+    <section
+      aria-label="Threat Console"
+      className="space-y-4 rounded-2xl border border-cyan-500/20 bg-[#0a0f1c] p-4"
+    >
+      <div
+        role="status"
+        aria-live="polite"
+        aria-label="Scan progress"
+        className="grid gap-3 md:grid-cols-2"
+      >
         {scanStages.map((s, i) => (
           <ScanStep
             key={s}
