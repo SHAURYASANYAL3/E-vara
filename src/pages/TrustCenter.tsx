@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+﻿import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -184,7 +184,7 @@ const TrustCenter = () => {
             <CardHeader>
               <CardTitle>Data Lifecycle</CardTitle>
               <CardDescription>
-                Collected → Processed → Retained → Deleted
+                Collected â†’ Processed â†’ Retained â†’ Deleted
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -274,4 +274,5 @@ const TrustCenter = () => {
   );
 };
 
-export default TrustCenter;
+export { handleDataExport };`nexport default TrustCenter;
+
