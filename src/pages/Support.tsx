@@ -25,8 +25,14 @@ const SupportPage = () => {
     },
   ]);
 
-  const [sessionId] = useState(() =>
-    Math.random().toString(36).substring(7).toUpperCase(),
+  const sessionId = useMemo(
+
+    () => crypto.randomUUID().slice(0, 8).toUpperCase(),
+
+     
+    () => Math.random().toString(36).substring(7).toUpperCase(),
+
+    [],
   );
 
   const handleSend = (e: React.FormEvent) => {

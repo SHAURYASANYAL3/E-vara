@@ -40,14 +40,43 @@ E-VARA combines exposure monitoring, trust scoring, explainable risk analysis, a
 E-VARA utilizes a cutting-edge serverless architecture for maximum scalability and performance.
 
 ```mermaid
-graph TD
-    Client["React / Vite Frontend"] -->|"REST & WebSockets"| Edge["Supabase Edge Functions"]
-    Edge --> DB[("PostgreSQL Database")]
-    Edge --> ThirdParty["Dark Web / Intelligence APIs"]
-    DB --> RLS{"Row Level Security"}
-    RLS --> Auth["Supabase Auth"]
-    Client --> Crypto["Web Crypto API (Local Hash)"]
+  graph TD
+
+    U[User Input]
+
+    V[Vite]
+    R[React + TypeScript UI]
+    H[Client-side SHA-256 Hashing<br/>Web Crypto API]
+    TQ[TanStack Query]
+
+    SC[Supabase Client]
+
+    EF[Supabase Edge Functions]
+    DB[(PostgreSQL + RLS)]
+    AS[Auth & Storage]
+
+    GH[GitHub Repository]
+    GA[GitHub Actions]
+    VD[Vercel Deployment]
+
+    U --> R
+    V --> R
+
+    R --> H
+    R --> TQ
+
+    TQ --> SC
+
+    SC --> EF
+    SC --> DB
+    SC --> AS
+
+    GH --> GA
+    GA --> VD
+
+    VD --> R
 ```
+
 - **Frontend**: React 18 (TypeScript), Vite, Tailwind CSS, Framer Motion.
 - **Infrastructure**: Supabase (PostgreSQL, Auth, Edge Functions, RLS).
 - **Visualization**: Custom HUD components, Recharts, Lucide Icons.

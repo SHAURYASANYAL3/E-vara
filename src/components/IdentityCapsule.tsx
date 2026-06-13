@@ -57,11 +57,11 @@ export const IdentityCapsule = () => {
     <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
       <div className="flex justify-between items-start">
         <div>
-          <h3 className="text-gray-200 font-medium flex items-center gap-2 mb-2">
+          <h3 className="text-gray-100 font-medium flex items-center gap-2 mb-2">
             <FileJson size={18} className="text-cyan-500" />
             Identity Capsule (Export)
           </h3>
-          <p className="text-sm text-gray-400 max-w-sm mb-4">
+          <p className="text-sm text-gray-300 max-w-sm mb-4">
             Download your current zero-knowledge trust baseline, device fleet,
             and risk parameters as a portable, encrypted state file.
           </p>
