@@ -20,8 +20,11 @@ import {
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/landing/Navbar";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const TrustCenter = () => {
+  const { user, logout } = useAuth();
   const handleExport = () => {
     toast({
       title: "Data Export Initiated",
@@ -30,12 +33,39 @@ const TrustCenter = () => {
     });
   };
 
-  const handleDelete = () => {
-    toast({
-      variant: "destructive",
-      title: "Deletion Requested",
-      description: "30-day cryptographic cooling-off period initiated.",
-    });
+  const handleDelete = async () => {
+    if (!user) {
+      toast({
+        variant: "destructive",
+        title: "Deletion Failed",
+        description: "You must be logged in to request deletion.",
+      });
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from("user_profiles")
+        .update({ deleted_at: new Date().toISOString() })
+        .eq("id", user.id);
+
+      if (error) throw error;
+
+      toast({
+        variant: "destructive",
+        title: "Deletion Requested",
+        description: "30-day cryptographic cooling-off period initiated. Identity soft-deleted.",
+      });
+
+      await logout();
+    } catch (e) {
+      console.error("Soft delete failed:", e);
+      toast({
+        variant: "destructive",
+        title: "Deletion Failed",
+        description: "An error occurred while attempting to delete your identity.",
+      });
+    }
   };
 
   const handleWithdrawConsent = () => {

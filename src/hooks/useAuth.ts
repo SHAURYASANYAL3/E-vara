@@ -62,6 +62,7 @@ export function useAuth() {
             .from("user_profiles")
             .select("tier, security_clearance, node_id_stable, billing_status")
             .eq("id", user.id)
+            .is("deleted_at", null)
             .single();
 
           if (error) throw error;
