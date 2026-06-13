@@ -274,5 +274,6 @@ const TrustCenter = () => {
   );
 };
 
-export { handleDataExport };`nexport default TrustCenter;
+export { handleDataExport };
+export default TrustCenter;
 
