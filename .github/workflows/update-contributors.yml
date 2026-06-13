@@ -1,35 +1,35 @@
-name: Update Contributors Wall
+name: Auto-Update Contributors
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Run daily at midnight UTC
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [closed]
   workflow_dispatch: # Allow manual trigger
 
 jobs:
   update-contributors:
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
 
-      - name: Update Contributors
+      - name: Run Auto-Update Script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/update-contributors.js
+        run: |
+          node scripts/update-contributors.cjs
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/data/contributors.ts
-          # Only commit if there are changes
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-update contributor wall" && git push)
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/contributors.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-update top contributors and best PRs" && git push)

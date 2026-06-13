@@ -1,0 +1,202 @@
+[
+  {
+    "id": "c_001",
+    "name": "Shaurya Sanyal",
+    "github": "https://github.com/SHAURYASANYAL3",
+    "role": "Lead Architect & Founder",
+    "bio": "Building the zero-trust identity perimeter. Focuses on core infrastructure, Edge Functions, and threat engine architecture.",
+    "avatar": "https://avatars.githubusercontent.com/u/128920982?v=4",
+    "contribution_summary": "Core Platform Architecture, Zero-Trust Engine",
+    "merged_prs": 161,
+    "featured": true,
+    "is_founding": true,
+    "level": "Founding Contributor",
+    "badges": [
+      "Backend",
+      "Security",
+      "Product",
+      "NSOC'26"
+    ],
+    "joinedAt": "Jan 2024",
+    "resolved_issues": [
+      {
+        "issueNumber": 1,
+        "title": "🏆 Top Contribution: Implement structured identity intelligence engine, UI cards, and face-scan disclaimer",
+        "description": "Impact Factor: 415 additions, 58 deletions. Context:  Motivation  Turn raw searchresult links into actionable identity intelligence b...",
+        "prLink": "https://github.com/SHAURYASANYAL3/E-vara/pull/1"
+      }
+    ]
+  },
+  {
+    "id": "c_002",
+    "name": "mdhanvantar-web",
+    "github": "https://github.com/mdhanvantar-web",
+    "role": "Core Contributor",
+    "bio": "Driving the frontend UI/UX architecture and designing the threat visualization dashboard.",
+    "avatar": "https://avatars.githubusercontent.com/u/263683833?v=4",
+    "contribution_summary": "Frontend Architecture, UI/UX Implementation",
+    "merged_prs": 49,
+    "featured": true,
+    "is_founding": true,
+    "level": "Core Contributor",
+    "badges": [
+      "Frontend",
+      "Design",
+      "NSOC'26"
+    ],
+    "joinedAt": "Feb 2024",
+    "resolved_issues": [
+      {
+        "issueNumber": 25,
+        "title": "🏆 Top Contribution: CODE",
+        "description": "Impact Factor: 1802 additions, 263 deletions. ",
+        "prLink": "https://github.com/SHAURYASANYAL3/E-vara/pull/25"
+      }
+    ]
+  },
+  {
+    "id": "c_193049402",
+    "name": "jhnavi25",
+    "github": "https://github.com/jhnavi25",
+    "role": "Contributor",
+    "bio": "Open source contributor helping build the E-VARA perimeter.",
+    "avatar": "https://avatars.githubusercontent.com/u/193049402?v=4",
+    "contribution_summary": "Platform Improvements",
+    "merged_prs": 10,
+    "featured": false,
+    "is_founding": false,
+    "level": "Contributor",
+    "badges": [],
+    "joinedAt": "Jun 2026",
+    "resolved_issues": [
+      {
+        "issueNumber": 108,
+        "title": "🏆 Top Contribution: fix: resolve CI lint errors (react-hooks/purity) on main",
+        "description": "Impact Factor: 34 additions, 923 deletions. Context:   Fixes 107  CI lint failures    Fixes the reacthookspurity lint error on main t...",
+        "prLink": "https://github.com/SHAURYASANYAL3/E-vara/pull/108"
+      }
+    ]
+  },
+  {
+    "id": "c_184750994",
+    "name": "diksha78dev",
+    "github": "https://github.com/diksha78dev",
+    "role": "Contributor",
+    "bio": "Open source contributor helping build the E-VARA perimeter.",
+    "avatar": "https://avatars.githubusercontent.com/u/184750994?v=4",
+    "contribution_summary": "Platform Improvements",
+    "merged_prs": 2,
+    "featured": false,
+    "is_founding": false,
+    "level": "Contributor",
+    "badges": [],
+    "joinedAt": "Jun 2026",
+    "resolved_issues": [
+      {
+        "issueNumber": 96,
+        "title": "🏆 Top Contribution: feat: Implement real telemetry for Demo Health",
+        "description": "Impact Factor: 325 additions, 9 deletions. Context:  Overview  Replaces the hardcoded placeholders on demohealth with live clientDB ...",
+        "prLink": "https://github.com/SHAURYASANYAL3/E-vara/pull/96"
+      }
+    ]
+  },
+  {
+    "id": "c_210362211",
+    "name": "SriyaMeenakshi",
+    "github": "https://github.com/SriyaMeenakshi",
+    "role": "Contributor",
+    "bio": "Open source contributor helping build the E-VARA perimeter.",
+    "avatar": "https://avatars.githubusercontent.com/u/210362211?v=4",
+    "contribution_summary": "Platform Improvements",
+    "merged_prs": 2,
+    "featured": false,
+    "is_founding": false,
+    "level": "Contributor",
+    "badges": [],
+    "joinedAt": "Jun 2026",
+    "resolved_issues": [
+      {
+        "issueNumber": 95,
+        "title": "🏆 Top Contribution: docs: add comprehensive beginner-friendly CONTRIBUTING.md guide",
+        "description": "Impact Factor: 346 additions, 22 deletions. Context:    Closes 91      Description    This PR expands and improves the existing CONTR...",
+        "prLink": "https://github.com/SHAURYASANYAL3/E-vara/pull/95"
+      }
+    ]
+  },
+  {
+    "id": "c_237839667",
+    "name": "Janhvi Soni",
+    "github": "https://github.com/janhvisoni804",
+    "role": "Contributor",
+    "bio": "Open source contributor helping build the E-VARA perimeter.",
+    "avatar": "https://avatars.githubusercontent.com/u/237839667?v=4",
+    "contribution_summary": "Platform Improvements",
+    "merged_prs": 2,
+    "featured": false,
+    "is_founding": false,
+    "level": "Contributor",
+    "badges": [
+      "NSOC'26"
+    ],
+    "joinedAt": "Jun 2026",
+    "resolved_issues": [
+      {
+        "issueNumber": 120,
+        "title": "🏆 Top Contribution: docs: Add Contributor Covenant Code of Conduct",
+        "description": "Impact Factor: 89 additions, 0 deletions. Context:   Overview  This Pull Request introduces the official Contributor Covenant v2.1 ...",
+        "prLink": "https://github.com/SHAURYASANYAL3/E-vara/pull/120"
+      }
+    ]
+  },
+  {
+    "id": "c_186990161",
+    "name": "Aman kumar vishwakarma",
+    "github": "https://github.com/amankv1234",
+    "role": "Contributor",
+    "bio": "Open source contributor helping build the E-VARA perimeter.",
+    "avatar": "https://avatars.githubusercontent.com/u/186990161?v=4",
+    "contribution_summary": "UI Improvements",
+    "merged_prs": 4,
+    "featured": false,
+    "is_founding": false,
+    "level": "Contributor",
+    "badges": [
+      "Frontend",
+      "NSOC'26"
+    ],
+    "joinedAt": "Jun 2026",
+    "resolved_issues": [
+      {
+        "issueNumber": 117,
+        "title": "🏆 Top Contribution: feat: Add Pre-commit Hook (Husky) to run Prettier automatically",
+        "description": "Impact Factor: 658 additions, 39 deletions. Context: Closes 88     Description  Implemented a precommit hook using Husky and lintstag...",
+        "prLink": "https://github.com/SHAURYASANYAL3/E-vara/pull/117"
+      }
+    ]
+  },
+  {
+    "id": "c_169473202",
+    "name": "Tripti Patel",
+    "github": "https://github.com/tri-pti",
+    "role": "Contributor",
+    "bio": "Open source contributor helping build the E-VARA perimeter.",
+    "avatar": "https://avatars.githubusercontent.com/u/169473202?v=4",
+    "contribution_summary": "Documentation Improvements",
+    "merged_prs": 1,
+    "featured": false,
+    "is_founding": false,
+    "level": "Contributor",
+    "badges": [
+      "NSOC'26"
+    ],
+    "joinedAt": "Jun 2026",
+    "resolved_issues": [
+      {
+        "issueNumber": 116,
+        "title": "🏆 Top Contribution: docs: add Mermaid architecture diagram to README",
+        "description": "Impact Factor: 36 additions, 7 deletions. Context:  Description    Adds a Mermaid.js architecture diagram to the main README.md to ...",
+        "prLink": "https://github.com/SHAURYASANYAL3/E-vara/pull/116"
+      }
+    ]
+  }
+]

@@ -1,73 +1,59 @@
-name: Auto Assign Issues
+name: Auto-Assign Issue
 
 on:
   issue_comment:
     types: [created]
 
+permissions:
+  issues: write
+
 jobs:
-  auto-assign:
+  assign:
+    if: ${{ !github.event.issue.pull_request && github.event.issue.state == 'open' }}
     runs-on: ubuntu-latest
-    if: ${{ !github.event.sender.bot }}
-    permissions:
-      issues: write
-      pull-requests: write
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - name: Assign issue to volunteer
-        uses: actions/github-script@v9
+      - name: Assign first commenter
+        uses: actions/github-script@v7
         with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const comment = context.payload.comment.body.toLowerCase();
+            // 1. Fetch current issue to check assignees accurately
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
             
-            // Keywords that indicate the user wants to work on the issue
-            const keywords = [
-              '/assign', 
-              '/claim', 
-              'assign to me', 
-              'i want to work on this', 
-              'i can take this',
-              'i would like to work on this',
-              'let me work on this'
-            ];
-            
-            const wantsToWork = keywords.some(keyword => comment.includes(keyword));
-            
-            if (!wantsToWork) {
-              console.log('Comment does not indicate intent to work on the issue.');
+            // 2. Only proceed if the issue is completely unassigned
+            if (issue.data.assignees && issue.data.assignees.length > 0) {
+              console.log("Issue is already assigned. Skipping auto-assign.");
               return;
             }
             
-            const issueNumber = context.issue.number;
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            
-            // Get current issue to check if it's already assigned
-            const { data: issue } = await github.rest.issues.get({
-              owner,
-              repo,
-              issue_number: issueNumber
-            });
-            
-            if (issue.assignees && issue.assignees.length > 0) {
-              console.log('Issue is already assigned to someone else.');
+            // Skip if the commenter is a bot
+            if (context.payload.comment.user.type === "Bot") {
+              console.log("Commenter is a bot. Skipping.");
               return;
             }
             
-            const userLogin = context.payload.comment.user.login;
+            const commenter = context.payload.comment.user.login;
             
-            // Assign the user
-            await github.rest.issues.addAssignees({
-              owner,
-              repo,
-              issue_number: issueNumber,
-              assignees: [userLogin]
-            });
-            
-            // Leave a welcoming confirmation comment
-            await github.rest.issues.createComment({
-              owner,
-              repo,
-              issue_number: issueNumber,
-              body: `🚀 Assigned to @${userLogin}! Thank you for volunteering to help build E-VARA. Let us know if you have any questions before you start.`
-            });
+            try {
+              // 3. Assign the user
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                assignees: [commenter]
+              });
+              
+              // 4. Send a welcome comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `🚀 Assigned to @${commenter}! Thanks for taking this on. Please let us know if you need any help!`
+              });
+            } catch (error) {
+              console.log("Failed to assign user. Note: users must be a member of the organization or have prior activity to be assigned via API in some cases.", error);
+            }
