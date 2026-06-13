@@ -206,7 +206,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                 className="mt-0 focus-visible:ring-0 space-y-6"
               >
                 <EnterpriseSLAMonitor />
-                    <AnalyticsDashboard />
+                <AnalyticsDashboard />
                 <div className="grid gap-6 md:grid-cols-2">
                   <DigitalFootprintMap
                     username={identity?.username || "identity"}

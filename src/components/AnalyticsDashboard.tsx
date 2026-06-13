@@ -61,7 +61,10 @@ export const AnalyticsDashboard: React.FC = () => {
     <div className="p-4 bg-card rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">Risk Score Over Time</h2>
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <LineChart
+          data={data}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="calculated_at" tick={{ fontSize: 12 }} />
           <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
