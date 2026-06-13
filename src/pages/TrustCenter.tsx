@@ -1,274 +1,117 @@
+import React, { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Database,
-  Shield,
-  Key,
-  EyeOff,
-  CheckCircle2,
-  History,
-  XCircle,
-  Download,
-  FileText,
-  Trash2,
-} from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Shield, Download, ShieldCheck, Lock, Eye } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/landing/Navbar";
 
+export const handleDataExport = async (userId: string) => {
+  if (!userId) throw new Error("User ID is required for export");
+  
+  const { data, error } = await supabase
+    .from("identity_records")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) throw error;
+  
+  const blob = new Blob([JSON.stringify(data || [], null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `e-vara-user-data-${userId}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
 const TrustCenter = () => {
-  const handleExport = () => {
-    toast({
-      title: "Data Export Initiated",
-      description:
-        "An encrypted archive will be securely delivered within 1 hour.",
-    });
-  };
+  const { user } = useAuth();
+  const [isExporting, setIsExporting] = useState(false);
 
-  const handleDelete = () => {
-    toast({
-      variant: "destructive",
-      title: "Deletion Requested",
-      description: "30-day cryptographic cooling-off period initiated.",
-    });
-  };
+  const onExportClick = async () => {
+    if (!user) {
+      toast({ title: "Authentication required", description: "Please sign in to export your data.", variant: "destructive" });
+      return;
+    }
 
-  const handleWithdrawConsent = () => {
-    toast({
-      variant: "destructive",
-      title: "Consent Withdrawn",
-      description: "Active monitoring paused. Identity OS disabled.",
-    });
+    try {
+      setIsExporting(true);
+      toast({ title: "Export Initiated", description: "Gathering your database records..." });
+      await handleDataExport(user.id);
+      toast({ title: "Export Successful", description: "Your data history has been downloaded safely." });
+    } catch (error: any) {
+      console.error("Export error:", error);
+      toast({ title: "Export Failed", description: error.message || "An error occurred during completion.", variant: "destructive" });
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <div className="pt-32 pb-20 container mx-auto px-4 max-w-4xl">
-        <div className="mb-12 space-y-4">
-          <div className="flex items-center gap-3 text-primary mb-2">
-            <Shield className="h-6 w-6" />
-            <span className="font-mono text-sm tracking-widest uppercase">
-              E-Vara Privacy Architecture
-            </span>
+      <div className="pt-32 container mx-auto px-4 max-w-6xl">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 border-b pb-6">
+          <div>
+            <h1 className="text-4xl font-black tracking-tight flex items-center gap-2">
+              <Shield className="h-9 w-9 text-primary" /> Trust Center
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              Manage your personal identifier privacy, data lifecycles, and consent history transparency.
+            </p>
           </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase">
-            Trust Center
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl">
-            Transparency is the foundation of our Executive Identity
-            Intelligence Platform. Review exactly how your data is handled and
-            maintain cryptographic control.
-          </p>
+          <Button onClick={onExportClick} disabled={isExporting} className="font-semibold shadow-md">
+            <Download className="mr-2 h-4 w-4" /> {isExporting ? "Exporting..." : "EXPORT MY DATA"}
+          </Button>
         </div>
 
-        <div className="grid gap-8">
-          {/* What We Collect vs Never Collect */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card className="border-border/50 bg-white/[0.02]">
-              <CardHeader>
-                <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <CardTitle>What We Collect</CardTitle>
-                </div>
-                <CardDescription>
-                  Strictly operational telemetry.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4 font-mono text-sm text-muted-foreground">
-                <ul className="space-y-2 list-disc pl-4">
-                  <li>
-                    Cryptographic hashes of monitored identifiers (SHA-256)
-                  </li>
-                  <li>Platform usage and session analytics</li>
-                  <li>Anomalous signal metadata (anonymized)</li>
-                  <li>Exposure context (encrypted at rest)</li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="border-[hsl(var(--severity-high)/0.2)] bg-[hsl(var(--severity-high)/0.02)]">
-              <CardHeader>
-                <div className="flex items-center gap-2 mb-2">
-                  <EyeOff className="h-5 w-5 text-[hsl(var(--severity-high))]" />
-                  <CardTitle>What We Never Collect</CardTitle>
-                </div>
-                <CardDescription>
-                  We minimize storage of raw identifiers.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4 font-mono text-sm text-muted-foreground">
-                <ul className="space-y-2 list-disc pl-4">
-                  <li>Plaintext passwords or biometrics</li>
-                  <li>Contents of private communications</li>
-                  <li>Browsing history outside of threat intelligence</li>
-                  <li>Raw financial transaction data</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Actionable Controls */}
-          <Card className="border-border/50 bg-black/40">
+        <div className="grid gap-6 md:grid-cols-3 mb-10">
+          <Card>
             <CardHeader>
-              <CardTitle>Data Sovereignty Controls</CardTitle>
-              <CardDescription>
-                Execute your rights under GDPR and CCPA directly.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between p-4 rounded-lg bg-black/20 border border-border/50">
-                <div>
-                  <p className="font-medium text-sm">Export My Data</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Download a cryptographic archive of your metadata.
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleExport}
-                  className="font-mono text-xs"
-                >
-                  <Download className="h-3 w-3 mr-2" />
-                  EXPORT
-                </Button>
-              </div>
-
-              <div className="flex items-center justify-between p-4 rounded-lg bg-black/20 border border-border/50">
-                <div>
-                  <p className="font-medium text-sm">Withdraw Consent</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Pause active monitoring and OSINT gathering.
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleWithdrawConsent}
-                  className="font-mono text-xs border-amber-500/50 text-amber-500 hover:bg-amber-500/10 hover:text-amber-400"
-                >
-                  WITHDRAW
-                </Button>
-              </div>
-
-              <div className="flex items-center justify-between p-4 rounded-lg border border-red-500/20 bg-red-500/5">
-                <div>
-                  <p className="font-medium text-sm text-red-500">
-                    Delete My Identity
-                  </p>
-                  <p className="text-xs text-red-500/70 mt-1">
-                    Permanently scrub all stored data and baseline models.
-                  </p>
-                </div>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={handleDelete}
-                  className="font-mono text-xs"
-                >
-                  <XCircle className="h-3 w-3 mr-2" />
-                  DELETE
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Data Lifecycle */}
-          <Card className="border-border/50 bg-black/40">
-            <CardHeader>
-              <CardTitle>Data Lifecycle</CardTitle>
-              <CardDescription>
-                Collected → Processed → Retained → Deleted
-              </CardDescription>
+              <CardTitle className="text-lg flex items-center gap-2"><Lock className="h-5 w-5 text-primary" /> End-to-End Encryption</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="rounded-lg border border-border/50 overflow-hidden">
-                <table className="w-full text-sm text-left font-mono">
-                  <thead className="bg-white/[0.02] border-b border-border/50 text-xs uppercase tracking-wider text-muted-foreground">
-                    <tr>
-                      <th className="px-4 py-3 font-medium">Data</th>
-                      <th className="px-4 py-3 font-medium">Retention</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border/50">
-                    <tr className="hover:bg-white/[0.01]">
-                      <td className="px-4 py-3">Device Metadata</td>
-                      <td className="px-4 py-3 text-muted-foreground">
-                        90 days
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-white/[0.01]">
-                      <td className="px-4 py-3">Risk Snapshots</td>
-                      <td className="px-4 py-3 text-muted-foreground">
-                        30 days
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-white/[0.01]">
-                      <td className="px-4 py-3">Events</td>
-                      <td className="px-4 py-3 text-muted-foreground">
-                        180 days
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-white/[0.01]">
-                      <td className="px-4 py-3">Queue Logs</td>
-                      <td className="px-4 py-3 text-muted-foreground">
-                        7 days
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <CardDescription>All PII records are completely obfuscated application-side using AES-256-GCM architecture prior to database persistence.</CardDescription>
             </CardContent>
           </Card>
-
-          {/* Consent History */}
-          <Card className="border-border/50 bg-black/40">
+          <Card>
             <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <History className="h-4 w-4" /> Consent History
-                  </CardTitle>
-                  <CardDescription>
-                    Immutable log of your privacy agreements.
-                  </CardDescription>
-                </div>
-                <Button variant="ghost" size="sm">
-                  <FileText className="h-4 w-4 mr-2" /> View Full Log
-                </Button>
-              </div>
+              <CardTitle className="text-lg flex items-center gap-2"><Eye className="h-5 w-5 text-primary" /> Zero-Knowledge Access</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {[
-                  {
-                    date: "2026-06-11",
-                    action: "Accepted Terms of Service v2.4",
-                  },
-                  {
-                    date: "2026-06-11",
-                    action: "Granted Exposure Intelligence scan permission",
-                  },
-                  { date: "2026-06-10", action: "Initial Account Creation" },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex justify-between items-center py-2 border-b border-border/50 last:border-0 font-mono text-sm"
-                  >
-                    <span className="text-muted-foreground">{item.date}</span>
-                    <span className="text-right">{item.action}</span>
-                  </div>
-                ))}
-              </div>
+              <CardDescription>Administrative functions cannot view your clear-text raw keys. Your identifiers are decoded exclusively on your browser session.</CardDescription>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Dynamic Consent Control</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>Revoke access to identity records globally at any time, instantly dropping keys and wiping active caches.</CardDescription>
             </CardContent>
           </Card>
         </div>
+
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle>Data Lifecycle Processing Logs</CardTitle>
+            <CardDescription>Auditable operational flow mapping your encrypted packets.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm text-muted-foreground">
+            <div className="p-3 bg-muted rounded-md flex justify-between">
+              <span>Client Entry Verification (Cleartext Data)</span>
+              <span>Inbound {"\u2192"} AES-GCM Transform Engine</span>
+            </div>
+            <div className="p-3 bg-muted rounded-md flex justify-between">
+              <span>Secure Persistence Layer (Supabase Hex Storage)</span>
+              <span>Encrypted String {"\u2192"} Encoded Table Target</span>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
