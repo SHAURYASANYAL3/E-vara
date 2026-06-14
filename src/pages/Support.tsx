@@ -26,7 +26,6 @@ const SupportPage = () => {
   ]);
 
   const sessionId = useMemo(() => {
-
     // Cryptographically secure session ID generation
     if (typeof crypto !== "undefined" && crypto.randomUUID) {
       return crypto.randomUUID().slice(0, 8).toUpperCase();

@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 export async function isRateLimited(
   identifier: string,
   maxRequests: number = 60,
-  windowSeconds: number = 60
+  windowSeconds: number = 60,
 ): Promise<{ allowed: boolean; currentLimit: number }> {
   try {
     const { data, error } = await supabase.rpc("check_rate_limit", {
