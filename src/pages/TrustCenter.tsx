@@ -16,20 +16,26 @@ import Navbar from "@/components/landing/Navbar";
 export const handleDataExport = async (userId: string) => {
   if (!userId) throw new Error("User ID is required for export");
 
-  const { data, error } = await supabase
-    .from("identity_records")
-    .select("*")
-    .eq("user_id", userId);
-
-  if (error) throw error;
-
-  const blob = new Blob([JSON.stringify(data || [], null, 2)], {
-    type: "application/json",
+  // Backend endpoint se cryptographic metadata archive (.zip) fetch karna
+  const response = await fetch("/api/trust-center/export", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
+
+  if (!response.ok) {
+    throw new Error("Failed to generate cryptographic archive from backend");
+  }
+
+  // Response stream ko zip blob mein convert karna
+  const blob = await response.blob();
   const url = URL.createObjectURL(blob);
+
+  // Programmatically trigger download
   const a = document.createElement("a");
   a.href = url;
-  a.download = `e-vara-user-data-${userId}.json`;
+  a.download = "cryptographic_metadata_archive.zip";
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -54,13 +60,17 @@ const TrustCenter = () => {
     try {
       setIsExporting(true);
       toast({
-        title: "Export Initiated",
-        description: "Gathering your database records...",
+        title: "Data Export Initiated",
+        description:
+          "An encrypted archive will be securely delivered within 1 hour.",
       });
+
       await handleDataExport(user.id);
+
       toast({
         title: "Export Successful",
-        description: "Your data history has been downloaded safely.",
+        description:
+          "Your cryptographic metadata archive has been downloaded safely.",
       });
     } catch (error: unknown) {
       console.error("Export error:", error);
@@ -90,9 +100,9 @@ const TrustCenter = () => {
     try {
       setIsDeleting(true);
       toast({
-        title: "Deletion Initiated",
-        description:
-          "Your request has been logged. Account will be removed after 30 days.",
+        title: "Deletion Requested",
+        description: "30-day cryptographic cooling-off period initiated.",
+        variant: "destructive",
       });
 
       const {
