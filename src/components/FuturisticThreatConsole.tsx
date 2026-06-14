@@ -122,7 +122,6 @@ export default function FuturisticThreatConsole({
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    
     setDone(false);
     const timer = setInterval(() => {
       setStage((s) => {
