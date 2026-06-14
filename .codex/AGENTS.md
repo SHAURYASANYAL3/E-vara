@@ -21,6 +21,7 @@ The generated baseline enables GitHub, Context7, Exa, Memory, Playwright, and Se
 
 ## Workflow Files
 
-- No dedicated workflow command files were generated for this repo.
+- `.claude/commands/add-or-modify-supabase-database-schema.md`
+- `.claude/commands/feature-development-with-ui-and-backend.md`
 
 Use these workflow files as reusable task scaffolds when the detected repository workflows recur.

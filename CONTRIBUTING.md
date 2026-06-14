@@ -10,22 +10,22 @@ Whether you're fixing a bug, improving documentation, or implementing a new feat
 
 # 📋 Table of Contents
 
-* Code of Conduct
-* Before You Start
-* Prerequisites
-* Fork and Clone the Repository
-* Install Dependencies
-* Environment Setup
-* Local Development
-* Database Setup
-* Supabase Edge Functions
-* Creating a Branch
-* Development Guidelines
-* Testing and Linting
-* Commit Guidelines
-* Submitting a Pull Request
-* Security Contributions
-* Contribution Tips
+- Code of Conduct
+- Before You Start
+- Prerequisites
+- Fork and Clone the Repository
+- Install Dependencies
+- Environment Setup
+- Local Development
+- Database Setup
+- Supabase Edge Functions
+- Creating a Branch
+- Development Guidelines
+- Testing and Linting
+- Commit Guidelines
+- Submitting a Pull Request
+- Security Contributions
+- Contribution Tips
 
 ---
 
@@ -33,10 +33,10 @@ Whether you're fixing a bug, improving documentation, or implementing a new feat
 
 Please help us maintain a positive and professional community.
 
-* Be respectful and constructive.
-* Prioritize security and user privacy.
-* Follow existing project architecture.
-* Welcome and support fellow contributors.
+- Be respectful and constructive.
+- Prioritize security and user privacy.
+- Follow existing project architecture.
+- Welcome and support fellow contributors.
 
 ---
 
@@ -56,10 +56,10 @@ Before working on an issue:
 
 Please ensure you have:
 
-* Node.js 20+
-* npm
-* Git
-* A Supabase account
+- Node.js 20+
+- npm
+- Git
+- A Supabase account
 
 Verify your installation:
 
@@ -231,11 +231,11 @@ let value: UserProfile;
 
 ## General Guidelines
 
-* Keep changes focused.
-* Write clean and maintainable code.
-* Follow existing project structure.
-* Update documentation when necessary.
-* Prioritize security and privacy.
+- Keep changes focused.
+- Write clean and maintainable code.
+- Follow existing project structure.
+- Update documentation when necessary.
+- Prioritize security and privacy.
 
 ---
 
@@ -277,10 +277,10 @@ git commit -m "docs: improve contributing guide"
 
 Examples:
 
-* feat: add new dashboard component
-* fix: resolve authentication issue
-* docs: update README
-* refactor: simplify API logic
+- feat: add new dashboard component
+- fix: resolve authentication issue
+- docs: update README
+- refactor: simplify API logic
 
 ---
 
@@ -305,11 +305,11 @@ git push origin your-branch-name
 
 Before submitting, please verify:
 
-* Project builds successfully.
-* Linting passes.
-* Tests pass.
-* Documentation is updated if needed.
-* CI checks complete successfully.
+- Project builds successfully.
+- Linting passes.
+- Tests pass.
+- Documentation is updated if needed.
+- CI checks complete successfully.
 
 ---
 
@@ -333,12 +333,12 @@ SECURITY.md
 
 Good first contributions include:
 
-* Documentation improvements
-* Bug fixes
-* UI enhancements
-* Accessibility improvements
-* Performance optimizations
-* Additional test coverage
+- Documentation improvements
+- Bug fixes
+- UI enhancements
+- Accessibility improvements
+- Performance optimizations
+- Additional test coverage
 
 If you're new to open source, don't hesitate to ask questions or request guidance through the project's issue tracker.
 

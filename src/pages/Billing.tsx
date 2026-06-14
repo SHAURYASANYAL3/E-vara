@@ -127,7 +127,7 @@ const BillingPage = () => {
                 variant="outline"
                 className="border-white/10 rounded-[12px] text-[10px] uppercase font-bold tracking-widest"
               >
-                Contact Command <ArrowUpRight className="ml-2 h-3 w-3" />
+                Contact Support <ArrowUpRight className="ml-2 h-3 w-3" />
               </Button>
             </Link>
           </div>

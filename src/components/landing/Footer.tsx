@@ -15,8 +15,8 @@ const Footer = () => (
             </span>
           </div>
           <p className="text-muted-foreground max-w-sm font-body leading-relaxed">
-            Autonomous identity intelligence and threat containment for the
-            modern executive. Built in the grid, verified by the source.
+            Protect your digital identity from AI-generated threats,
+            impersonation, and data exposure.
           </p>
         </div>
         <div>
@@ -37,7 +37,7 @@ const Footer = () => (
                 to="/dashboard"
                 className="hover:text-primary transition-colors"
               >
-                Neural Net Scan
+                Identity Scan
               </Link>
             </li>
             <li>
@@ -45,7 +45,7 @@ const Footer = () => (
                 to="/identity-records"
                 className="hover:text-primary transition-colors"
               >
-                Identity Engine
+                Identity Protection
               </Link>
             </li>
             <li>
@@ -119,10 +119,7 @@ const Footer = () => (
           </h4>
           <ul className="space-y-4 text-sm text-muted-foreground font-mono uppercase tracking-tighter">
             <li>
-              <Link
-                to="/blog"
-                className="hover:text-primary transition-colors"
-              >
+              <Link to="/blog" className="hover:text-primary transition-colors">
                 Intelligence Blog
               </Link>
             </li>

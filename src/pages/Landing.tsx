@@ -237,13 +237,23 @@ const LandingPage = () => {
               synthetic media.
             </p>
             <div className="flex gap-6">
-              {["X", "LinkedIn", "GitHub", "Discord"].map((social) => (
+              {[
+                { name: "X", href: "https://x.com/your_handle" },
+                {
+                  name: "LinkedIn",
+                  href: "https://www.linkedin.com/in/shaurya-sanyal-7b57a0382",
+                },
+                { name: "GitHub", href: "https://github.com/SHAURYASANYAL3" },
+                { name: "Discord", href: "https://discord.gg/your_invite" },
+              ].map((social) => (
                 <a
-                  key={social}
-                  href="#"
-                  className="text-xs font-mono text-white/50 hover:text-[#007AFF] transition-colors uppercase tracking-widest"
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono text-white/50 hover:text-[#007AFF] transition-colors uppercase"
                 >
-                  {social}
+                  {social.name}
                 </a>
               ))}
             </div>

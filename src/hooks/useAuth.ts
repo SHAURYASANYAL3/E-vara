@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { sha256 } from "@/lib/crypto";
 import { runResilient } from "@/lib/resilient-fetch";
 import { useSimulation } from "@/providers/SimulationProvider";
+import { enrollPasskey, verifyPasskey } from "@/lib/webauthn";
 
 const DEMO_PROFILE: UserProfile = {
   tier: "omni",
@@ -39,12 +40,30 @@ export function useAuth() {
   const { data: user, isLoading: loading } = useQuery({
     queryKey: ["auth-user"],
     queryFn: async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession();
-      if (error) throw error;
-      return session?.user ?? null;
+      const isDemo = localStorage.getItem("e_vara_demo_auth") === "true";
+      if (isDemo) {
+        const demoEmail =
+          localStorage.getItem("e_vara_demo_email") || "demo@e-vara.com";
+        return {
+          id: "demo-user-id-12345",
+          email: demoEmail,
+          user_metadata: {},
+          aud: "authenticated",
+          role: "authenticated",
+          created_at: new Date().toISOString(),
+        } as unknown as import("@supabase/supabase-js").User;
+      }
+      try {
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession();
+        if (error) throw error;
+        return session?.user ?? null;
+      } catch (err) {
+        console.warn("Supabase auth session fetch failed, returning null", err);
+        return null;
+      }
     },
     staleTime: 1000 * 60 * 5,
   });
@@ -54,7 +73,7 @@ export function useAuth() {
     queryKey: ["user-profile", user?.id, isSimulationMode],
     queryFn: async () => {
       if (!user) return null;
-      if (isSimulationMode) return DEMO_PROFILE;
+      if (isSimulationMode || user.id.startsWith("demo-")) return DEMO_PROFILE;
 
       return runResilient(
         async () => {
@@ -224,6 +243,62 @@ export function useAuth() {
       localStorage.setItem("e_vara_demo_auth", "false");
       await queryClient.invalidateQueries({ queryKey: ["auth-user"] });
       return { data, error };
+    },
+    signInWithOtp: async (email: string) => {
+      // If simulated / local dev, allow instant passwordless mock login
+      if (
+        email.endsWith("@demo.com") ||
+        email.endsWith("@investor.com") ||
+        import.meta.env.DEV
+      ) {
+        enableSimulation();
+        localStorage.setItem("e_vara_demo_auth", "true");
+        localStorage.setItem("e_vara_demo_email", email);
+        await queryClient.invalidateQueries({ queryKey: ["auth-user"] });
+        toast.success("Preserving secure simulated session via Magic Link");
+        return { success: true };
+      }
+
+      const { error } = await supabase.auth.signInWithOTP({
+        email,
+        options: {
+          emailRedirectTo: window.location.origin,
+        },
+      });
+      if (error) throw error;
+      toast.success("Magic Link verification sent to your designated email.");
+      return { success: true };
+    },
+    registerPasskey: async (email: string) => {
+      try {
+        const pk = await enrollPasskey(email);
+        toast.success("WebAuthn Passkey Registered Successfully");
+        return pk;
+      } catch (error) {
+        const err = error as Error;
+        toast.error("WebAuthn Registration Refused", {
+          description:
+            err.message || "Failed to issue cryptographic credential.",
+        });
+        throw error;
+      }
+    },
+    loginWithPasskey: async (email: string) => {
+      try {
+        const pk = await verifyPasskey(email);
+        enableSimulation();
+        localStorage.setItem("e_vara_demo_auth", "true");
+        localStorage.setItem("e_vara_demo_email", email);
+        await queryClient.invalidateQueries({ queryKey: ["auth-user"] });
+        toast.success("Biometric verification verified, session initialised.");
+        return pk;
+      } catch (error) {
+        const err = error as Error;
+        toast.error("Biometric Verification Denied", {
+          description: err.message || "Credential assertion failed.",
+        });
+        throw error;
+      }
     },
     logout,
     saveIdentity,

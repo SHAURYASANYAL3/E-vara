@@ -10,21 +10,21 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: actions/checkout@v6
-      
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-          
+
       - name: Install Dependencies
         run: npm ci
-        
+
       - name: Install Coverage Provider
         run: npm i -D @vitest/coverage-v8
-        
+
       - name: Run tests with coverage
         run: npx vitest run --coverage.enabled true --coverage.reporter json-summary
-        
+
       - name: Report Coverage
         uses: davelosert/vitest-coverage-report-action@v2
         with:

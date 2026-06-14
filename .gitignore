@@ -24,3 +24,23 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# AI Assistant & Configuration Files
+.cursor/
+.cursorrules
+.cursorignore
+.ai/
+.gemini/
+.cline/
+.windsurfrules
+.prompt/
+claude.md
+scratchpad.md
+*.ai.md
+
+
+.agents/
+.claude/
+.codex/
+.antigravitycli/
+

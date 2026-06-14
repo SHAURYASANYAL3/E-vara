@@ -16,9 +16,15 @@ const AskEVaraChat = () => {
   const [displayed, setDisplayed] = useState("");
 
   const [typing, setTyping] = useState(false);
-  const [messages, setMessages] = useState<{ role: string, content: string }[]>([
-    { role: "assistant", content: "I can provide exposure guidance from your active telemetry. Ask me anything." }
-  ]);
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>(
+    [
+      {
+        role: "assistant",
+        content:
+          "I can provide exposure guidance from your active telemetry. Ask me anything.",
+      },
+    ],
+  );
 
   const askQuestion = async (questionText: string) => {
     if (!questionText.trim()) return;
@@ -29,29 +35,33 @@ const AskEVaraChat = () => {
     setDisplayed("");
 
     try {
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json"
+      const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "openai/gpt-3.5-turbo",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "You are E-Vara, an AI cybersecurity assistant for the E-VARA website. You must ONLY answer questions related to cybersecurity. Provide only legal and ethical advice. If any question is regarding the E-VARA website or platform, think twice and provide an accurate answer based on the fact that E-VARA is an Enterprise Identity Defense & Intelligence OS providing autonomous identity defense, real-time threat monitoring, and executive security auditing. If asked something illegal or unrelated to cybersecurity, politely decline to answer.",
+              },
+              ...newMessages,
+            ],
+          }),
         },
-        body: JSON.stringify({
-          model: "openai/gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are E-Vara, an AI cybersecurity assistant for the E-VARA website. You must ONLY answer questions related to cybersecurity. Provide only legal and ethical advice. If any question is regarding the E-VARA website or platform, think twice and provide an accurate answer based on the fact that E-VARA is an Enterprise Identity Defense & Intelligence OS providing autonomous identity defense, real-time threat monitoring, and executive security auditing. If asked something illegal or unrelated to cybersecurity, politely decline to answer."
-            },
-            ...newMessages
-          ]
-        })
-      });
+      );
 
       if (!response.ok) throw new Error("API Error");
-      
+
       const data = await response.json();
       const reply = data.choices[0].message.content;
-      
+
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
       // Simple typing effect for the newest message
       let i = 0;
@@ -62,7 +72,10 @@ const AskEVaraChat = () => {
       }, 10);
     } catch (e) {
       console.error(e);
-      setMessages((prev) => [...prev, { role: "assistant", content: "Error connecting to AI backend." }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Error connecting to AI backend." },
+      ]);
       setDisplayed("Error connecting to AI backend.");
     } finally {
       setTyping(false);
@@ -79,21 +92,25 @@ const AskEVaraChat = () => {
             </p>
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
           </div>
-          
+
           <div className="max-h-48 space-y-2 overflow-y-auto mb-3 pr-1">
-             {messages.map((m, idx) => (
-                <div
-                  key={idx}
-                  className={`rounded-md px-2 py-1.5 text-xs ${m.role === "assistant" ? "bg-secondary/60 text-foreground" : "ml-6 bg-primary/20 text-primary"}`}
-                >
-                  {m.role === "assistant" && idx === messages.length - 1 && !typing ? displayed || m.content : m.content}
-                </div>
-              ))}
-              {typing && (
-                <div className="rounded-md bg-secondary/60 px-2 py-1.5 text-xs text-muted-foreground animate-pulse">
-                  E-Vara is typing...
-                </div>
-              )}
+            {messages.map((m, idx) => (
+              <div
+                key={idx}
+                className={`rounded-md px-2 py-1.5 text-xs ${m.role === "assistant" ? "bg-secondary/60 text-foreground" : "ml-6 bg-primary/20 text-primary"}`}
+              >
+                {m.role === "assistant" &&
+                idx === messages.length - 1 &&
+                !typing
+                  ? displayed || m.content
+                  : m.content}
+              </div>
+            ))}
+            {typing && (
+              <div className="rounded-md bg-secondary/60 px-2 py-1.5 text-xs text-muted-foreground animate-pulse">
+                E-Vara is typing...
+              </div>
+            )}
           </div>
 
           <div className="mb-2 flex flex-wrap gap-1.5">
@@ -112,7 +129,9 @@ const AskEVaraChat = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              const input = e.currentTarget.elements.namedItem("chatInput") as HTMLInputElement;
+              const input = e.currentTarget.elements.namedItem(
+                "chatInput",
+              ) as HTMLInputElement;
               if (input && input.value) {
                 askQuestion(input.value);
                 input.value = "";

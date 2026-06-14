@@ -17,8 +17,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install Dependencies
         run: npm ci
@@ -43,10 +43,10 @@ jobs:
             const prNumber = context.payload.pull_request.number;
             const buildSuccess = process.env.BUILD_OUTCOME === 'success';
             const lintSuccess = process.env.LINT_OUTCOME === 'success';
-            
+
             let labelToAdd = "Ready to Merge";
             let commentBody = "";
-            
+
             if (!buildSuccess) {
               labelToAdd = "Do Not Merge Yet";
               commentBody = "🚨 **Automated PR Check Failed:** The project failed to build. Please check the logs and fix the compilation errors.";
@@ -56,9 +56,9 @@ jobs:
             } else {
               labelToAdd = "Ready to Merge";
             }
-            
+
             const labelsToRemove = ["Ready to Merge", "Do Not Merge Yet", "Needs Minor Changes"].filter(l => l !== labelToAdd);
-            
+
             // Add the new label
             try {
               await github.rest.issues.addLabels({
@@ -70,7 +70,7 @@ jobs:
             } catch (err) {
               console.error(`Error adding label: ${err}`);
             }
-            
+
             // Remove old conflicting labels
             for (const label of labelsToRemove) {
               try {
@@ -84,13 +84,17 @@ jobs:
                 // Ignore
               }
             }
-            
+
             // Leave a comment if there are errors so the contributor knows why
             if (!buildSuccess || !lintSuccess) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: prNumber,
-                body: commentBody
-              });
+              try {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  body: commentBody
+                });
+              } catch (err) {
+                console.error(`Error adding comment: ${err}`);
+              }
             }

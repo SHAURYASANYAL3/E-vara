@@ -1,29 +1,8 @@
 # Instincts generated from https://github.com/SHAURYASANYAL3/E-vara
-# Generated: 2026-06-11T17:56:05.945Z
+# Generated: 2026-06-13T20:04:00.269Z
 # Version: 2.0
 # NOTE: This file supplements (does not replace) any existing curated instincts.
 # High-confidence manually curated instincts should be preserved alongside these.
-
----
-id: E-vara-commit-conventional
-trigger: "when writing a commit message"
-confidence: 0.85
-domain: git
-source: repo-analysis
-source_repo: https://github.com/SHAURYASANYAL3/E-vara
----
-
-# E Vara Commit Conventional
-
-## Action
-
-Use conventional commit format with prefixes: chore, style
-
-## Evidence
-
-- 2 commits analyzed
-- Detected conventional commit pattern
-- Examples: chore(deps): bump posthog-js from 1.384.1 to 1.386.5, style: 🎨 auto-format code with Prettier
 
 ---
 id: E-vara-commit-length
@@ -38,12 +17,12 @@ source_repo: https://github.com/SHAURYASANYAL3/E-vara
 
 ## Action
 
-Keep commit messages concise (~46 characters)
+Write moderate-length commit messages (~59 characters)
 
 ## Evidence
 
-- Average commit message length: 46 chars
-- Based on 2 commits
+- Average commit message length: 59 chars
+- Based on 3 commits
 
 ---
 id: E-vara-naming-files
@@ -123,7 +102,7 @@ Place code in the appropriate type folder (components/, services/, utils/, etc.)
 ## Evidence
 
 - Type-based module organization detected
-- Folders: components, data, hooks, integrations, lib
+- Folders: components, pages, utils, data, lib
 
 ---
 id: E-vara-test-colocate
@@ -146,8 +125,56 @@ Place test file next to the source file (e.g., Button.test.tsx next to Button.ts
 - Tests live alongside source files
 
 ---
+id: E-vara-workflow-add-or-modify-supabase-database-schema
+trigger: "when doing add or modify supabase database schema"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/SHAURYASANYAL3/E-vara
+---
+
+# E Vara Workflow Add Or Modify Supabase Database Schema
+
+## Action
+
+Follow the add-or-modify-supabase-database-schema workflow:
+1. Create new migration SQL file(s) in supabase/migrations/
+2. Update or add relevant Supabase serverless function(s) in supabase/functions/
+3. Optionally update backend logic in src/utils/ or related files
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: supabase/migrations/*.sql, supabase/functions/*/index.ts
+
+---
+id: E-vara-workflow-feature-development-with-ui-and-backend
+trigger: "when doing feature development with ui and backend"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/SHAURYASANYAL3/E-vara
+---
+
+# E Vara Workflow Feature Development With Ui And Backend
+
+## Action
+
+Follow the feature-development-with-ui-and-backend workflow:
+1. Add or modify React component(s) in src/components/ or src/pages/
+2. Update or create backend logic in src/utils/ or supabase/functions/
+3. Optionally update workflow files or documentation
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: src/components/**/*.tsx, src/pages/**/*.tsx, src/utils/**/*.ts
+
+---
 id: e-vara-instinct-file-naming
-trigger: "When creating a new file in src/"
+trigger: "When creating a new file (component, class, or constant) in the codebase"
 confidence: 0.9
 domain: code-style
 source: repo-analysis
@@ -158,15 +185,16 @@ source_repo: SHAURYASANYAL3/E-vara
 
 ## Action
 
-Name the file using PascalCase (e.g., MyComponent.tsx).
+Name files using PascalCase (e.g., MyComponent.tsx)
 
 ## Evidence
 
-- Pattern in files: src/components, src/hooks, src/pages
+- Pattern in codeStyle.namingConventions.files
+- Observed in src/components/ and src/pages/
 
 ---
 id: e-vara-instinct-function-naming
-trigger: "When defining a function"
+trigger: "When defining a new function"
 confidence: 0.9
 domain: code-style
 source: repo-analysis
@@ -177,15 +205,16 @@ source_repo: SHAURYASANYAL3/E-vara
 
 ## Action
 
-Name the function using camelCase.
+Use camelCase for function names (e.g., fetchData)
 
 ## Evidence
 
-- Pattern in code: src/hooks, src/lib
+- Pattern in codeStyle.namingConventions.functions
+- Seen in src/utils/
 
 ---
 id: e-vara-instinct-class-naming
-trigger: "When defining a class"
+trigger: "When defining a new class"
 confidence: 0.9
 domain: code-style
 source: repo-analysis
@@ -196,16 +225,17 @@ source_repo: SHAURYASANYAL3/E-vara
 
 ## Action
 
-Name the class using PascalCase.
+Use PascalCase for class names (e.g., UserManager)
 
 ## Evidence
 
-- Pattern in code: src/components, src/lib
+- Pattern in codeStyle.namingConventions.classes
+- Seen in src/components/
 
 ---
 id: e-vara-instinct-constant-naming
-trigger: "When declaring a constant"
-confidence: 0.8
+trigger: "When defining a constant"
+confidence: 0.9
 domain: code-style
 source: repo-analysis
 source_repo: SHAURYASANYAL3/E-vara
@@ -215,14 +245,15 @@ source_repo: SHAURYASANYAL3/E-vara
 
 ## Action
 
-Name the constant using SCREAMING_SNAKE_CASE.
+Use SCREAMING_SNAKE_CASE for constant names (e.g., MAX_RETRIES)
 
 ## Evidence
 
-- Pattern in code: src/lib
+- Pattern in codeStyle.namingConventions.constants
+- Seen in src/utils/
 
 ---
-id: e-vara-instinct-import-alias
+id: e-vara-instinct-import-style
 trigger: "When importing modules"
 confidence: 0.8
 domain: code-style
@@ -230,110 +261,96 @@ source: repo-analysis
 source_repo: SHAURYASANYAL3/E-vara
 ---
 
-# E Vara Instinct Import Alias
+# E Vara Instinct Import Style
 
 ## Action
 
-Use alias-based import paths instead of relative paths.
+Use import aliases for module imports
 
 ## Evidence
 
-- Pattern in code: src/components, src/pages
+- Pattern in codeStyle.importStyle
+- Seen in src/components/ and src/utils/
 
 ---
-id: e-vara-instinct-default-export
-trigger: "When exporting a module"
+id: e-vara-instinct-export-style
+trigger: "When exporting modules or components"
 confidence: 0.8
 domain: code-style
 source: repo-analysis
 source_repo: SHAURYASANYAL3/E-vara
 ---
 
-# E Vara Instinct Default Export
+# E Vara Instinct Export Style
 
 ## Action
 
-Use default export style.
+Use default exports
 
 ## Evidence
 
-- Pattern in code: src/components, src/pages
+- Pattern in codeStyle.exportStyle
+- Seen in src/components/
 
 ---
-id: e-vara-instinct-colocated-tests
-trigger: "When adding a test for a module"
-confidence: 0.9
+id: e-vara-instinct-test-location
+trigger: "When writing tests for a module or component"
+confidence: 0.85
 domain: testing
 source: repo-analysis
 source_repo: SHAURYASANYAL3/E-vara
 ---
 
-# E Vara Instinct Colocated Tests
+# E Vara Instinct Test Location
 
 ## Action
 
-Place the test file in the same folder as the module (colocated).
+Co-locate test files with the source files (e.g., MyComponent.test.tsx in the same folder as MyComponent.tsx)
 
 ## Evidence
 
-- Pattern in folder structure: testLocation is 'colocated'
+- Pattern in architecture.folderStructure.testLocation
+- Seen in src/components/ and src/utils/
 
 ---
-id: e-vara-instinct-type-based-folders
-trigger: "When creating a new module or feature"
-confidence: 0.8
-domain: architecture
+id: e-vara-instinct-test-naming
+trigger: "When naming a test file"
+confidence: 0.85
+domain: testing
 source: repo-analysis
 source_repo: SHAURYASANYAL3/E-vara
 ---
 
-# E Vara Instinct Type Based Folders
+# E Vara Instinct Test Naming
 
 ## Action
 
-Organize files by type (e.g., components, hooks, data) rather than by feature.
+Use the .test.ts or .test.tsx suffix (e.g., MyComponent.test.tsx)
 
 ## Evidence
 
-- Pattern in folder structure: type-based organization
+- Pattern in architecture.folderStructure.testLocation
+- Seen in src/components/
 
 ---
-id: e-vara-instinct-conventional-commit-chore
-trigger: "When updating dependencies or performing maintenance"
+id: e-vara-instinct-commit-prefix
+trigger: "When writing a commit message for a code change"
 confidence: 0.9
 domain: git
 source: repo-analysis
 source_repo: SHAURYASANYAL3/E-vara
 ---
 
-# E Vara Instinct Conventional Commit Chore
+# E Vara Instinct Commit Prefix
 
 ## Action
 
-Use a commit message starting with 'chore:' followed by a description.
+Prefix the commit message with 'feat:' for features or 'fix:' for bug fixes
 
 ## Evidence
 
-- Seen in commit: 'chore(deps): bump posthog-js from 1.384.1 to 1.386.5'
-
----
-id: e-vara-instinct-conventional-commit-style
-trigger: "When making code formatting or style changes"
-confidence: 0.9
-domain: git
-source: repo-analysis
-source_repo: SHAURYASANYAL3/E-vara
----
-
-# E Vara Instinct Conventional Commit Style
-
-## Action
-
-Use a commit message starting with 'style:' followed by a description.
-
-## Evidence
-
-- Seen in commit: 'style: 🎨 auto-format code with Prettier'
+- Pattern in commits.prefixes
+- Seen in commit 'fix: restore premium AI model for issue comment responder (#71)'
 
 ---
 id: e-vara-instinct-commit-length
@@ -348,28 +365,69 @@ source_repo: SHAURYASANYAL3/E-vara
 
 ## Action
 
-Keep the commit message concise, around 46 characters on average.
+Keep the commit message concise (average ~59 characters)
 
 ## Evidence
 
-- Pattern: average commit length is 46
+- Pattern in commits.averageLength
+- Seen in commit examples
 
 ---
-id: e-vara-instinct-error-boundary
-trigger: "When handling errors in React components"
+id: e-vara-instinct-commit-merge-format
+trigger: "When merging branches"
 confidence: 0.8
-domain: architecture
+domain: git
 source: repo-analysis
 source_repo: SHAURYASANYAL3/E-vara
 ---
 
-# E Vara Instinct Error Boundary
+# E Vara Instinct Commit Merge Format
 
 ## Action
 
-Use error boundaries for error handling.
+Use the format 'Merge remote-tracking branch ...' for merge commits
 
 ## Evidence
 
-- Pattern: errorBoundaries is true
+- Seen in commit 'Merge remote-tracking branch 'upstream/main''
+
+---
+id: e-vara-instinct-supabase-schema-workflow
+trigger: "When adding or modifying database tables, columns, or policies in Supabase"
+confidence: 0.93
+domain: workflow
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Supabase Schema Workflow
+
+## Action
+
+Create new migration SQL file(s) in supabase/migrations/ and update or add relevant Supabase serverless function(s) in supabase/functions/
+
+## Evidence
+
+- Workflow 'add-or-modify-supabase-database-schema'
+- Pattern in commit sequences and files involved
+
+---
+id: e-vara-instinct-feature-dev-workflow
+trigger: "When developing a new end-to-end feature"
+confidence: 0.88
+domain: workflow
+source: repo-analysis
+source_repo: SHAURYASANYAL3/E-vara
+---
+
+# E Vara Instinct Feature Dev Workflow
+
+## Action
+
+Add or modify React component(s) in src/components/ or src/pages/, update or create backend logic in src/utils/ or supabase/functions/, and optionally update workflow files or documentation
+
+## Evidence
+
+- Workflow 'feature-development-with-ui-and-backend'
+- Pattern in commit sequences and files involved
 

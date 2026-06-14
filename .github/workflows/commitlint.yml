@@ -29,4 +29,4 @@ jobs:
             chore
             revert
           requireScope: false
-          titlePattern: ^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .+
+          titlePattern: "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\\(.+\\))?: .+"

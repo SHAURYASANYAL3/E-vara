@@ -4,95 +4,134 @@
 > Auto-generated skill from repository analysis
 
 ## Overview
-This skill teaches the core development conventions and patterns used in the E-vara repository, a React application written in TypeScript. It covers file organization, code style, commit message conventions, and testing patterns, providing clear examples and suggested commands for efficient collaboration.
+
+This skill teaches you the core development patterns and workflows used in the E-vara repository, a TypeScript/React project. You'll learn the project's coding conventions, how to contribute new features or database changes, and how to follow established workflows for consistent, maintainable code.
 
 ## Coding Conventions
 
 ### File Naming
-- Use **PascalCase** for all file names (each word capitalized, no separators).
-  - **Example:**  
-    `UserProfile.tsx`  
-    `LoginForm.ts`
+
+- Use **PascalCase** for all file names.
+
+  **Example:**
+  ```
+  UserProfile.tsx
+  AuthProvider.ts
+  ```
 
 ### Import Style
+
 - Use **alias imports** for modules.
-  - **Example:**  
-    ```typescript
-    import Button from '@components/Button';
-    import { fetchUser } from '@utils/api';
-    ```
+
+  **Example:**
+  ```typescript
+  import UserService from '@/utils/UserService';
+  import Dashboard from '@/components/Dashboard';
+  ```
 
 ### Export Style
-- Use **default exports** for components and modules.
-  - **Example:**  
-    ```typescript
-    // UserProfile.tsx
-    const UserProfile = () => { /* ... */ };
-    export default UserProfile;
-    ```
 
-### Commit Message Conventions
-- Use **conventional commit** format with prefixes such as `chore` and `style`.
-- Keep commit messages concise (average ~46 characters).
-  - **Examples:**  
-    ```
-    chore: update dependencies
-    style: fix button alignment
-    ```
+- Use **default exports** for modules and components.
+
+  **Example:**
+  ```typescript
+  // src/components/Settings.tsx
+  const Settings = () => { /* ... */ };
+  export default Settings;
+  ```
+
+### Commit Messages
+
+- Use prefixes like `fix:` and `feat:`.
+- Keep commit messages concise (average ~59 characters).
+
+  **Example:**
+  ```
+  feat: add user profile page
+  fix: correct typo in dashboard title
+  ```
 
 ## Workflows
 
-### Commit Changes
-**Trigger:** When making any code or style change  
-**Command:** `/commit-changes`
+### Add or Modify Supabase Database Schema
+**Trigger:** When you need to add or change database structure or logic.
+**Command:** `/new-table`
 
-1. Make your code or style modifications.
-2. Stage the changes with `git add`.
-3. Write a commit message using the conventional format:
-   - Prefix: `chore` or `style`
-   - Short, descriptive message
-   - Example:  
-     ```
-     git commit -m "style: update header spacing"
-     ```
+1. **Create a migration SQL file**  
+   Add a new `.sql` file in `supabase/migrations/` describing the schema changes.
 
-### Add New Component
-**Trigger:** When adding a new React component  
-**Command:** `/add-component`
+   _Example:_
+   ```
+   supabase/migrations/20240612_add_users_table.sql
+   ```
 
-1. Create a new file using PascalCase in the appropriate directory.
-   - Example: `UserMenu.tsx`
-2. Write the component using TypeScript and React.
-3. Use alias imports for dependencies.
-4. Export the component as default.
-   - Example:
-     ```typescript
-     import React from 'react';
-     import Button from '@components/Button';
+2. **Update or add Supabase serverless functions**  
+   Modify or create files in `supabase/functions/*/index.ts` to reflect new schema or logic.
 
-     const UserMenu = () => (
-       <div>
-         <Button>Logout</Button>
-       </div>
-     );
+   _Example:_
+   ```typescript
+   // supabase/functions/createUser/index.ts
+   export default async function handler(req, res) {
+     // logic using new table/column
+   }
+   ```
 
-     export default UserMenu;
-     ```
-5. Add and commit the file using the commit conventions.
+3. **(Optional) Update backend logic**  
+   If needed, update utility files in `src/utils/` or related backend files.
+
+   _Example:_
+   ```typescript
+   // src/utils/userHelpers.ts
+   export default function getUserByEmail(email: string) { /* ... */ }
+   ```
+
+### Feature Development with UI and Backend
+**Trigger:** When you want to develop a new end-to-end feature.
+**Command:** `/new-feature`
+
+1. **Add or modify React components**  
+   Create or update components in `src/components/` or pages in `src/pages/`.
+
+   _Example:_
+   ```typescript
+   // src/components/UserProfile.tsx
+   const UserProfile = () => { /* ... */ };
+   export default UserProfile;
+   ```
+
+2. **Update or create backend logic**  
+   Add or modify utility functions in `src/utils/` or Supabase functions in `supabase/functions/`.
+
+   _Example:_
+   ```typescript
+   // src/utils/userApi.ts
+   export default async function fetchUser(id: string) { /* ... */ }
+   ```
+
+3. **(Optional) Update workflows or documentation**  
+   If your feature affects workflows or requires documentation, update the relevant files.
+
+   _Example:_
+   ```
+   docs/feature-overview.md
+   .github/workflows/ci.yml
+   ```
 
 ## Testing Patterns
 
-- Test files use the pattern `*.test.*` (e.g., `UserMenu.test.tsx`).
-- The specific testing framework is not detected, but follow the file naming pattern for all tests.
-  - Example:
-    ```
-    UserMenu.test.tsx
-    ```
-- Place test files alongside the components they test or in a dedicated `__tests__` directory as appropriate.
+- **Test files** use the pattern `*.test.*`.
+- The specific testing framework is **unknown**, but tests are likely colocated with source files.
+
+  _Example:_
+  ```
+  src/components/UserProfile.test.tsx
+  src/utils/userApi.test.ts
+  ```
 
 ## Commands
-| Command           | Purpose                                         |
-|-------------------|-------------------------------------------------|
-| /commit-changes   | Guide for making and committing changes         |
-| /add-component    | Steps for adding a new React component          |
+
+| Command      | Purpose                                            |
+|--------------|----------------------------------------------------|
+| /new-table   | Start a workflow to add or modify database schema  |
+| /new-feature | Begin developing a new UI + backend feature        |
 ```

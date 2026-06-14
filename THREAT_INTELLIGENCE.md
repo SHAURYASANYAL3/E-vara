@@ -4,10 +4,12 @@ This document outlines the architectural validation of E-VARA's threat intellige
 
 ## 1. Actual Threat Intelligence Capability
 
-E-VARA moves beyond simulated metrics by integrating deep-web and surface-web breach corpora directly into its localized risk engine. 
+E-VARA moves beyond simulated metrics by integrating deep-web and surface-web breach corpora directly into its localized risk engine.
 
 ### Asynchronous Edge Processing
+
 Instead of vulnerable synchronous API calls, E-VARA utilizes an asynchronous job queue via Supabase Edge Functions (`osint-worker`).
+
 - **Distributed Queuing:** When an identity check is requested, the `breach-check` function enforces rate limits and drops the job into `osint_jobs`.
 - **Worker Leases:** The `osint-worker` locks jobs securely using UUIDs and processes them in isolation, preventing race conditions or duplicated API calls.
 
@@ -15,14 +17,14 @@ Instead of vulnerable synchronous API calls, E-VARA utilizes an asynchronous job
 
 E-VARA is built to integrate with industry-leading threat intelligence data providers. The `osint-worker` edge function natively supports dual-provider resolution:
 
-1. **HaveIBeenPwned (HIBP) Enterprise API:** 
+1. **HaveIBeenPwned (HIBP) Enterprise API:**
    - Queries `https://haveibeenpwned.com/api/v3/breachedaccount/`
    - Validates data classes (e.g., distinguishing between exposed passwords vs. just email addresses).
 2. **DeHashed API:**
    - Deep-web search correlation (`https://api.dehashed.com/search`).
    - Retrieves specific compromised fields to elevate the localized risk score immediately.
 
-*Note: In local/demo environments lacking API keys, the engine falls back to simulated outputs to ensure frontend telemetry components remain functional for demonstration.*
+_Note: In local/demo environments lacking API keys, the engine falls back to simulated outputs to ensure frontend telemetry components remain functional for demonstration._
 
 ## 3. Verifiable Privacy Claims (Privacy-Preserving Ingestion)
 
@@ -41,4 +43,5 @@ E-VARA provides executive protection by translating raw threat intelligence into
 - **Rate-Limiting (P0):** To protect executives from becoming the target of denial-of-wallet or enumeration attacks through our own platform, E-VARA enforces strict, stateful rate-limiting via Supabase RPC (`check_rate_limit`).
 
 ---
-*E-VARA Architectural Engineering Team*
+
+_E-VARA Architectural Engineering Team_

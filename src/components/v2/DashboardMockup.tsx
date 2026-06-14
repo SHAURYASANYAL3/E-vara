@@ -1,3 +1,4 @@
+import * as React from "react";
 import { motion } from "framer-motion";
 import {
   Shield,
@@ -6,169 +7,189 @@ import {
   Search,
   AlertCircle,
   Globe,
+  Terminal,
 } from "lucide-react";
 
-const FLOATING_NODES = Array.from({ length: 5 }).map((_, i) => ({
-  id: i,
-  x: [Math.random() * 200 - 100, Math.random() * 200 - 100],
-  y: [Math.random() * 100 - 50, Math.random() * 100 - 50],
-}));
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+};
 
 const DashboardMockup = () => {
   return (
-    <div className="relative group">
-      {/* Background Glow */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-electric-blue/20 to-purple-600/20 rounded-[32px] blur-2xl opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="relative group w-full max-w-5xl mx-auto"
+    >
+      <div className="absolute -inset-1 bg-gradient-to-r from-electric-blue/20 to-purple-600/20 rounded-[32px] blur-2xl opacity-50 transition duration-1000 group-hover:opacity-100 group-hover:duration-200" />
 
-      {/* Main Container */}
-      <div className="relative rounded-[24px] border border-white/10 bg-graphite/80 backdrop-blur-xl p-1 overflow-hidden">
-        <div className="absolute inset-0 hud-grid opacity-[0.05]" />
-
-        {/* Header Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-white/[0.02]">
-          <div className="flex items-center gap-4">
-            <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]" />
-            </div>
-            <div className="h-4 w-px bg-white/10 mx-2" />
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-electric-blue" />
-              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-white/70">
-                Secure_Node: Delta-09
-              </span>
-            </div>
+      <div className="relative rounded-[24px] border border-white/10 bg-black/80 backdrop-blur-xl p-6 md:p-8 flex flex-col gap-6 overflow-hidden shadow-2xl">
+        {/* Header Section */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-4">
+          <div className="flex items-center gap-3">
+            <motion.div
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            >
+              <Shield className="h-6 w-6 text-electric-blue" />
+            </motion.div>
+            <h2 className="text-xl font-bold tracking-widest uppercase text-white">
+              Threat Intelligence
+            </h2>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-              <span className="text-[9px] font-mono text-success uppercase">
-                System_Healthy
-              </span>
-            </div>
-            <span className="text-[9px] font-mono text-white/60">
-              10:42:15 UTC
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+            <span className="hidden sm:inline text-xs font-mono text-green-400 uppercase tracking-widest">
+              Active Monitoring
             </span>
           </div>
         </div>
 
-        {/* Dashboard Content */}
-        <div className="p-4 sm:p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Column - Key Stats */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.03] space-y-4">
-              <div className="flex justify-between items-start">
-                <span className="text-[10px] font-mono text-white/60 uppercase">
-                  Risk Snapshot
-                </span>
-                <Activity className="w-4 h-4 text-electric-blue" />
+        {/* Grid Layout */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+        >
+          {/* Main Scanner Feed */}
+          <motion.div
+            variants={itemVariants}
+            className="lg:col-span-2 flex flex-col gap-4"
+          >
+            <div className="bg-white/5 border border-white/10 rounded-xl p-6 relative overflow-hidden flex-1 h-full min-h-[200px] shadow-inner group-hover:border-white/20 transition-colors">
+              <div className="flex items-center gap-2 mb-6">
+                <Terminal className="h-4 w-4 text-purple-400" />
+                <h3 className="text-sm font-mono text-white/70 uppercase">
+                  Live Terminal Feed
+                </h3>
               </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-5xl font-bold tracking-tighter">04</span>
-                <span className="text-white/60 font-mono text-xs">/ 100</span>
-              </div>
-              <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+              <div className="space-y-4 font-mono text-xs sm:text-sm text-white/60">
                 <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "4%" }}
-                  className="h-full bg-electric-blue"
-                />
-              </div>
-              <p className="text-[10px] text-success font-mono">
-                STATUS: MINIMAL_EXPOSURE
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.03] space-y-4">
-              <div className="flex justify-between items-start">
-                <span className="text-[10px] font-mono text-white/60 uppercase">
-                  AI Integrity Index
-                </span>
-                <Lock className="w-4 h-4 text-purple-500" />
-              </div>
-              <span className="text-3xl font-bold tracking-tighter">99.8%</span>
-              <div className="grid grid-cols-8 gap-1">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className={`h-8 rounded-sm ${i < 7 ? "bg-electric-blue/20" : "bg-electric-blue/5"}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Center Column - Visualizations */}
-          <div className="lg:col-span-8 space-y-6">
-            <div className="h-[280px] rounded-2xl border border-white/5 bg-white/[0.02] relative overflow-hidden flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-br from-electric-blue/5 to-transparent" />
-              <Search className="w-12 h-12 text-electric-blue/20 animate-pulse" />
-
-              {/* Animated Scanning Lines */}
-              <motion.div
-                animate={{ top: ["0%", "100%", "0%"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                className="absolute left-0 right-0 h-px bg-electric-blue/30 shadow-[0_0_15px_rgba(0,122,255,0.5)] z-10"
-              />
-
-              {/* Floating Data Nodes */}
-              {FLOATING_NODES.map((node, i) => (
-                <motion.div
-                  key={node.id}
-                  animate={{
-                    x: node.x,
-                    y: node.y,
-                  }}
-                  transition={{
-                    duration: 10 + i,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute p-2 rounded-lg border border-white/10 bg-black/40 backdrop-blur-md flex items-center gap-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex gap-4"
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-electric-blue" />
-                  <span className="text-[8px] font-mono text-white/60">
-                    SCANNING_DATA_STREAM_{i}
+                  <span className="text-electric-blue shrink-0">[SYSTEM]</span>
+                  <span>Initiating deep web scan protocols...</span>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="flex gap-4"
+                >
+                  <span className="text-purple-400 shrink-0">[SCANNING]</span>
+                  <span>
+                    Enumerating exposed credentials for targeted identities.
                   </span>
                 </motion.div>
-              ))}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.4 }}
+                  className="flex gap-4"
+                >
+                  <span className="text-purple-400 shrink-0">[SCANNING]</span>
+                  <span>
+                    Cross-referencing dark web forums and data leak sites...
+                  </span>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 2.0, type: "spring" }}
+                  className="flex gap-4 text-green-400 mt-2 bg-green-400/10 p-2 rounded-md border border-green-400/20"
+                >
+                  <span className="shrink-0">[CLEAN]</span>
+                  <span>No critical breaches found in the last 24h.</span>
+                </motion.div>
+              </div>
             </div>
+          </motion.div>
 
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-              <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.03]">
-                <div className="flex items-center gap-3 mb-4">
-                  <Globe className="w-4 h-4 text-electric-blue" />
-                  <span className="text-[10px] font-mono text-white/60 uppercase">
-                    Active Monitoring
-                  </span>
+          {/* Side Metrics */}
+          <div className="flex flex-col gap-4">
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ scale: 1.02, y: -2 }}
+              className="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center gap-4 cursor-default shadow-sm hover:shadow-electric-blue/10 hover:border-electric-blue/30 transition-all"
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+              >
+                <Globe className="h-6 w-6 text-electric-blue shrink-0" />
+              </motion.div>
+              <div>
+                <div className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                  Nodes Active
                 </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold">12.4k</span>
-                  <span className="text-[10px] text-white/60 font-mono">
-                    sources/sec
-                  </span>
-                </div>
+                <div className="font-mono text-xl text-white">1,402</div>
               </div>
-              <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.03]">
-                <div className="flex items-center gap-3 mb-4">
-                  <AlertCircle className="w-4 h-4 text-warning" />
-                  <span className="text-[10px] font-mono text-white/60 uppercase">
-                    Recent Alerts
-                  </span>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ scale: 1.02, y: -2 }}
+              className="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center gap-4 cursor-default shadow-sm hover:shadow-orange-400/10 hover:border-orange-400/30 transition-all"
+            >
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+              >
+                <AlertCircle className="h-6 w-6 text-orange-400 shrink-0" />
+              </motion.div>
+              <div>
+                <div className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                  Anomalies Detected
                 </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold">0</span>
-                  <span className="text-[10px] text-success font-mono">
-                    clean
-                  </span>
-                </div>
+                <div className="font-mono text-xl text-white">0</div>
               </div>
-            </div>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ scale: 1.02, y: -2 }}
+              className="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center gap-4 cursor-default shadow-sm hover:shadow-green-400/10 hover:border-green-400/30 transition-all"
+            >
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ repeat: Infinity, duration: 3, delay: 1 }}
+              >
+                <Lock className="h-6 w-6 text-green-400 shrink-0" />
+              </motion.div>
+              <div>
+                <div className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                  Security Posture
+                </div>
+                <div className="font-mono text-xl text-green-400">Optimal</div>
+              </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

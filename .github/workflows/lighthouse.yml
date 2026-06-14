@@ -2,30 +2,29 @@ name: Lighthouse CI
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          
+
       - name: Install & Build
         run: |
           npm ci
           npm run build
-          
+
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         with:
-          buildAsStaticSite: true
-          staticDistDir: ./dist
+          urls: |
+            http://localhost/
           uploadArtifacts: true
           temporaryPublicStorage: true
-          # This posts the lighthouse report to the PR!
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          configPath: .lighthouserc.json

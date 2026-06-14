@@ -2,11 +2,13 @@ import { Shield, FileText, PlayCircle, BookOpen, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useSEO } from "@/hooks/useSEO";
+import { toast } from "sonner";
 
 const ResourcesPage = () => {
   useSEO({
-    title: "Resources & Insights",
-    description: "Cybersecurity research, whitepapers, and guides from E-VARA.",
+    title: "Digital Reputation Blog & Identity Protection Guides | E-VARA",
+    description:
+      "Learn how to clean up your digital footprint, remove personal info from Google, and protect your identity online with E-VARA's expert guides.",
     canonicalUrl: "https://e-vara.vercel.app/resources",
   });
 
@@ -64,7 +66,7 @@ const ResourcesPage = () => {
       <div className="container mx-auto px-6 py-24">
         <div className="text-center max-w-2xl mx-auto mb-20">
           <h1 className="text-5xl font-black tracking-tighter uppercase mb-6 italic">
-            Intelligence Hub
+            Identity Protection Blog
           </h1>
           <p className="text-muted-foreground font-body text-lg">
             Research, technical specifications, and strategic guidance for
@@ -91,10 +93,11 @@ const ResourcesPage = () => {
                 {item.desc}
               </p>
               <Button
+                onClick={() => toast.success(`Opening article: ${item.title}`)}
                 variant="outline"
                 className="w-full border-white/10 hover:bg-white/5 uppercase tracking-widest text-[10px] font-bold"
               >
-                <Download className="mr-2 h-3 w-3" /> Access Asset
+                <BookOpen className="mr-2 h-3 w-3" /> Read Article
               </Button>
             </div>
           ))}

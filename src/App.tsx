@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import CyberDashboardLoader from "@/components/CyberDashboardLoader";
 import { useAuth, UserProfile } from "@/hooks/useAuth";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 const PricingPage = lazy(() => import("./pages/Pricing.tsx"));
@@ -30,7 +31,9 @@ const TrustCenter = lazy(() => import("./pages/TrustCenter.tsx"));
 const BlogList = lazy(() => import("./pages/BlogList.tsx"));
 const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
 const AnalystConsole = lazy(() => import("./pages/AnalystConsole.tsx"));
-const ExecutiveProtectionPage = lazy(() => import("./pages/ExecutiveProtection.tsx"));
+const ExecutiveProtectionPage = lazy(
+  () => import("./pages/ExecutiveProtection.tsx"),
+);
 const VsCompetitorsPage = lazy(() => import("./pages/VsCompetitors.tsx"));
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -143,7 +146,10 @@ const AppRouter = () => {
             <Route path="/" element={<Index />} />
             <Route path="/labs" element={<Labs />} />
             <Route path="/analyst-portal" element={<AnalystConsole />} />
-            <Route path="/executive-protection" element={<ExecutiveProtectionPage />} />
+            <Route
+              path="/executive-protection"
+              element={<ExecutiveProtectionPage />}
+            />
             <Route path="/vs-competitors" element={<VsCompetitorsPage />} />
 
             {/* Protected Routes */}
@@ -242,6 +248,7 @@ const App = () => (
           <Sonner />
           <AppRouter />
           <FeedbackWidget />
+          <ScrollToTop />
         </TooltipProvider>
       </SimulationProvider>
     </QueryClientProvider>

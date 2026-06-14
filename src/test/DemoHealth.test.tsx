@@ -18,7 +18,8 @@ vi.mock("@/providers/SimulationProvider", () => ({
 }));
 
 vi.mock("@tanstack/react-query", async (importOriginal) => {
-  const original = await importOriginal<typeof import("@tanstack/react-query")>();
+  const original =
+    await importOriginal<typeof import("@tanstack/react-query")>();
   return {
     ...original,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,7 +53,7 @@ describe("DemoHealth", () => {
     render(
       <BrowserRouter>
         <DemoHealth />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
 
     // Build Version is static
@@ -75,7 +76,7 @@ describe("DemoHealth", () => {
     render(
       <BrowserRouter>
         <DemoHealth />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
 
     expect(screen.getByText("0 pending")).toBeInTheDocument();
@@ -92,7 +93,9 @@ describe("DemoHealth", () => {
         return { data: 5 };
       }
       if (queryKey[0] === "demo-health-latest-snapshot") {
-        return { data: { expires_at: new Date(Date.now() + 100000).toISOString() } };
+        return {
+          data: { expires_at: new Date(Date.now() + 100000).toISOString() },
+        };
       }
       return { data: null };
     });
@@ -102,7 +105,7 @@ describe("DemoHealth", () => {
     render(
       <BrowserRouter>
         <DemoHealth />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
 
     expect(screen.getByText("5 pending")).toBeInTheDocument();
@@ -119,7 +122,9 @@ describe("DemoHealth", () => {
         return { data: 0 };
       }
       if (queryKey[0] === "demo-health-latest-snapshot") {
-        return { data: { expires_at: new Date(Date.now() - 100000).toISOString() } };
+        return {
+          data: { expires_at: new Date(Date.now() - 100000).toISOString() },
+        };
       }
       return { data: null };
     });
@@ -129,12 +134,14 @@ describe("DemoHealth", () => {
       { level: "info", message: "Info 1" },
       { level: "error", message: "Error 2" },
     ];
-    vi.spyOn(Storage.prototype, "getItem").mockReturnValue(JSON.stringify(mockLogs));
+    vi.spyOn(Storage.prototype, "getItem").mockReturnValue(
+      JSON.stringify(mockLogs),
+    );
 
     render(
       <BrowserRouter>
         <DemoHealth />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
 
     expect(screen.getByText("0 pending")).toBeInTheDocument();

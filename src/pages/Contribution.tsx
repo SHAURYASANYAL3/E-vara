@@ -41,7 +41,15 @@ const SprintBanner = () => (
         </p>
       </div>
 
-      <div className="flex items-center gap-4 shrink-0">
+      <div className="flex items-center gap-4 shrink-0 flex-wrap justify-end">
+        <div className="glass-panel p-4 rounded-xl flex flex-col items-center justify-center min-w-[120px] relative overflow-hidden border-yellow-500/30">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-500/5 z-0"></div>
+          <Target className="h-5 w-5 text-yellow-400 mb-2 z-10" />
+          <p className="text-[10px] font-mono uppercase text-muted-foreground z-10">
+            Current Rank
+          </p>
+          <p className="text-lg font-black text-white mt-1 z-10">#28</p>
+        </div>
         <div className="glass-panel p-4 rounded-xl flex flex-col items-center justify-center min-w-[120px]">
           <Target className="h-5 w-5 text-cyan-400 mb-2" />
           <p className="text-[10px] font-mono uppercase text-muted-foreground">
@@ -314,14 +322,24 @@ const ContributorWall = () => {
                   </h5>
                   <div className="space-y-2">
                     {c.resolved_issues.map((issue) => (
-                      <div key={issue.issueNumber} className="bg-black/30 border border-white/5 rounded-lg p-3 text-sm transition-colors hover:border-cyan-500/30">
+                      <div
+                        key={issue.issueNumber}
+                        className="bg-black/30 border border-white/5 rounded-lg p-3 text-sm transition-colors hover:border-cyan-500/30"
+                      >
                         <div className="flex justify-between items-start mb-1">
                           <span className="font-bold text-white text-xs leading-tight">
-                            <span className="text-cyan-500 mr-1">#{issue.issueNumber}</span>
+                            <span className="text-cyan-500 mr-1">
+                              #{issue.issueNumber}
+                            </span>
                             {issue.title}
                           </span>
                           {issue.prLink && (
-                            <a href={issue.prLink} target="_blank" rel="noreferrer" className="text-cyan-500 hover:text-cyan-400 ml-2 flex-shrink-0 mt-0.5">
+                            <a
+                              href={issue.prLink}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-cyan-500 hover:text-cyan-400 ml-2 flex-shrink-0 mt-0.5"
+                            >
                               <ExternalLink className="h-3 w-3" />
                             </a>
                           )}

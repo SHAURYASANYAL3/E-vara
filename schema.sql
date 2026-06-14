@@ -101,3 +101,43 @@ $$ language 'plpgsql';
 CREATE TRIGGER on_auth_user_created
 AFTER INSERT ON auth.users
 FOR EACH ROW EXECUTE PROCEDURE handle_new_user();
+
+-- 5. Account Deletion Requests
+CREATE TABLE account_deletion_requests (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    requested_at TIMESTAMPTZ DEFAULT now(),
+    scheduled_for TIMESTAMPTZ GENERATED ALWAYS AS (requested_at + interval '30 days') STORED,
+    status TEXT DEFAULT 'pending' CHECK (status IN ('pending','completed'))
+);
+
+CREATE UNIQUE INDEX uq_account_deletion_requests_user_pending
+ON account_deletion_requests (user_id)
+WHERE status = 'pending';
+
+-- RLS: Only allow the requesting user to see their own deletion request
+ALTER TABLE account_deletion_requests ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Deletion_Isolation" ON account_deletion_requests
+FOR ALL USING (auth.uid() = user_id);
+
+
+create or replace function cleanup_deletions()
+returns void as $$
+begin
+  delete from monitored_identities
+  where user_id in (
+    select user_id from account_deletion_requests
+    where scheduled_for <= now() and status = 'pending'
+  );
+
+  delete from user_profiles
+  where id in (
+    select user_id from account_deletion_requests
+    where scheduled_for <= now() and status = 'pending'
+  );
+
+  update account_deletion_requests
+  set status = 'completed'
+  where scheduled_for <= now() and status = 'pending';
+end;
+$$ language plpgsql;

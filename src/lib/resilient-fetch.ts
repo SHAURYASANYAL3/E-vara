@@ -73,7 +73,9 @@ export async function runResilient<T>(
       duration: 5000,
     });
   } else {
-    console.warn("Network Error (Supabase unlinked). Running in degraded mode.");
+    console.warn(
+      "Network Error (Supabase unlinked). Running in degraded mode.",
+    );
   }
 
   return emptyFallback;

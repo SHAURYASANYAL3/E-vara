@@ -2,7 +2,7 @@
   "version": "2.0",
   "technicalLevel": "technical",
   "preferredStyle": {
-    "verbosity": "detailed",
+    "verbosity": "moderate",
     "codeComments": true,
     "explanations": true
   },
@@ -11,5 +11,5 @@
     "react"
   ],
   "suggestedBy": "ecc-tools-repo-analysis",
-  "createdAt": "2026-06-11T17:56:05.945Z"
+  "createdAt": "2026-06-13T20:04:00.269Z"
 }

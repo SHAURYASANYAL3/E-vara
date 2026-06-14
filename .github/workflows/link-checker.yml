@@ -2,10 +2,10 @@ name: Broken Link Checker
 
 on:
   schedule:
-    - cron: '0 0 * * 0' # Weekly on Sundays
+    - cron: "0 0 * * 0" # Weekly on Sundays
   pull_request:
     paths:
-      - '**/*.md'
+      - "**/*.md"
 
 jobs:
   link-checker:

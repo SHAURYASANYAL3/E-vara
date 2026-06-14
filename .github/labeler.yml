@@ -1,15 +1,23 @@
 "Area: Frontend 🎨":
   - changed-files:
-    - any-glob-to-any-file: ['src/components/**/*', 'src/pages/**/*', 'src/App.tsx', 'index.html']
+      - any-glob-to-any-file:
+          ["src/components/**/*", "src/pages/**/*", "src/App.tsx", "index.html"]
 
 "Area: Database 🗄️":
   - changed-files:
-    - any-glob-to-any-file: ['supabase/migrations/**/*', 'supabase/functions/**/*']
+      - any-glob-to-any-file:
+          ["supabase/migrations/**/*", "supabase/functions/**/*"]
 
 "Area: Config ⚙️":
   - changed-files:
-    - any-glob-to-any-file: ['package.json', 'vite.config.ts', 'tailwind.config.js', 'tsconfig.json']
+      - any-glob-to-any-file:
+          [
+            "package.json",
+            "vite.config.ts",
+            "tailwind.config.js",
+            "tsconfig.json",
+          ]
 
 "Area: Github Actions 🤖":
   - changed-files:
-    - any-glob-to-any-file: ['.github/workflows/**/*']
+      - any-glob-to-any-file: [".github/workflows/**/*"]

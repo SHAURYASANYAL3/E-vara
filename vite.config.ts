@@ -39,18 +39,24 @@ export default defineConfig(() => ({
     },
   },
   build: {
-    target: 'esnext',
+    target: "esnext",
     chunkSizeWarningLimit: 900,
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ["react", "react-dom", "react-router-dom"],
-          ui: ["@radix-ui/react-dialog", "@radix-ui/react-slot", "lucide-react", "framer-motion", "gsap"],
+          ui: [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-slot",
+            "lucide-react",
+            "framer-motion",
+            "gsap",
+          ],
           three: ["three", "@react-three/fiber", "@react-three/drei"],
-          supabase: ["@supabase/supabase-js"]
+          supabase: ["@supabase/supabase-js"],
         },
         experimentalMinChunkSize: 10_000,
-      }
-    }
-  }
+      },
+    },
+  },
 }));

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { User, ShieldCheck, Loader2 } from "lucide-react";
+import { useRef, useState, useCallback } from "react";
+import { User, ShieldCheck, Loader2, Copy, CheckCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
@@ -17,6 +17,8 @@ interface IdentityFormProps {
   initial?: Partial<IdentityData> | null;
 }
 
+const SUBMIT_COOLDOWN_MS = 10000; // 10 seconds between submissions
+
 const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
   const { user, saveIdentity } = useAuth();
   const { isSimulationMode } = useSimulation();
@@ -24,11 +26,56 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
   const [username, setUsername] = useState(initial?.username || "");
   const [fullName, setFullName] = useState(initial?.fullName || "");
   const [loading, setLoading] = useState(false);
+  const [identityHash, setIdentityHash] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(async () => {
+    if (!identityHash) return;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(identityHash);
+      } else {
+        // Fallback for browsers/contexts without Clipboard API support
+        const textArea = document.createElement("textarea");
+        textArea.value = identityHash;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+      }
+
+      setCopied(true);
+      toast.success("Hash Copied", {
+        description: "SHA-256 identity hash copied to clipboard.",
+      });
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      toast.error("Copy Failed", {
+        description: "Could not copy hash. Please copy it manually.",
+      });
+    }
+  }, [identityHash]);
+  const lastSubmitRef = useRef<number>(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
     if (!user) return;
+
+    const now = Date.now();
+    const elapsed = now - lastSubmitRef.current;
+    if (elapsed < SUBMIT_COOLDOWN_MS) {
+      const waitSeconds = Math.ceil((SUBMIT_COOLDOWN_MS - elapsed) / 1000);
+      toast.error("Please slow down", {
+        description: `You can submit again in ${waitSeconds}s.`,
+      });
+      return;
+    }
+    lastSubmitRef.current = now;
 
     setLoading(true);
 
@@ -45,6 +92,7 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
 
       // 1. Cryptographic Integrity: Hash before persistence
       const identity_hash = await sha256(safeEmail);
+      setIdentityHash(identity_hash);
 
       // 2. Real Persistence via useAuth (which now enforces hashing and Postgres RLS)
       await saveIdentity({
@@ -136,10 +184,14 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
 
       <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
         <div className="space-y-1.5">
-          <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">
+          <label
+            htmlFor="identity-email"
+            className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1"
+          >
             Primary Email Target
           </label>
           <input
+            id="identity-email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -152,10 +204,14 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">
+            <label
+              htmlFor="identity-username"
+              className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1"
+            >
               Public Handle
             </label>
             <input
+              id="identity-username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               maxLength={100}
@@ -164,10 +220,14 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">
+            <label
+              htmlFor="identity-fullname"
+              className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1"
+            >
               Legal Designation
             </label>
             <input
+              id="identity-fullname"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               maxLength={100}
@@ -192,6 +252,46 @@ const IdentityForm = ({ onSave, initial }: IdentityFormProps) => {
           )}
         </button>
       </form>
+
+      {identityHash && (
+        <div
+          className="mt-4 p-3 rounded-lg border border-primary/20 bg-primary/5 flex items-center gap-3 relative z-10"
+          role="status"
+          aria-live="polite"
+        >
+          <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-0.5">
+              SHA-256 Identity Hash
+            </p>
+            <p
+              className="text-xs font-mono text-primary truncate"
+              title={identityHash}
+            >
+              {identityHash}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={handleCopy}
+            aria-label="Copy identity hash to clipboard"
+            className="shrink-0 p-1.5 rounded hover:bg-primary/10 transition-colors"
+            title="Copy hash to clipboard"
+          >
+            {copied ? (
+              <CheckCheck
+                className="h-4 w-4 text-green-400"
+                aria-hidden="true"
+              />
+            ) : (
+              <Copy
+                className="h-4 w-4 text-muted-foreground hover:text-primary"
+                aria-hidden="true"
+              />
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

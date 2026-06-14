@@ -25,12 +25,12 @@ const DigitalFootprintMap = ({ username }: DigitalFootprintMapProps) => {
   );
 
   return (
-    <section className="neon-panel rounded-xl border border-primary/20 p-4 sm:p-5">
+    <section className="neon-panel rounded-xl border border-primary/20 p-4 sm:p-5 w-full overflow-hidden">
       <h3 className="mb-4 text-sm font-mono font-semibold uppercase tracking-wider text-foreground">
         Digital Footprint Map
       </h3>
       <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="relative h-72 rounded-lg border border-border/70 bg-background/35 p-3">
+        <div className="relative h-72 w-full overflow-hidden rounded-lg border border-border/70 bg-background/35 p-3">
           <div className="absolute inset-0 hud-grid opacity-40" />
 
           <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">

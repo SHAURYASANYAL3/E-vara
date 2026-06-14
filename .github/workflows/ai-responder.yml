@@ -24,30 +24,30 @@ jobs:
             const author = context.payload.comment.user.login;
             const repoOwner = context.repo.owner;
             const issueNumber = context.issue.number;
-            
+
             console.log(`Received comment from @${author}: "${commentBody}"`);
-            
+
             // Trigger conditions: if the user explicitly tags you or asks a question
             const lowerComment = commentBody.toLowerCase();
             const lowerOwner = repoOwner.toLowerCase();
             const tagsOwner = lowerComment.includes(`@${lowerOwner}`) || lowerComment.includes('@shauryasanyal3');
             const asksQuestion = commentBody.includes('?');
-            
+
             if (!tagsOwner && !asksQuestion) {
               console.log('Skipping comment: does not tag the owner or ask a question.');
               return;
             }
-            
+
             if (!process.env.OPENROUTER_API_KEY) {
               console.error('OPENROUTER_API_KEY secret is not set.');
               return;
             }
-            
+
             console.log('Generating AI response for comment...');
-            
+
             const prompt = `You are a helpful AI co-maintainer for the E-VARA GitHub repository, representing the founder Shaurya.
             A user named @${author} just left a comment on issue #${issueNumber}: "${commentBody}"
-            
+
             Please provide a helpful, welcoming, and concise response. Address them directly. 
             If they are asking a technical question about the repo, do your best to answer based on typical React/Supabase/Tailwind architecture.
             If they are reporting a bug or issue, thank them and assure them the core team will look into it. 
@@ -63,7 +63,7 @@ jobs:
                   "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                  model: "google/gemma-4-31b-it:free",
+                  model: "anthropic/claude-3.5-sonnet",
                   messages: [
                     { role: "system", content: "You are a helpful and polite GitHub AI assistant." },
                     { role: "user", content: prompt }

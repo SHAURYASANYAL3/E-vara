@@ -30,14 +30,14 @@ const ClientPortal = () => {
 
   const portalActions = [
     {
-      title: "Security Dashboard",
+      title: "Identity Dashboard",
       desc: "Access real-time threat monitoring and identity maps.",
       icon: <Terminal className="h-6 w-6 text-primary" />,
       link: "/dashboard",
       color: "border-primary/20 bg-primary/5",
     },
     {
-      title: "Identity Records",
+      title: "My Identity",
       desc: "Manage monitored emails, handles, and digital assets.",
       icon: <Database className="h-6 w-6 text-secondary" />,
       link: "/identity-records",
@@ -51,7 +51,7 @@ const ClientPortal = () => {
       color: "border-yellow-500/20 bg-yellow-500/5",
     },
     {
-      title: "Support Protocol",
+      title: "Support",
       desc: "Establish secure contact with your dedicated account lead.",
       icon: <HelpCircle className="h-6 w-6 text-success" />,
       link: "/support",
@@ -85,7 +85,7 @@ const ClientPortal = () => {
             <button
               onClick={handleLogout}
               className="p-2 text-muted-foreground hover:text-alert transition-colors"
-              title="Terminate Session"
+              title="Sign Out"
             >
               <LogOut className="h-5 w-5" />
             </button>
@@ -106,8 +106,7 @@ const ClientPortal = () => {
               </span>
             </h1>
             <p className="text-muted-foreground text-lg max-w-xl font-body">
-              Your perimeter is currently secure. Review your active
-              intelligence modules and threat surface analytics below.
+              Your digital identity is currently protected.
             </p>
           </header>
 
@@ -129,7 +128,7 @@ const ClientPortal = () => {
                     </p>
                   </div>
                   <div className="mt-8 flex items-center gap-2 text-[10px] font-bold text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                    Initialize Connection <ArrowRight className="h-3 w-3" />
+                    Start Monitoring <ArrowRight className="h-3 w-3" />
                   </div>
                 </div>
               </Link>
@@ -145,7 +144,7 @@ const ClientPortal = () => {
                 </div>
                 <div>
                   <h4 className="font-bold uppercase tracking-widest">
-                    Global Threat Feed
+                    Recent Security Activity
                   </h4>
                   <p className="text-xs text-muted-foreground mt-1 font-body">
                     0 active critical alerts detected in your sector over the

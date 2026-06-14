@@ -12,6 +12,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { generateExecutiveReport } from "@/lib/report-generator";
 import { sha256 } from "@/lib/crypto";
+import FileScanner from "@/components/FileScanner";
 
 interface BreachResult {
   source: string;
@@ -172,6 +173,9 @@ const ToolsPanel = ({ identity }: ToolsPanelProps) => {
           <ExternalLink className="h-3 w-3" />
         </a>
       </div>
+
+      {/* VirusTotal File Scanner */}
+      <FileScanner />
 
       {/* Exposure Intelligence Scan */}
       <div className="rounded-lg border border-border bg-card p-6">

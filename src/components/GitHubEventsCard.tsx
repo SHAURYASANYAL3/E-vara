@@ -17,6 +17,7 @@ export const GitHubEventsCard = ({ username }: Props) => {
 
   useEffect(() => {
     if (!username) return;
+
     setLoading(true);
     void (async () => {
       try {

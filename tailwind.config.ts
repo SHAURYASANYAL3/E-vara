@@ -3,7 +3,12 @@ import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -15,8 +20,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        mono: ['"JetBrains Mono"', 'monospace'],
-        body: ['"Inter"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', "monospace"],
+        body: ['"Inter"', "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -105,21 +110,21 @@ export default {
           "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(100%)" },
         },
-        "float": {
+        float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-20px)" },
         },
         "pulse-glow": {
           "0%, 100%": { opacity: "0.5", transform: "scale(1)" },
           "50%": { opacity: "0.8", transform: "scale(1.05)" },
-        }
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.4s ease-out",
         "panel-scan": "panel-scan 3s linear infinite",
-        "float": "float 6s ease-in-out infinite",
+        float: "float 6s ease-in-out infinite",
         "pulse-glow": "pulse-glow 4s ease-in-out infinite",
       },
     },
