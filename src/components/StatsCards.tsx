@@ -28,7 +28,6 @@ const StatsCards = ({
 
   useEffect(() => {
     if (!monitoringActive || !monitoringStartTime) {
-      
       setUptime("00:00:00");
       return;
     }
