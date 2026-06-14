@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+﻿import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -32,65 +32,20 @@ interface NavCommand {
 }
 
 const primaryCommands: NavCommand[] = [
-  {
-    label: "Dashboard",
-    path: "/dashboard",
-    icon: LayoutDashboard,
-    keywords: ["home", "overview"],
-  },
-  {
-    label: "Trust Center",
-    path: "/trust-center",
-    icon: ShieldCheck,
-    keywords: ["compliance", "security"],
-  },
-  {
-    label: "Analyst Portal",
-    path: "/analyst-portal",
-    icon: Users,
-    keywords: ["console", "analyst"],
-  },
-  {
-    label: "Identity Records",
-    path: "/identity-records",
-    icon: Fingerprint,
-    keywords: ["identity", "records"],
-  },
-  {
-    label: "Billing",
-    path: "/billing",
-    icon: CreditCard,
-    keywords: ["payments", "subscription", "plan"],
-  },
+  { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard, keywords: ["home", "overview"] },
+  { label: "Trust Center", path: "/trust-center", icon: ShieldCheck, keywords: ["compliance", "security"] },
+  { label: "Analyst Portal", path: "/analyst-portal", icon: Users, keywords: ["console", "analyst"] },
+  { label: "Identity Records", path: "/identity-records", icon: Fingerprint, keywords: ["identity", "records"] },
+  { label: "Billing", path: "/billing", icon: CreditCard, keywords: ["payments", "subscription", "plan"] },
 ];
 
 const secondaryCommands: NavCommand[] = [
   { label: "Landing Page", path: "/", icon: Home, keywords: ["home"] },
-  {
-    label: "Client Portal",
-    path: "/client-portal",
-    icon: ShieldHalf,
-    keywords: ["portal", "client"],
-  },
-  {
-    label: "Support",
-    path: "/support",
-    icon: LifeBuoy,
-    keywords: ["help", "tickets"],
-  },
-  {
-    label: "Labs",
-    path: "/labs",
-    icon: FlaskConical,
-    keywords: ["experiments", "beta"],
-  },
+  { label: "Client Portal", path: "/client-portal", icon: ShieldHalf, keywords: ["portal", "client"] },
+  { label: "Support", path: "/support", icon: LifeBuoy, keywords: ["help", "tickets"] },
+  { label: "Labs", path: "/labs", icon: FlaskConical, keywords: ["experiments", "beta"] },
   { label: "Docs", path: "/docs", icon: BookOpen, keywords: ["documentation"] },
-  {
-    label: "Pricing",
-    path: "/pricing",
-    icon: Tags,
-    keywords: ["plans", "cost"],
-  },
+  { label: "Pricing", path: "/pricing", icon: Tags, keywords: ["plans", "cost"] },
 ];
 
 export function CommandPalette() {

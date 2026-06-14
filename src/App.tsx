@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+﻿import { Suspense, lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -38,6 +38,7 @@ const VsCompetitorsPage = lazy(() => import("./pages/VsCompetitors.tsx"));
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import FeedbackWidget from "@/components/FeedbackWidget";
+import { CommandPalette } from "@/components/CommandPalette";
 const Index = lazy(() => import("./pages/Index.tsx"));
 const Labs = lazy(() => import("./pages/Labs.tsx"));
 import {
@@ -96,7 +97,6 @@ const ProtectedRoute = ({
   }
 
   if (profileError) {
-    // If we failed to fetch the profile (e.g., db error or no access), force logout or show error
     return <Navigate to="/auth" replace />;
   }
 
@@ -107,7 +107,6 @@ const ProtectedRoute = ({
   return <>{children}</>;
 };
 
-// Analytics wrapper — must be inside BrowserRouter for useLocation
 const AnalyticsProvider = ({ children }: { children: React.ReactNode }) => {
   usePageView();
   useScrollDepth();
@@ -124,6 +123,7 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <AnalyticsProvider>
+        <CommandPalette />
         <Suspense fallback={<CyberDashboardLoader />}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -152,7 +152,6 @@ const AppRouter = () => {
             />
             <Route path="/vs-competitors" element={<VsCompetitorsPage />} />
 
-            {/* Protected Routes */}
             <Route
               path="/client-portal"
               element={
@@ -217,7 +216,6 @@ const AppRouter = () => {
               }
             />
 
-            {/* Auth Route */}
             <Route
               path="/auth"
               element={
