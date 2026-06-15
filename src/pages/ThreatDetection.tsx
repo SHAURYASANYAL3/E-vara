@@ -2,7 +2,8 @@ import { Shield, Radar, Fingerprint, SearchCode, Database } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useSEO } from "@/hooks/useSEO";
-
+import { Copy, Check } from "lucide-react";
+import { useState } from "react";
 const ThreatDetectionPage = () => {
   useSEO({
     title: "Threat Detection Engine",
@@ -33,7 +34,34 @@ const ThreatDetectionPage = () => {
       desc: "Cross-referencing new findings against a proprietary index of billions of historical credential leaks.",
     },
   ];
+  const [copied, setCopied] = useState(false);
+  const codeSnippet = `// E-VARA Detection Protocol
+async function scanPerimeter(targetHash: string) {
+  logger.info("Initializing vector sweep...");
 
+  const sources = [
+    await ingestDarknetFeeds(),
+    await parsePublicBuckets(),
+    await crossRefBreachData()
+  ];
+
+  const exposure = analyzeEntropy(sources, targetHash);
+
+  if (exposure.severity >= SEVERITY.HIGH) {
+    await triggerExecutiveAlert(exposure);
+    await generateForensicPDF(exposure);
+  }
+
+  return exposure.status;
+}`;
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(codeSnippet);
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  };
   return (
     <div className="min-h-screen bg-[#050608] text-white selection:bg-primary/30 font-mono">
       <nav className="h-20 border-b border-white/5 bg-[#050608]/50 backdrop-blur-xl sticky top-0 z-50">
@@ -102,6 +130,16 @@ const ThreatDetectionPage = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent blur-3xl rounded-full opacity-50" />
             <div className="relative rounded-[24px] border border-white/10 bg-[#0A0C12] p-8 shadow-2xl">
+              <button
+                onClick={handleCopy}
+                className="absolute top-4 right-4 p-2 rounded-md bg-white/5 hover:bg-white/10"
+              >
+                {copied ? (
+                  <Check className="h-4 w-4 text-green-500" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
+              </button>
               <pre className="text-[10px] sm:text-xs text-muted-foreground overflow-x-auto">
                 <code className="language-typescript">
                   {`// E-VARA Detection Protocol
