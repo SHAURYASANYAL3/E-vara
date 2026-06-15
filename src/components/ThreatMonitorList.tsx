@@ -2,18 +2,20 @@ import { useThreatMonitor } from "@/hooks/useThreatMonitor";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ShieldCheck, Loader2, AlertTriangle } from "lucide-react";
+import ThreatMonitorSkeleton from "@/components/ThreatMonitorSkeleton";
 
 export const ThreatMonitorList = () => {
   const { data: findings = [], isLoading: loading, error } = useThreatMonitor();
   const isOffline = !!error;
 
-  if (loading) {
-    return (
-      <div className="flex justify-center p-12">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+if (loading) {
+  return (
+    <div className="p-6">
+      <ThreatMonitorSkeleton />
+    </div>
+  );
+}
+
 
   if (findings.length === 0) {
     return (
