@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01266",
-      "timestamp": "2026-04-24T15:23:42+05:30",
-      "scope": "classifier",
-      "type": "test",
-      "description": "add synthetic test vectors for phishing domain patterns",
-      "status": "verified"
-    },
-    {
       "id": "REF-01267",
       "timestamp": "2026-04-24T16:51:51+05:30",
       "scope": "nlp",
@@ -1601,6 +1593,14 @@
       "scope": "threat-intel",
       "type": "docs",
       "description": "update threat modeling guide and compliance runbook",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01466",
+      "timestamp": "2026-06-15T16:07:44+05:30",
+      "scope": "classifier",
+      "type": "chore",
+      "description": "tune rate-limiting thresholds on public audit endpoints",
       "status": "verified"
     }
   ]
