@@ -88,7 +88,6 @@
   }
   body {
     @apply bg-[#050505] text-foreground font-body antialiased;
-    @apply scrollbar-thin scrollbar-thumb-primary scrollbar-track-secondary;
     @apply bg-gradient-to-b from-[#007aff]/15 via-transparent to-[#8a2be2]/5;
   }
   h1,
