@@ -75,7 +75,8 @@ const TrustCenter = () => {
       toast({
         variant: "destructive",
         title: "Deletion Requested",
-        description: "30-day cryptographic cooling-off period initiated. Identity soft-deleted.",
+        description:
+          "30-day cryptographic cooling-off period initiated. Identity soft-deleted.",
       });
 
       await logout();
@@ -84,9 +85,12 @@ const TrustCenter = () => {
       toast({
         variant: "destructive",
         title: "Deletion Failed",
-        description: "An error occurred while attempting to delete your identity.",
+        description:
+          "An error occurred while attempting to delete your identity.",
       });
-  const { user } = useAuth();
+    }
+  };
+
   const [isExporting, setIsExporting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
