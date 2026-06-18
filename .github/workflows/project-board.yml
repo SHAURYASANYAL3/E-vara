@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ secrets.PROJECT_URL != '' }}
     steps:
-      - uses: actions/add-to-project@v1.0.2
+      - uses: actions/add-to-project@v2.0.0
         with:
           # SECURITY REQUIREMENT:
           # 1. Create a GitHub Project Board and put the URL in Repo Secrets as PROJECT_URL
