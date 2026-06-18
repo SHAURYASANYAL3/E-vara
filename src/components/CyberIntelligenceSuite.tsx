@@ -68,6 +68,8 @@ const timelineEvents: TimelineEvent[] = [
   },
 ];
 
+const [activeTab, setActiveTab] = useState("timeline");
+
 const platformNodes: PlatformNode[] = [
   {
     id: "instagram",
@@ -160,7 +162,7 @@ export default function CyberIntelligenceSuite({
     const platforms = Math.round(
       (platformNodes.reduce((acc, p) => acc + p.risk, 0) /
         platformNodes.length) *
-        0.38,
+      0.38,
     );
     const anomalies = Math.min(28, alertCount * 4);
     return {
@@ -285,108 +287,102 @@ export default function CyberIntelligenceSuite({
         </div>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1.35fr_1fr]">
-        <div className="glass-panel rounded-xl p-4 sm:p-5 lift-3d">
-          <div className="mb-4 flex items-center justify-between gap-2">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-              Identity timeline
-            </h3>
-            <span className="text-[10px] font-mono text-muted-foreground">
-              Historic intelligence events
-            </span>
-          </div>
-          <div className="space-y-3">
-            {timelineEvents.map((event) => (
-              <div
-                key={event.id}
-                className="rounded-lg border border-border/80 bg-secondary/35 p-3 transition-all hover:border-primary/40"
-              >
-                <button
-                  onClick={() =>
-                    setExpandedEvent((curr) =>
-                      curr === event.id ? null : event.id,
-                    )
-                  }
-                  className="flex w-full items-start justify-between gap-3 text-left"
-                >
-                  <div>
-                    <p className="text-xs text-muted-foreground">
-                      {event.timestamp}
-                    </p>
-                    <p className="mt-1 text-sm font-medium text-foreground">
-                      {event.title}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`rounded-full border px-2 py-0.5 text-[10px] uppercase ${levelClasses[event.level]}`}
-                    >
-                      {event.level}
-                    </span>
-                    {expandedEvent === event.id ? (
-                      <ChevronUp className="h-4 w-4 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                    )}
-                  </div>
-                </button>
-                {expandedEvent === event.id && (
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    {event.details}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Tablist */}
+      <div role="tablist" aria-label="Cyber Intelligence Suite Tabs" className="flex gap-2 mb-4">
+        <button
+          role="tab"
+          id="timeline-tab"
+          aria-controls="timeline-panel"
+          aria-selected={activeTab === "timeline"}
+          tabIndex={activeTab === "timeline" ? 0 : -1}
+          onClick={() => setActiveTab("timeline")}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowRight") setActiveTab("insight");
+            if (e.key === "ArrowLeft") setActiveTab("insight");
+            if (e.key === "Enter" || e.key === " ") setActiveTab("timeline");
+          }}
+          className="px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          Identity Timeline
+        </button>
 
-        <div className="glass-panel rounded-xl p-4 sm:p-5 lift-3d">
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-              AI insight panel
-            </h3>
-            <Sparkles className="h-4 w-4 text-primary" />
-          </div>
-          <ul className="space-y-2 text-xs text-muted-foreground">
-            <li className="rounded-md border border-border/70 bg-secondary/35 p-2.5">
-              High exposure footprint across{" "}
-              <span className="text-foreground">4 platforms</span>.
-            </li>
-            <li className="rounded-md border border-border/70 bg-secondary/35 p-2.5">
-              Primary vulnerability:{" "}
-              <span className="text-foreground">
-                reused email and correlated username tokens
-              </span>
-              .
-            </li>
-            <li className="rounded-md border border-border/70 bg-secondary/35 p-2.5">
-              Recommended action: isolate public metadata and rotate credentials
-              in top-risk nodes.
-            </li>
-          </ul>
-
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            {[
-              { label: "Breach", value: score.breach },
-              { label: "Platform", value: score.platforms },
-              { label: "Anomalies", value: score.anomalies },
-              { label: "Total", value: score.total },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="rounded-lg border border-border/80 bg-secondary/30 p-2.5 text-center"
-              >
-                <p className="text-lg font-semibold text-foreground">
-                  {item.value}
-                </p>
-                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                  {item.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <button
+          role="tab"
+          id="insight-tab"
+          aria-controls="insight-panel"
+          aria-selected={activeTab === "insight"}
+          tabIndex={activeTab === "insight" ? 0 : -1}
+          onClick={() => setActiveTab("insight")}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowRight") setActiveTab("timeline");
+            if (e.key === "ArrowLeft") setActiveTab("timeline");
+            if (e.key === "Enter" || e.key === " ") setActiveTab("insight");
+          }}
+          className="px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          AI Insight Panel
+        </button>
       </div>
+
+      {/* Tab panels */}
+      <div
+        role="tabpanel"
+        id="timeline-panel"
+        aria-labelledby="timeline-tab"
+        hidden={activeTab !== "timeline"}
+      >
+        {/* timelineEvents JSX goes here */}
+      </div>
+
+      <div
+        role="tabpanel"
+        id="insight-panel"
+        aria-labelledby="insight-tab"
+        hidden={activeTab !== "insight"}
+      >
+        {/* AI insight JSX goes here */}
+      </div>
+
+      <ul className="space-y-2 text-xs text-muted-foreground">
+        <li className="rounded-md border border-border/70 bg-secondary/35 p-2.5">
+          High exposure footprint across{" "}
+          <span className="text-foreground">4 platforms</span>.
+        </li>
+        <li className="rounded-md border border-border/70 bg-secondary/35 p-2.5">
+          Primary vulnerability:{" "}
+          <span className="text-foreground">
+            reused email and correlated username tokens
+          </span>
+          .
+        </li>
+        <li className="rounded-md border border-border/70 bg-secondary/35 p-2.5">
+          Recommended action: isolate public metadata and rotate credentials
+          in top-risk nodes.
+        </li>
+      </ul>
+
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        {[
+          { label: "Breach", value: score.breach },
+          { label: "Platform", value: score.platforms },
+          { label: "Anomalies", value: score.anomalies },
+          { label: "Total", value: score.total },
+        ].map((item) => (
+          <div
+            key={item.label}
+            className="rounded-lg border border-border/80 bg-secondary/30 p-2.5 text-center"
+          >
+            <p className="text-lg font-semibold text-foreground">
+              {item.value}
+            </p>
+            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              {item.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+      </div >
 
       <div className="grid gap-4 xl:grid-cols-[1.25fr_1fr]">
         <div className="glass-panel rounded-xl p-4 sm:p-5 lift-3d">
@@ -529,146 +525,148 @@ export default function CyberIntelligenceSuite({
         <Bot className="h-4 w-4" /> Ask E-Vara
       </button>
 
-      {chatOpen && (
-        <div className="chat-panel glass-panel">
-          <div className="mb-2 flex items-center justify-between border-b border-border/70 pb-2">
-            <p className="text-xs font-semibold uppercase tracking-widest text-foreground">
-              AI Assistant
-            </p>
-            <button
-              onClick={() => setChatOpen(false)}
-              className="text-[10px] text-muted-foreground"
-            >
-              Close
-            </button>
-          </div>
-          <div className="max-h-60 space-y-2 overflow-y-auto pr-1">
-            {chatMessages.map((msg, idx) => (
-              <div
-                key={`${msg.text}-${idx}`}
-                className={`rounded-md px-2.5 py-2 text-xs ${msg.from === "assistant" ? "bg-secondary/45 text-foreground" : "bg-primary/25 text-primary-foreground"}`}
-              >
-                {msg.text}
-              </div>
-            ))}
-            {typing && (
-              <div className="rounded-md px-2.5 py-2 text-xs bg-secondary/45 text-muted-foreground animate-pulse">
-                E-Vara is typing...
-              </div>
-            )}
-          </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const input = e.currentTarget.elements.namedItem(
-                "chatInput",
-              ) as HTMLInputElement;
-              if (input && input.value) {
-                askAssistant(input.value);
-                input.value = "";
-              }
-            }}
-            className="mt-3 flex gap-2"
+  {
+    chatOpen && (
+      <div className="chat-panel glass-panel">
+        <div className="mb-2 flex items-center justify-between border-b border-border/70 pb-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-foreground">
+            AI Assistant
+          </p>
+          <button
+            onClick={() => setChatOpen(false)}
+            className="text-[10px] text-muted-foreground"
           >
-            <input
-              name="chatInput"
-              autoComplete="off"
-              placeholder="Ask E-Vara..."
-              className="flex-1 rounded-md border border-border/70 bg-secondary/35 px-2 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
-            />
-            <button
-              type="submit"
-              disabled={typing}
-              className="neon-button rounded-md border border-border/70 bg-secondary/35 px-3 py-2 text-xs text-muted-foreground hover:border-primary/50 hover:text-foreground disabled:opacity-50"
-            >
-              Send
-            </button>
-          </form>
+            Close
+          </button>
         </div>
-      )}
-
-      <div className="glass-panel rounded-xl p-4 sm:p-5 lift-3d">
-        <div className="mb-3 flex flex-col gap-1">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Target className="h-4 w-4 text-primary" />
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-                Identity Risk Snapshot: {score.total}/100
-              </h3>
-            </div>
-            <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border bg-black/40 text-amber-400 border-amber-400/50">
-              LIMITED DATA
-            </span>
-          </div>
-          <div className="flex items-center gap-4 text-[9px] font-mono uppercase text-muted-foreground ml-6 mt-1">
-            <div className="flex gap-4">
-              <span>Confidence: 89%</span>
-              <span>Evidence: Medium</span>
-            </div>
-            <span>Updated: 1m ago</span>
-          </div>
-          <div className="ml-6 mt-2 p-2 rounded bg-black/20 border border-white/5 w-fit">
-            <p className="text-[10px] text-muted-foreground uppercase font-mono mb-1">
-              Changed since last snapshot:
-            </p>
-            <div className="flex flex-col gap-1 text-[11px] font-mono">
-              <span className="text-rose-400">
-                +12 Deepfake audio marker match
-              </span>
-              <span className="text-emerald-400">−8 PII takedown verified</span>
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {[
-            { title: "Breach data", value: score.breach, icon: ShieldAlert },
-            { title: "Platform exposure", value: score.platforms, icon: Wand2 },
-            { title: "Activity anomalies", value: score.anomalies, icon: Bot },
-          ].map((item) => (
+        <div className="max-h-60 space-y-2 overflow-y-auto pr-1">
+          {chatMessages.map((msg, idx) => (
             <div
-              key={item.title}
-              className="rounded-lg border border-border/80 bg-secondary/25 p-3 text-center"
+              key={`${msg.text}-${idx}`}
+              className={`rounded-md px-2.5 py-2 text-xs ${msg.from === "assistant" ? "bg-secondary/45 text-foreground" : "bg-primary/25 text-primary-foreground"}`}
             >
-              <item.icon className="mx-auto mb-2 h-4 w-4 text-primary" />
-              <div className="mx-auto mb-2 h-20 w-20">
-                <svg viewBox="0 0 120 120" className="h-full w-full">
-                  <circle
-                    cx="60"
-                    cy="60"
-                    r="52"
-                    stroke="rgba(148,163,184,0.2)"
-                    strokeWidth="10"
-                    fill="none"
-                  />
-                  <circle
-                    cx="60"
-                    cy="60"
-                    r="52"
-                    stroke="rgba(34,211,238,0.9)"
-                    strokeWidth="10"
-                    fill="none"
-                    strokeDasharray={327}
-                    strokeDashoffset={
-                      327 - (Math.min(item.value, 100) / 100) * 327
-                    }
-                    strokeLinecap="round"
-                    transform="rotate(-90 60 60)"
-                  />
-                  <text
-                    x="60"
-                    y="66"
-                    textAnchor="middle"
-                    className="fill-white text-[22px] font-bold"
-                  >
-                    {item.value}
-                  </text>
-                </svg>
-              </div>
-              <p className="text-xs text-muted-foreground">{item.title}</p>
+              {msg.text}
             </div>
           ))}
+          {typing && (
+            <div className="rounded-md px-2.5 py-2 text-xs bg-secondary/45 text-muted-foreground animate-pulse">
+              E-Vara is typing...
+            </div>
+          )}
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const input = e.currentTarget.elements.namedItem(
+              "chatInput",
+            ) as HTMLInputElement;
+            if (input && input.value) {
+              askAssistant(input.value);
+              input.value = "";
+            }
+          }}
+          className="mt-3 flex gap-2"
+        >
+          <input
+            name="chatInput"
+            autoComplete="off"
+            placeholder="Ask E-Vara..."
+            className="flex-1 rounded-md border border-border/70 bg-secondary/35 px-2 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
+          />
+          <button
+            type="submit"
+            disabled={typing}
+            className="neon-button rounded-md border border-border/70 bg-secondary/35 px-3 py-2 text-xs text-muted-foreground hover:border-primary/50 hover:text-foreground disabled:opacity-50"
+          >
+            Send
+          </button>
+        </form>
+      </div>
+    )
+  }
+
+  <div className="glass-panel rounded-xl p-4 sm:p-5 lift-3d">
+    <div className="mb-3 flex flex-col gap-1">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Target className="h-4 w-4 text-primary" />
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
+            Identity Risk Snapshot: {score.total}/100
+          </h3>
+        </div>
+        <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border bg-black/40 text-amber-400 border-amber-400/50">
+          LIMITED DATA
+        </span>
+      </div>
+      <div className="flex items-center gap-4 text-[9px] font-mono uppercase text-muted-foreground ml-6 mt-1">
+        <div className="flex gap-4">
+          <span>Confidence: 89%</span>
+          <span>Evidence: Medium</span>
+        </div>
+        <span>Updated: 1m ago</span>
+      </div>
+      <div className="ml-6 mt-2 p-2 rounded bg-black/20 border border-white/5 w-fit">
+        <p className="text-[10px] text-muted-foreground uppercase font-mono mb-1">
+          Changed since last snapshot:
+        </p>
+        <div className="flex flex-col gap-1 text-[11px] font-mono">
+          <span className="text-rose-400">
+            +12 Deepfake audio marker match
+          </span>
+          <span className="text-emerald-400">−8 PII takedown verified</span>
         </div>
       </div>
-    </section>
+    </div>
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      {[
+        { title: "Breach data", value: score.breach, icon: ShieldAlert },
+        { title: "Platform exposure", value: score.platforms, icon: Wand2 },
+        { title: "Activity anomalies", value: score.anomalies, icon: Bot },
+      ].map((item) => (
+        <div
+          key={item.title}
+          className="rounded-lg border border-border/80 bg-secondary/25 p-3 text-center"
+        >
+          <item.icon className="mx-auto mb-2 h-4 w-4 text-primary" />
+          <div className="mx-auto mb-2 h-20 w-20">
+            <svg viewBox="0 0 120 120" className="h-full w-full">
+              <circle
+                cx="60"
+                cy="60"
+                r="52"
+                stroke="rgba(148,163,184,0.2)"
+                strokeWidth="10"
+                fill="none"
+              />
+              <circle
+                cx="60"
+                cy="60"
+                r="52"
+                stroke="rgba(34,211,238,0.9)"
+                strokeWidth="10"
+                fill="none"
+                strokeDasharray={327}
+                strokeDashoffset={
+                  327 - (Math.min(item.value, 100) / 100) * 327
+                }
+                strokeLinecap="round"
+                transform="rotate(-90 60 60)"
+              />
+              <text
+                x="60"
+                y="66"
+                textAnchor="middle"
+                className="fill-white text-[22px] font-bold"
+              >
+                {item.value}
+              </text>
+            </svg>
+          </div>
+          <p className="text-xs text-muted-foreground">{item.title}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+    </section >
   );
 }

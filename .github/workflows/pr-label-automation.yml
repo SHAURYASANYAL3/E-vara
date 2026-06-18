@@ -14,7 +14,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Apply PR Labels Based on Review or Comment
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           script: |
             const eventName = context.eventName;

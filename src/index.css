@@ -6,49 +6,40 @@
   :root {
     --background: 0 0% 2%;
     --foreground: 0 0% 98%;
-
     --card: 0 0% 4%;
     --card-foreground: 0 0% 98%;
-
     --popover: 0 0% 4%;
     --popover-foreground: 0 0% 98%;
-
     --primary: 212 100% 50%; /* Electric Blue #007AFF */
     --primary-foreground: 0 0% 100%;
-
     --secondary: 240 5% 12%; /* Graphite Light */
     --secondary-foreground: 0 0% 98%;
-
     --muted: 240 4% 8%;
     --muted-foreground: 240 5% 65%;
-
     --accent: 212 100% 50%;
     --accent-foreground: 0 0% 100%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 240 5% 15%;
     --input: 240 5% 15%;
     --ring: 212 100% 50%;
-
     --radius: 1.5rem;
   }
 
   .high-contrast {
     --primary: 212 100% 70%;
     --muted-foreground: 240 5% 80%;
-    color: #ffffff;
+    @apply text-white;
   }
   .high-contrast .text-cyan-400,
   .high-contrast .text-cyan-300,
   .high-contrast .text-cyan-200,
   .high-contrast .text-cyan-100 {
-    color: #ffffff !important;
+    @apply text-white;
   }
   .high-contrast .text-slate-400,
   .high-contrast .text-slate-500 {
-    color: #d1d5db !important;
+    @apply text-slate-300;
   }
 
   @media (prefers-contrast: more) {
@@ -77,6 +68,18 @@
   .glass-panel {
     @apply bg-white/5 backdrop-blur-2xl border border-white/10;
   }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold hover:bg-primary/80 transition;
+  }
+
+  .card {
+    @apply bg-card border border-border rounded-lg shadow-md p-4;
+  }
+
+  .section-heading {
+    @apply text-lg font-bold uppercase tracking-wide text-foreground mb-4;
+  }
 }
 
 @layer base {
@@ -85,17 +88,8 @@
   }
   body {
     @apply bg-[#050505] text-foreground font-body antialiased;
-    background-image:
-      radial-gradient(
-        circle at 50% -20%,
-        rgba(0, 122, 255, 0.15),
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 100% 100%,
-        rgba(138, 43, 226, 0.05),
-        transparent 40%
-      );
+    @apply scrollbar-thin scrollbar-thumb-primary scrollbar-track-secondary;
+    @apply bg-gradient-to-b from-[#007aff]/15 via-transparent to-[#8a2be2]/5;
   }
   h1,
   h2,
@@ -105,19 +99,4 @@
   h6 {
     @apply font-mono font-bold tracking-tight;
   }
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #050608;
-}
-::-webkit-scrollbar-thumb {
-  background: #1c1c1e;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #007aff;
 }

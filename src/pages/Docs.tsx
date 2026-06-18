@@ -53,22 +53,29 @@ const DocsPage = () => {
   const [activeSection, setActiveSection] = useState("introduction");
 
   useEffect(() => {
+    const sectionIds = docSections.map((s) => s.id);
+
     const handleScroll = () => {
-      let currentSection = docSections[0].id;
-      for (const section of docSections) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          // Adjust threshold based on layout
-          if (rect.top <= 200) {
-            currentSection = section.id;
-          }
+      const nearBottom =
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 100;
+
+      if (nearBottom) {
+        setActiveSection(sectionIds[sectionIds.length - 1]);
+        return;
+      }
+
+      let currentSection = sectionIds[0];
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 200) {
+          currentSection = id;
         }
       }
       setActiveSection(currentSection);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
