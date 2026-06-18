@@ -8,14 +8,13 @@ export const ThreatMonitorList = () => {
   const { data: findings = [], isLoading: loading, error } = useThreatMonitor();
   const isOffline = !!error;
 
-if (loading) {
-  return (
-    <div className="p-6">
-      <ThreatMonitorSkeleton />
-    </div>
-  );
-}
-
+  if (loading) {
+    return (
+      <div className="p-6">
+        <ThreatMonitorSkeleton />
+      </div>
+    );
+  }
 
   if (findings.length === 0) {
     return (

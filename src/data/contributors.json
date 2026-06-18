@@ -11,12 +11,7 @@
     "featured": true,
     "is_founding": true,
     "level": "Founding Contributor",
-    "badges": [
-      "Backend",
-      "Security",
-      "Product",
-      "NSOC'26"
-    ],
+    "badges": ["Backend", "Security", "Product", "NSOC'26"],
     "joinedAt": "Jan 2024",
     "resolved_issues": [
       {
@@ -39,11 +34,7 @@
     "featured": true,
     "is_founding": true,
     "level": "Core Contributor",
-    "badges": [
-      "Frontend",
-      "Design",
-      "NSOC'26"
-    ],
+    "badges": ["Frontend", "Design", "NSOC'26"],
     "joinedAt": "Feb 2024",
     "resolved_issues": [
       {
@@ -135,9 +126,7 @@
     "featured": false,
     "is_founding": false,
     "level": "Contributor",
-    "badges": [
-      "NSOC'26"
-    ],
+    "badges": ["NSOC'26"],
     "joinedAt": "Jun 2026",
     "resolved_issues": [
       {
@@ -160,10 +149,7 @@
     "featured": false,
     "is_founding": false,
     "level": "Contributor",
-    "badges": [
-      "Frontend",
-      "NSOC'26"
-    ],
+    "badges": ["Frontend", "NSOC'26"],
     "joinedAt": "Jun 2026",
     "resolved_issues": [
       {
@@ -186,9 +172,7 @@
     "featured": false,
     "is_founding": false,
     "level": "Contributor",
-    "badges": [
-      "NSOC'26"
-    ],
+    "badges": ["NSOC'26"],
     "joinedAt": "Jun 2026",
     "resolved_issues": [
       {
@@ -211,9 +195,7 @@
     "featured": false,
     "is_founding": false,
     "level": "Contributor",
-    "badges": [
-      "NSOC'26"
-    ],
+    "badges": ["NSOC'26"],
     "joinedAt": "Jun 2026",
     "resolved_issues": [
       {
@@ -236,9 +218,7 @@
     "featured": false,
     "is_founding": false,
     "level": "Contributor",
-    "badges": [
-      "NSOC'26"
-    ],
+    "badges": ["NSOC'26"],
     "joinedAt": "Jun 2026",
     "resolved_issues": [
       {
@@ -261,9 +241,7 @@
     "featured": false,
     "is_founding": false,
     "level": "Contributor",
-    "badges": [
-      "NSOC'26"
-    ],
+    "badges": ["NSOC'26"],
     "joinedAt": "Jun 2026",
     "resolved_issues": [
       {
@@ -286,9 +264,7 @@
     "featured": false,
     "is_founding": false,
     "level": "Contributor",
-    "badges": [
-      "NSOC'26"
-    ],
+    "badges": ["NSOC'26"],
     "joinedAt": "Jun 2026",
     "resolved_issues": [
       {
@@ -311,9 +287,7 @@
     "featured": false,
     "is_founding": false,
     "level": "Contributor",
-    "badges": [
-      "NSOC'26"
-    ],
+    "badges": ["NSOC'26"],
     "joinedAt": "Jun 2026",
     "resolved_issues": [
       {

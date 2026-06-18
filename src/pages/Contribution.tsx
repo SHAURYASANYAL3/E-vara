@@ -3,7 +3,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import {
   Search,
-  Github,
+  GitBranch,
   Code,
   PenTool,
   BookOpen,
@@ -84,7 +84,7 @@ const Hero = () => (
     </p>
     <div className="flex flex-wrap justify-center gap-4">
       <Button className="bg-cyan-500 hover:bg-cyan-600 text-black font-semibold rounded-full px-8">
-        <Github className="mr-2 h-4 w-4" /> Explore Repo
+        <GitBranch className="mr-2 h-4 w-4" /> Explore Repo
       </Button>
       <Button
         variant="outline"
@@ -265,7 +265,7 @@ const ContributorWall = () => {
       {filtered.length === 0 ? (
         <div className="glass-panel border-dashed border-2 border-border/50 rounded-3xl p-16 text-center max-w-3xl mx-auto">
           <div className="w-16 h-16 bg-cyan-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Github className="h-8 w-8 text-cyan-400" />
+            <GitBranch className="h-8 w-8 text-cyan-400" />
           </div>
           <h3 className="text-2xl font-bold mb-2">
             We're building the first chapter.
@@ -363,7 +363,7 @@ const ContributorWall = () => {
                   rel="noreferrer"
                   className="text-muted-foreground hover:text-white transition-colors"
                 >
-                  <Github className="h-4 w-4" />
+                  <GitBranch className="h-4 w-4" />
                 </a>
               </div>
             </div>
