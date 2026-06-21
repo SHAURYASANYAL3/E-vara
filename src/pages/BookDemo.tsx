@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { supabase } from "@/integrations/supabase/client";
 import { log } from "@/lib/observability";
+import { toast } from "sonner";
 
 const BookDemo = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -50,13 +51,17 @@ const BookDemo = () => {
 
       if (error) {
         log("error", "Supabase Error in BookDemo", { error });
-        alert(`Transmission failed: ${error.message}`);
+        toast.error("Transmission failed", {
+          description: error.message,
+        });
       } else {
         setSubmitted(true);
       }
     } catch (error) {
       log("error", "Network protocol error in BookDemo", { error });
-      alert("Network protocol error. Check your connection.");
+      toast.error("Network protocol error", {
+        description: "Check your connection.",
+      });
     } finally {
       setLoading(false);
     }
