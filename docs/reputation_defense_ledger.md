@@ -640,3 +640,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Refresh mock phishing dataset fixtures for test suite.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01567] 2026-07-17 19:48:31 - feat(nlp)
+- **Summary**: Implement social media threat detector for spoofed profiles.
+- **Verification**: State integrity confirmed, checksum passed.
+
