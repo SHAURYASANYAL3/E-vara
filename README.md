@@ -99,6 +99,27 @@ VITE_SUPABASE_URL=your_instance_url
 VITE_SUPABASE_ANON_KEY=your_anon_key
 ```
 
+### Local setup
+
+```bash
+git clone https://github.com/SHAURYASANYAL3/E-vara.git
+cd E-vara
+npm install
+```
+
+Create a `.env` file in the project root (there is no committed `.env.example`):
+
+```env
+VITE_SUPABASE_URL=your_instance_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+Start the dev server:
+
+```bash
+npm run dev
+```
+
 ### Deployment
 
 1. **Database Setup**: Execute `schema.sql` in the Supabase SQL Editor.
