@@ -716,3 +716,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Document rest api contract for identity defense endpoints.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01653] 2026-08-02 19:49:06 - feat(reputation)
+- **Summary**: Add sentiment polarity index to community mentions collector.
+- **Verification**: State integrity confirmed, checksum passed.
+
