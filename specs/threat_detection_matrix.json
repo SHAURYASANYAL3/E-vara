@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01462",
-      "timestamp": "2026-06-11T18:19:59+05:30",
-      "scope": "crawler",
-      "type": "refactor",
-      "description": "streamline async payload queue for reputation alerts",
-      "status": "verified"
-    },
-    {
       "id": "REF-01463",
       "timestamp": "2026-06-12T16:08:06+05:30",
       "scope": "reputation",
@@ -1601,6 +1593,14 @@
       "scope": "scanner",
       "type": "perf",
       "description": "optimize redis cache hit ratio for identity lookup",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01662",
+      "timestamp": "2026-08-03T21:15:45+05:30",
+      "scope": "crawler",
+      "type": "test",
+      "description": "add synthetic test vectors for phishing domain patterns",
       "status": "verified"
     }
   ]
