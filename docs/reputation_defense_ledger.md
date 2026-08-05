@@ -544,3 +544,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Add heuristic weights for impersonation risk scoring.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01677] 2026-08-05 19:47:50 - fix(nlp)
+- **Summary**: Sanitize multiline unicode bio sequences in entity profile.
+- **Verification**: State integrity confirmed, checksum passed.
+
