@@ -12,8 +12,6 @@ import {
 import { Shield, Download, ShieldCheck, Lock, Eye } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/landing/Navbar";
-import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 
 export const handleDataExport = async (userId: string) => {
   if (!userId) throw new Error("User ID is required for export");
