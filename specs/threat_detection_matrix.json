@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01507",
-      "timestamp": "2026-07-02T15:23:36+05:30",
-      "scope": "nlp",
-      "type": "test",
-      "description": "add unit tests for fuzzy string matching in username audit",
-      "status": "verified"
-    },
-    {
       "id": "REF-01508",
       "timestamp": "2026-07-02T16:51:44+05:30",
       "scope": "storage",
@@ -1601,6 +1593,14 @@
       "scope": "classifier",
       "type": "docs",
       "description": "document REST API contract for identity defense endpoints",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01707",
+      "timestamp": "2026-08-15T18:20:01+05:30",
+      "scope": "nlp",
+      "type": "feat",
+      "description": "add sentiment polarity index to community mentions collector",
       "status": "verified"
     }
   ]
