@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01513",
-      "timestamp": "2026-07-04T16:08:11+05:30",
-      "scope": "reputation",
-      "type": "feat",
-      "description": "implement social media threat detector for spoofed profiles",
-      "status": "verified"
-    },
-    {
       "id": "REF-01514",
       "timestamp": "2026-07-05T10:58:54+05:30",
       "scope": "auth",
@@ -1601,6 +1593,14 @@
       "scope": "crawler",
       "type": "feat",
       "description": "add heuristic weights for impersonation risk scoring",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01713",
+      "timestamp": "2026-08-16T15:23:51+05:30",
+      "scope": "reputation",
+      "type": "fix",
+      "description": "sanitize multiline unicode bio sequences in entity profile",
       "status": "verified"
     }
   ]
