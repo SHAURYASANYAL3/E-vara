@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01521",
-      "timestamp": "2026-07-05T21:17:03+05:30",
-      "scope": "scanner",
-      "type": "feat",
-      "description": "integrate webhook dispatch for critical reputation alerts",
-      "status": "verified"
-    },
-    {
       "id": "REF-01522",
       "timestamp": "2026-07-06T10:57:44+05:30",
       "scope": "crawler",
@@ -1601,6 +1593,14 @@
       "scope": "telemetry",
       "type": "fix",
       "description": "handle null avatar checksum in risk evaluation pass",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01721",
+      "timestamp": "2026-08-19T16:06:50+05:30",
+      "scope": "scanner",
+      "type": "perf",
+      "description": "batch database insertions for scraped profile snapshots",
       "status": "verified"
     }
   ]
