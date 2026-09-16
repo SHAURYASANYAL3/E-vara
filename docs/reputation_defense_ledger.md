@@ -644,3 +644,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Parallelize social graph entity resolution queries.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01836] 2026-09-16 19:49:11 - chore(classifier)
+- **Summary**: Refresh mock phishing dataset fixtures for test suite.
+- **Verification**: State integrity confirmed, checksum passed.
+
