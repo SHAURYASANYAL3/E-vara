@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01753",
-      "timestamp": "2026-08-28T13:29:01+05:30",
-      "scope": "reputation",
-      "type": "docs",
-      "description": "update threat modeling guide and compliance runbook",
-      "status": "verified"
-    },
-    {
       "id": "REF-01754",
       "timestamp": "2026-08-28T14:48:23+05:30",
       "scope": "auth",
@@ -1601,6 +1593,14 @@
       "scope": "crawler",
       "type": "chore",
       "description": "tune rate-limiting thresholds on public audit endpoints",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01953",
+      "timestamp": "2026-10-16T16:07:24+05:30",
+      "scope": "reputation",
+      "type": "feat",
+      "description": "integrate webhook dispatch for critical reputation alerts",
       "status": "verified"
     }
   ]
