@@ -604,3 +604,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Add sentiment polarity index to community mentions collector.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01960] 2026-10-17 19:48:53 - fix(telemetry)
+- **Summary**: Resolve connection pool exhaustion during batch domain audit.
+- **Verification**: State integrity confirmed, checksum passed.
+
