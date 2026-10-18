@@ -636,3 +636,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Optimize redis cache hit ratio for identity lookup.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01968] 2026-10-18 19:49:01 - test(storage)
+- **Summary**: Add synthetic test vectors for phishing domain patterns.
+- **Verification**: State integrity confirmed, checksum passed.
+
