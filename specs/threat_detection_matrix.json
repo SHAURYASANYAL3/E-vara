@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01779",
-      "timestamp": "2026-09-01T13:54:19+05:30",
-      "scope": "api",
-      "type": "feat",
-      "description": "add sentiment polarity index to community mentions collector",
-      "status": "verified"
-    },
-    {
       "id": "REF-01780",
       "timestamp": "2026-09-01T15:23:30+05:30",
       "scope": "telemetry",
@@ -1601,6 +1593,14 @@
       "scope": "storage",
       "type": "fix",
       "description": "resolve connection pool exhaustion during batch domain audit",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01979",
+      "timestamp": "2026-10-21T21:16:00+05:30",
+      "scope": "api",
+      "type": "perf",
+      "description": "parallelize social graph entity resolution queries",
       "status": "verified"
     }
   ]
