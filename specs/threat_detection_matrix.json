@@ -4,14 +4,6 @@
   "last_audit_sync": "2026-11-03T18:00:00+05:30",
   "entries": [
     {
-      "id": "REF-01784",
-      "timestamp": "2026-09-01T21:16:47+05:30",
-      "scope": "auth",
-      "type": "feat",
-      "description": "add heuristic weights for impersonation risk scoring",
-      "status": "verified"
-    },
-    {
       "id": "REF-01785",
       "timestamp": "2026-09-02T10:49:24+05:30",
       "scope": "threat-intel",
@@ -1601,6 +1593,14 @@
       "scope": "reputation",
       "type": "fix",
       "description": "sanitize multiline unicode bio sequences in entity profile",
+      "status": "verified"
+    },
+    {
+      "id": "REF-01984",
+      "timestamp": "2026-10-26T16:07:56+05:30",
+      "scope": "auth",
+      "type": "refactor",
+      "description": "streamline async payload queue for reputation alerts",
       "status": "verified"
     }
   ]
