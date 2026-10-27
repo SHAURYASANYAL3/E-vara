@@ -728,3 +728,7 @@ Automated architectural decision record, telemetry benchmarks, and operational a
 - **Summary**: Handle null avatar checksum in risk evaluation pass.
 - **Verification**: State integrity confirmed, checksum passed.
 
+### [REF-01991] 2026-10-27 19:48:59 - perf(scanner)
+- **Summary**: Batch database insertions for scraped profile snapshots.
+- **Verification**: State integrity confirmed, checksum passed.
+
