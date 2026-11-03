@@ -126,7 +126,7 @@ const DocsPage = () => {
               Getting Started
             </h4>
             <ul className="space-y-1">
-              {["introduction", "authentication", "adding-identities"].map(
+              {["", "authentication", "adding-identities"].map(
                 (id) => (
                   <li key={id}>
                     <button
